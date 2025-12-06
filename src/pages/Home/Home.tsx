@@ -1,0 +1,175 @@
+import { useEffect, useState, type FC } from "react";
+import s from "./Home.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import type { Expense } from "../../types/Expense";
+import { Button, TextField } from "@mui/material";
+import { inputSx } from "../../InputStyles";
+import type { Touched } from "../../types/Touched";
+import type { User } from "@supabase/supabase-js";
+import { useExpenses } from "../../hooks/useExpenses";
+import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
+
+const Home: FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const { loading, setExpenses, expenses } = useExpenses(user);
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [touched, setTouched] = useState<Touched>({
+    amount: false,
+    category: false,
+  });
+  const navigate = useNavigate();
+
+  const totalAmount = expenses.reduce(
+    (sum, expense) => sum + expense.amount,
+    0
+  );
+
+  useEffect(() => {
+    const init = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        return;
+      }
+
+      setUser(user);
+    };
+    void init();
+  }, [navigate]);
+
+  const addExpense = async () => {
+    if (!user) {
+      console.error("No user logged in.");
+      return;
+    }
+
+    if (!amount || !category)
+      return console.error("Amount and category are required.");
+
+    const parsedAmount = Number(amount);
+    if (Number.isNaN(parsedAmount)) {
+      alert("Please enter a valid number for amount.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("expenses")
+      .insert([
+        {
+          user_id: user.id,
+          amount: parsedAmount,
+          category,
+          description: description || null,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error adding expense:", error.message);
+      return;
+    }
+
+    setExpenses((prev) => [data as Expense, ...prev]);
+    setAmount("");
+    setCategory("");
+    setDescription("");
+    setTouched({ amount: false, category: false });
+  };
+
+  const deleteExpense = async (id: string) => {
+    const { error } = await supabase.from("expenses").delete().eq("id", id);
+    if (error) {
+      console.error("Error deleting expense:", error.message);
+      return;
+    }
+    setExpenses((prev) => prev.filter((e) => e.id !== id));
+  };
+
+  return (
+    <div className={s.home}>
+      <header className={s.header}>
+        <h2 className={s.headerTitle}>Add your finance</h2>
+      </header>
+      <div className={s.content}>
+        <div className={s.addExpense}>
+          <TextField
+            error={touched.amount && amount === ""}
+            helperText={touched.amount && amount === "" && "Amount is required"}
+            fullWidth
+            sx={inputSx}
+            value={amount}
+            label="Amount(USD)"
+            onChange={(e) => setAmount(e.target.value)}
+            onBlur={() => setTouched({ ...touched, amount: true })}
+          />
+          <TextField
+            error={touched.category && category === ""}
+            helperText={
+              touched.category && category === "" && "Category is required"
+            }
+            fullWidth
+            sx={inputSx}
+            value={category}
+            label="Category"
+            onChange={(e) => setCategory(e.target.value)}
+            onBlur={() => setTouched({ ...touched, category: true })}
+          />
+          <TextField
+            fullWidth
+            sx={inputSx}
+            value={description}
+            label="Description"
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Button variant="contained" onClick={addExpense}>
+            {loading ? "Adding..." : "Add Expense"}
+          </Button>
+        </div>
+        <div className={s.expenses}>
+          <h2 className={s.totalAmount}>Total Amount: {totalAmount}$</h2>
+          <ul className={s.expensesList}>
+            {expenses.map((expense) => (
+              <li key={expense.id} className={s.expenseItem}>
+                <h3 className={s.expenseAmount}>Amount: {expense.amount}$</h3>
+                <h4 className={s.expenseCategory}>
+                  Category: {expense.category}
+                </h4>
+                {expense.description ? (
+                  <p className={s.expenseDescription}>
+                    Description: {expense.description}
+                  </p>
+                ) : (
+                  <p className={s.expenseDescription}>No description</p>
+                )}
+                <p className={s.expenseDate}>
+                  Date: {new Date(expense.date).toLocaleDateString()}
+                </p>
+                <Button
+                  color="error"
+                  variant="contained"
+                  onClick={() => deleteExpense(expense.id)}
+                >
+                  Delete
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <footer className={s.footer}>
+        <Link to="/view" className={s.footerLink}>
+          View Finances
+        </Link>
+      </footer>
+      <LoadingProgress loading={loading} />
+    </div>
+  );
+};
+
+export default Home;

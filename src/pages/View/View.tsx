@@ -1,15 +1,18 @@
 import { useEffect, useState, type FC } from "react";
 import s from "./View.module.css";
-
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../../supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
+import ExpensesList from "../../components/ExpensesList/ExpensesList";
+import type { Expense } from "../../types/Expense";
+import ModalComponent from "../../components/ModalComponent/ModalComponent";
 
 const View: FC = () => {
   const [user, setUser] = useState<User | null>(null);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
   const { loading, expenses } = useExpenses(user);
 
   const navigate = useNavigate();
@@ -29,6 +32,15 @@ const View: FC = () => {
     void init();
   }, [navigate]);
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedExpense(null);
+  };
+  const handleOpenModal = (expense: Expense) => {
+    setSelectedExpense(expense);
+    setModalOpen(true);
+  };
+
   return (
     <div className={s.viewPage}>
       {!user ? (
@@ -46,27 +58,44 @@ const View: FC = () => {
           <div className={s.content}>
             <ul className={s.expensesList}>
               {expenses.map((expense) => (
-                <li key={expense.id} className={s.expenseItem}>
-                  <h3 className={s.amount}>
-                    <span className={s.desc}>Amount:</span> {expense.amount}$
-                  </h3>
-                  <p className={s.category}>
-                    <span className={s.desc}>Category:</span> {expense.category}
-                  </p>
-                  <h3 className={s.date}>
-                    <span className={s.desc}>Date:</span>{" "}
-                    {new Date(expense.date).toLocaleDateString()}
-                  </h3>
-                  <p className={s.description}>
-                    <span className={s.desc}>Desc:</span> {expense.description}
-                  </p>
-                </li>
+                <ExpensesList
+                  key={expense.id}
+                  onClick={() => handleOpenModal(expense)}
+                  id={expense.id}
+                  amount={expense.amount}
+                  category={expense.category}
+                  date={expense.date}
+                  description={expense.description}
+                />
               ))}
             </ul>
           </div>
         </>
       )}
       <LoadingProgress loading={loading} />
+      <ModalComponent
+        open={modalOpen}
+        onClose={handleCloseModal}
+        content={
+          selectedExpense && (
+            <div className={s.modalContent}>
+              <h2 className={s.modalCategory}>{selectedExpense.category}</h2>
+              <p className={s.modalAmount}>
+                <span className={s.modalDesc}>Amount: </span>
+                {selectedExpense.amount}$
+              </p>
+              <p className={s.modalDescription}>
+                <span className={s.modalDesc}>Description: </span>
+                {selectedExpense.description}
+              </p>
+              <p className={s.modalDate}>
+                <span className={s.modalDesc}>Date: </span>
+                {new Date(selectedExpense.date).toLocaleDateString()}
+              </p>
+            </div>
+          )
+        }
+      />
     </div>
   );
 };

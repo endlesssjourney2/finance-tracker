@@ -84,3 +84,36 @@
 .desc {
   color: var(--color-text-secondary);
 }
+
+.modalContent {
+  color: var(--color-text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.modalCategory {
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.modalAmount {
+  font-size: 1.6rem;
+}
+
+.modalDescription {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+
+.modalDate {
+  font-size: 1.4rem;
+}
+
+.modalDesc {
+  color: var(--color-text-secondary);
+}

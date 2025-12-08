@@ -1,6 +1,7 @@
-import { Backdrop, Modal, Zoom } from "@mui/material";
+import { Backdrop, IconButton, Modal, Zoom } from "@mui/material";
 import { type FC, type ReactNode } from "react";
 import s from "./ModalComponent.module.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 type ModalProps = {
   open: boolean;
@@ -34,6 +35,9 @@ const ModalComponent: FC<ModalProps> = ({ open, onClose, content }) => {
       >
         <Zoom in={open} timeout={250} style={{ zIndex: 1500 }}>
           <div className={s.modalBox} onClick={(e) => e.stopPropagation()}>
+            <IconButton className={s.closeBtn} onClick={onClose}>
+              <CloseIcon className={s.icon} />
+            </IconButton>
             {content}
           </div>
         </Zoom>

@@ -17,6 +17,11 @@ const View: FC = () => {
 
   const navigate = useNavigate();
 
+  const totalAmount = expenses.reduce(
+    (sum, expense) => sum + expense.amount,
+    0
+  );
+
   useEffect(() => {
     const init = async () => {
       const {
@@ -56,6 +61,9 @@ const View: FC = () => {
             <h1 className={s.titleHeader}>Your Finances</h1>
           </header>
           <div className={s.content}>
+            <div className={s.totalAmount}>
+              <h2 className={s.totalTitle}>Total: {totalAmount}$</h2>
+            </div>
             <ul className={s.expensesList}>
               {expenses.map((expense) => (
                 <ExpensesList
@@ -86,7 +94,9 @@ const View: FC = () => {
               </p>
               <p className={s.modalDescription}>
                 <span className={s.modalDesc}>Description: </span>
-                {selectedExpense.description}
+                {selectedExpense.description
+                  ? selectedExpense.description
+                  : "No description"}
               </p>
               <p className={s.modalDate}>
                 <span className={s.modalDesc}>Date: </span>

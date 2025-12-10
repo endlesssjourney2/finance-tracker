@@ -106,6 +106,11 @@ const View: FC = () => {
           )
         }
       />
+      <footer className={s.footer}>
+        <Link to="/dashboard" className={s.footerLink}>
+          Dashboard
+        </Link>
+      </footer>
     </div>
   );
 };

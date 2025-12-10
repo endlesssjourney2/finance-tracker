@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import type { Expense } from "../../types/Expense";
 import { Button, TextField } from "@mui/material";
-import { inputSx } from "../../InputStyles";
+import { datePickerSx, inputSx } from "../../InputStyles";
 import type { Touched } from "../../types/Touched";
 import type { User } from "@supabase/supabase-js";
 import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from "dayjs";
 
 const Home: FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -16,6 +18,7 @@ const Home: FC = () => {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [date, setDate] = useState<Dayjs | null>(dayjs());
   const [touched, setTouched] = useState<Touched>({
     amount: false,
     category: false,
@@ -65,6 +68,7 @@ const Home: FC = () => {
           amount: parsedAmount,
           category,
           description: description || null,
+          date: date || dayjs().date(),
         },
       ])
       .select()
@@ -79,6 +83,7 @@ const Home: FC = () => {
     setAmount("");
     setCategory("");
     setDescription("");
+    setDate(null);
     setTouched({ amount: false, category: false });
   };
 
@@ -126,6 +131,17 @@ const Home: FC = () => {
             value={description}
             label="Description"
             onChange={(e) => setDescription(e.target.value)}
+          />
+          <DatePicker
+            label="Date"
+            value={date}
+            onChange={(newDate) => setDate(newDate)}
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                ...datePickerSx,
+              },
+            }}
           />
           <Button variant="contained" onClick={addExpense}>
             {loading ? "Adding..." : "Add Expense"}

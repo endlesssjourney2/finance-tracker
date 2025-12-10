@@ -88,3 +88,12 @@
 .modalDesc {
   color: var(--color-text-secondary);
 }
+
+.footer {
+  margin: 15px 0 15px 0;
+  color: var(--color-text-secondary);
+}
+
+.footerLink {
+  font-size: 1.8rem;
+}

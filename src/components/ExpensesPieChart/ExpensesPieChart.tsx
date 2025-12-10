@@ -45,7 +45,7 @@ const ExpensesPieChart: FC<ExpensesPieChartProps> = ({ labels, values }) => {
       },
     },
   };
-
+  //NO STYLES YET
   return (
     <div style={{ maxWidth: 800 }}>
       <Pie data={data} options={options} />

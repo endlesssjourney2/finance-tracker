@@ -8,7 +8,7 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { COLORS } from "./Colors";
+import { COLORS } from "../../constants/Colors";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -43,11 +43,16 @@ const ExpensesPieChart: FC<ExpensesPieChartProps> = ({ labels, values }) => {
         display: true,
         text: "Expenses by category",
       },
+      tooltip: {
+        callbacks: {
+          label: (context) => `$${context.parsed}`,
+        },
+      },
     },
   };
-  //NO STYLES YET
+
   return (
-    <div style={{ maxWidth: 800 }}>
+    <div style={{ minWidth: "600px", maxWidth: "800px" }}>
       <Pie data={data} options={options} />
     </div>
   );

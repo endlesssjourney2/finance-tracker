@@ -4,11 +4,15 @@ import { useExpenses } from "../../hooks/useExpenses";
 import { Link, useNavigate } from "react-router-dom";
 import type { ChartType } from "../../types/ChartType";
 import { supabase } from "../../supabaseClient";
-import ExpensesPieChart from "../../components/ExpensesPieChart/ExpensesPieChart";
-import type { JSX } from "@emotion/react/jsx-runtime";
 import s from "./Dashboard.module.css";
 import { Button, Menu, MenuItem } from "@mui/material";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
+import { chartLabels } from "../../helpers/chartLabels";
+import {
+  buildCategoryPieForLastMonth,
+  buildMonthlyTotals,
+} from "../../helpers/expensesCharts";
+import { DashboardChartContent } from "../../components/DashboardChartContent/DashboardChartContent";
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -47,110 +51,67 @@ const Dashboard = () => {
     void init();
   }, [navigate]);
 
-  const getMonthKey = (dateStr: string) => {
-    const d = new Date(dateStr);
-    return d.toISOString().slice(0, 7);
-  };
-
   const { pieLabels, pieValues } = useMemo(() => {
-    if (!expenses.length) {
-      return { pieLabels: [] as string[], pieValues: [] as number[] };
-    }
-    const monthSet = new Set<string>();
-    for (const e of expenses) {
-      monthSet.add(getMonthKey(e.date));
-    }
-    const months = Array.from(monthSet).sort();
-    const lastMonth = months[months.length - 1];
-
-    const expensesForLastMonth = expenses.filter(
-      (e) => getMonthKey(e.date) === lastMonth
-    );
-
-    const categoryMap = new Map<string, number>();
-    for (const e of expensesForLastMonth) {
-      const prev = categoryMap.get(e.category) ?? 0;
-      categoryMap.set(e.category, prev + e.amount);
-    }
-
-    return {
-      pieLabels: Array.from(categoryMap.keys()),
-      pieValues: Array.from(categoryMap.values()),
-    };
+    return buildCategoryPieForLastMonth(expenses);
   }, [expenses]);
 
-  let chartContent: JSX.Element | null = null;
-
-  if (!user) {
-    chartContent = (
-      <h2>
-        Log in to see dashboard.
-        <Link to="/login">Login</Link>
-      </h2>
-    );
-  } else {
-    switch (selectedChart) {
-      case "byCategory":
-        chartContent = (
-          <div>
-            <h2>Expenses by category (last month)</h2>
-            <ExpensesPieChart labels={pieLabels} values={pieValues} />
-          </div>
-        );
-        break;
-
-      case "feature":
-        chartContent = <h2>Feature</h2>;
-        break;
-
-      case "feature1":
-        chartContent = <h2>Feature</h2>;
-        break;
-
-      default:
-        chartContent = null;
-    }
-  }
-
-  //NO STYLES YET
+  const { monthLabels, monthValues } = useMemo(() => {
+    return buildMonthlyTotals(expenses);
+  }, [expenses]);
 
   return (
     <div className={s.dashboardPage}>
+      <header className={s.header}>
+        <h1 className={s.headerTitle}>Dashboard</h1>
+      </header>
       <div className={s.content}>
-        <h1>Dashboard</h1>
-        <Link to="/" className={s.link}>
-          Home
-        </Link>
-        <Button
-          variant="contained"
-          onClick={handleClick}
-          id="chart-menu-btn"
-          aria-controls={menuOpen ? "chart-menu" : undefined}
-          aria-haspopup="true"
-        >
-          Choose chart
-        </Button>
+        <div className={s.menuBar}>
+          <Button
+            variant="contained"
+            onClick={handleClick}
+            id="chart-menu-btn"
+            aria-controls={menuOpen ? "chart-menu" : undefined}
+            aria-haspopup="true"
+          >
+            {chartLabels[selectedChart]}
+          </Button>
 
-        <Menu
-          id="chart-menu"
-          open={menuOpen}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={() => handleSelectChart("byCategory")}>
-            By category
-          </MenuItem>
+          <Menu
+            id="chart-menu"
+            open={menuOpen}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={() => handleSelectChart("byCategory")}>
+              By category
+            </MenuItem>
 
-          <MenuItem onClick={() => handleSelectChart("feature")}>
-            Feature
-          </MenuItem>
+            <MenuItem onClick={() => handleSelectChart("byMonths")}>
+              By months
+            </MenuItem>
 
-          <MenuItem onClick={() => handleSelectChart("feature1")}>
-            Feature
-          </MenuItem>
-        </Menu>
+            <MenuItem onClick={() => handleSelectChart("feature1")}>
+              Feature
+            </MenuItem>
+          </Menu>
+          <div className={s.links}>
+            <Link to="/" className={s.link}>
+              Home
+            </Link>
+            <Link to="/view" className={s.link}>
+              View
+            </Link>
+          </div>
+        </div>
+        <DashboardChartContent
+          user={user}
+          selectedChart={selectedChart}
+          pieLabels={pieLabels}
+          pieValues={pieValues}
+          monthLabels={monthLabels}
+          monthValues={monthValues}
+        />
       </div>
-      <div>{chartContent}</div>
       <LoadingProgress loading={loading} />
     </div>
   );

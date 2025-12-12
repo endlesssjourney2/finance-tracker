@@ -1,0 +1,64 @@
+.dashboardPage {
+  height: 100vh;
+  background: var(--color-bg-primary);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header {
+  margin: 15px 0 15px 0;
+  color: var(--color-text-primary);
+}
+
+.headerTitle {
+  font-size: 2.3rem;
+  font-weight: bold;
+}
+
+.content {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.menuBar {
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.links {
+  display: flex;
+  gap: 15px;
+}
+
+.link {
+  color: var(--color-link);
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s color ease-in-out;
+}
+
+.link:hover {
+  color: var(--color-link-hover);
+  animation: animateHover ease-in-out 0.8s infinite;
+}
+
+@keyframes animateHover {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

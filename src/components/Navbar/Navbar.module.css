@@ -11,6 +11,12 @@
   border-radius: 12px;
   cursor: pointer;
   padding: 12px;
+  transition: 0.3s background-color ease-in-out;
+}
+
+.logo:hover {
+  background-color: var(--color-bg-hover);
+  animation: animateHover ease-in-out 0.8s infinite;
 }
 
 .authLinks {

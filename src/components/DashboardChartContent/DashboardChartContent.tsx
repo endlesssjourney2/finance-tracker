@@ -2,7 +2,7 @@ import type { ChartType } from "../../types/ChartType";
 import { Link } from "react-router-dom";
 import ExpensesPieChart from "../ExpensesPieChart/ExpensesPieChart";
 import s from "./DashboardChartContent.module.css";
-import ExpensesBarChart from "../ExpensesBarChart/ExpensesBarChart";
+import ExpensesLineChart from "../ExpensesLineChart/ExpensesLineChart";
 
 type DashboardChartContentProps = {
   user: unknown | null;
@@ -42,7 +42,7 @@ export const DashboardChartContent = ({
       return (
         <div className={s.chartContainer}>
           <h2 className={s.chartTitle}>Expenses by months (total)</h2>
-          <ExpensesBarChart months={monthLabels} values={monthValues} />
+          <ExpensesLineChart months={monthLabels} values={monthValues} />
         </div>
       );
 

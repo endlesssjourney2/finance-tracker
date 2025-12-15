@@ -13,7 +13,9 @@ export type ExpenseTotal = {
 
 const getMonthKey = (dateStr: string) => {
   const d = new Date(dateStr);
-  return d.toISOString().slice(0, 7);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  return `${y}-${m}`;
 };
 
 export const buildCategoryPieForLastMonth = (expenses: ExpenseMonth[]) => {

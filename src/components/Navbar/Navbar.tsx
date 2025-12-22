@@ -13,6 +13,10 @@ const Navbar: FC = () => {
     navigate("/");
   };
 
+  const handleNavigateDashboard = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <nav className={s.navbar}>
       <Link to={"/"} className={s.logo}>
@@ -21,11 +25,14 @@ const Navbar: FC = () => {
 
       <div className={s.links}>
         {loading ? null : user ? (
-          <>
+          <div className={s.buttons}>
+            <button onClick={handleNavigateDashboard} className={s.toDbBtn}>
+              Dashboard
+            </button>
             <button onClick={handleLogout} className={s.logoutBtn}>
               Logout
             </button>
-          </>
+          </div>
         ) : (
           <div className={s.authLinks}>
             <Link to={"/login"} className={s.link}>

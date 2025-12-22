@@ -11,6 +11,7 @@ import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
+import ExpensesSkeleton from "../../components/SkeletonHome/SkeletonHome";
 
 const Home: FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -54,7 +55,7 @@ const Home: FC = () => {
     if (!amount || !category)
       return console.error("Amount and category are required.");
 
-    const parsedAmount = Number(amount);
+    let parsedAmount = Number(amount);
     if (Number.isNaN(parsedAmount)) {
       alert("Please enter a valid number for amount.");
       return;
@@ -144,39 +145,43 @@ const Home: FC = () => {
             }}
           />
           <Button variant="contained" onClick={addExpense}>
-            {loading ? "Adding..." : "Add Expense"}
+            Add expense
           </Button>
         </div>
-        <div className={s.expenses}>
-          <h2 className={s.totalAmount}>Total Amount: {totalAmount}$</h2>
-          <ul className={s.expensesList}>
-            {expenses.map((expense) => (
-              <li key={expense.id} className={s.expenseItem}>
-                <h3 className={s.expenseAmount}>Amount: {expense.amount}$</h3>
-                <h4 className={s.expenseCategory}>
-                  Category: {expense.category}
-                </h4>
-                {expense.description ? (
-                  <p className={s.expenseDescription}>
-                    Description: {expense.description}
+        {loading ? (
+          <ExpensesSkeleton />
+        ) : (
+          <div className={s.expenses}>
+            <h2 className={s.totalAmount}>Total Amount: {totalAmount}$</h2>
+            <ul className={s.expensesList}>
+              {expenses.map((expense) => (
+                <li key={expense.id} className={s.expenseItem}>
+                  <h3 className={s.expenseAmount}>Amount: {expense.amount}$</h3>
+                  <h4 className={s.expenseCategory}>
+                    Category: {expense.category}
+                  </h4>
+                  {expense.description ? (
+                    <p className={s.expenseDescription}>
+                      Description: {expense.description}
+                    </p>
+                  ) : (
+                    <p className={s.expenseDescription}>No description</p>
+                  )}
+                  <p className={s.expenseDate}>
+                    Date: {new Date(expense.date).toLocaleDateString()}
                   </p>
-                ) : (
-                  <p className={s.expenseDescription}>No description</p>
-                )}
-                <p className={s.expenseDate}>
-                  Date: {new Date(expense.date).toLocaleDateString()}
-                </p>
-                <Button
-                  color="error"
-                  variant="contained"
-                  onClick={() => deleteExpense(expense.id)}
-                >
-                  Delete
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </div>
+                  <Button
+                    color="error"
+                    variant="contained"
+                    onClick={() => deleteExpense(expense.id)}
+                  >
+                    Delete
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <footer className={s.footer}>
         <Link to="/view" className={s.footerLink}>

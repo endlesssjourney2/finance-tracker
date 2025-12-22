@@ -39,10 +39,6 @@ const ExpensesPieChart: FC<ExpensesPieChartProps> = ({ labels, values }) => {
       legend: {
         position: "bottom",
       },
-      title: {
-        display: true,
-        text: "Expenses by category",
-      },
       tooltip: {
         callbacks: {
           label: (context) => `$${context.parsed}`,

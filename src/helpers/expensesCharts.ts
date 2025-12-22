@@ -66,3 +66,46 @@ export const buildMonthlyTotals = (expenses: ExpenseTotal[]) => {
 
   return { monthLabels, monthValues };
 };
+
+export const buildLast6Months = (expenses: ExpenseTotal[]) => {
+  if (!expenses.length) {
+    return { sixMonthsLabels: [] as string[], sixMonthsValues: [] as number[] };
+  }
+  const now = new Date();
+  const nowKey = getMonthKey(now.toISOString());
+
+  const monthMap = new Map<string, number>();
+
+  for (const e of expenses) {
+    const d = new Date(e.date);
+    if (d > now) continue;
+
+    const key = getMonthKey(e.date);
+    monthMap.set(key, (monthMap.get(key) ?? 0) + e.amount);
+  }
+
+  let [year, month] = nowKey.split("-").map(Number);
+
+  const labels: string[] = [];
+  const values: number[] = [];
+
+  for (let i = 0; i < 6; i++) {
+    const key = `${year}-${String(month).padStart(2, "0")}`;
+    labels.push(key);
+    values.push(monthMap.get(key) ?? 0);
+
+    month--;
+    if (month === 0) {
+      month = 12;
+      year--;
+    }
+  }
+
+  const sixMonthsLabels = labels.reverse();
+  const sixMonthsValues = values.reverse();
+
+  return {
+    sixMonthsLabels,
+    sixMonthsValues,
+  };
+};

@@ -1,1 +1,1 @@
-export type ChartType = "byCategory" | "byMonths" | "feature1";
+export type ChartType = "byCategory" | "byMonths" | "byLast6Months";

@@ -40,7 +40,15 @@
   animation: animateHover ease-in-out 0.8s infinite;
 }
 
-.logoutBtn {
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoutBtn,
+.toDbBtn {
   border: 1px solid var(--color-border);
   padding: 12px 24px;
   color: var(--color-text-primary);
@@ -51,7 +59,8 @@
   transition: 0.3s background-color ease-in-out;
 }
 
-.logoutBtn:hover {
+.logoutBtn:hover,
+.toDbBtn:hover {
   background-color: var(--color-bg-hover);
   animation: animateHover ease-in-out 0.8s infinite;
 }

@@ -1,53 +1,51 @@
+import { useMemo, type FC } from "react";
 import {
+  BarElement,
   CategoryScale,
   Chart as ChartJS,
   Legend,
   LinearScale,
-  LineElement,
-  PointElement,
   Title,
   Tooltip,
   type ChartOptions,
 } from "chart.js";
-import { useMemo, type FC } from "react";
-import { Line } from "react-chartjs-2";
 import { monthTickCallback } from "../../helpers/chartTicks";
+import { Bar } from "react-chartjs-2";
+import { COLORS } from "../../constants/Colors";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  LineElement,
-  PointElement,
+  BarElement,
   Tooltip,
   Legend,
   Title
 );
 
-type ExpensesLineChartProps = {
+type ExpensesBarChartProps = {
   months: string[];
   values: number[];
 };
 
-const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
+const ExpensesBarChart: FC<ExpensesBarChartProps> = ({ months, values }) => {
   const data = useMemo(
     () => ({
       labels: months,
       datasets: [
         {
-          label: "Total Expenses",
+          label: "Expenses (last 6 months)",
           data: values,
-          borderColor: "#ffffff",
-          backgroundColor: "#000000",
-          tension: 0.2,
-          pointRadius: 5,
-          pointHoverRadius: 7,
+          backgroundColor: COLORS,
+          borderColor: COLORS,
+          borderWidth: 1,
+          borderRadius: 6,
         },
       ],
     }),
     [months, values]
   );
 
-  const options: ChartOptions<"line"> = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
       legend: { display: false },
@@ -68,12 +66,11 @@ const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
       },
     },
   };
-
   return (
     <div style={{ minWidth: "600px", maxWidth: "1200px" }}>
-      <Line data={data} options={options} />
+      <Bar data={data} options={options} />
     </div>
   );
 };
 
-export default ExpensesLineChart;
+export default ExpensesBarChart;

@@ -10,13 +10,17 @@ import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { chartLabels } from "../../helpers/chartLabels";
 import {
   buildCategoryPieForLastMonth,
+  buildLast6Months,
   buildMonthlyTotals,
 } from "../../helpers/expensesCharts";
 import { DashboardChartContent } from "../../components/DashboardChartContent/DashboardChartContent";
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
-  const { expenses, loading } = useExpenses(user);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  const { expenses, loading: expensesLoading } = useExpenses(user);
+
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -38,6 +42,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const init = async () => {
+      setAuthLoading(true);
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -45,11 +50,13 @@ const Dashboard = () => {
       if (!user) {
         return;
       }
-
       setUser(user);
+      setAuthLoading(false);
     };
     void init();
   }, [navigate]);
+
+  const loading = authLoading || expensesLoading;
 
   const { pieLabels, pieValues } = useMemo(() => {
     return buildCategoryPieForLastMonth(expenses);
@@ -57,6 +64,10 @@ const Dashboard = () => {
 
   const { monthLabels, monthValues } = useMemo(() => {
     return buildMonthlyTotals(expenses);
+  }, [expenses]);
+
+  const { sixMonthsLabels, sixMonthsValues } = useMemo(() => {
+    return buildLast6Months(expenses);
   }, [expenses]);
 
   return (
@@ -83,15 +94,15 @@ const Dashboard = () => {
             onClose={handleClose}
           >
             <MenuItem onClick={() => handleSelectChart("byCategory")}>
-              By category
+              By category (Last month)
             </MenuItem>
 
             <MenuItem onClick={() => handleSelectChart("byMonths")}>
-              By months
+              By months (Total)
             </MenuItem>
 
-            <MenuItem onClick={() => handleSelectChart("feature1")}>
-              Feature
+            <MenuItem onClick={() => handleSelectChart("byLast6Months")}>
+              Last 6 months
             </MenuItem>
           </Menu>
           <div className={s.links}>
@@ -103,14 +114,18 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-        <DashboardChartContent
-          user={user}
-          selectedChart={selectedChart}
-          pieLabels={pieLabels}
-          pieValues={pieValues}
-          monthLabels={monthLabels}
-          monthValues={monthValues}
-        />
+        {!authLoading && (
+          <DashboardChartContent
+            user={user}
+            selectedChart={selectedChart}
+            pieLabels={pieLabels}
+            pieValues={pieValues}
+            monthLabels={monthLabels}
+            monthValues={monthValues}
+            sixMonthsLabels={sixMonthsLabels}
+            sixMonthsValues={sixMonthsValues}
+          />
+        )}
       </div>
       <LoadingProgress loading={loading} />
     </div>

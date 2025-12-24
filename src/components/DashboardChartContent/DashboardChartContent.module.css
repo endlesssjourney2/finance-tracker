@@ -1,3 +1,19 @@
+.notLoggedIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 30px 0;
+}
+
+.notLoggedInText {
+  color: var(--color-text-primary);
+  font-size: 2rem;
+}
+
+.link {
+  color: var(--color-link);
+}
+
 .chartContainer {
   width: 100%;
   display: flex;

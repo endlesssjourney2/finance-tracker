@@ -48,6 +48,7 @@ const Dashboard = () => {
       } = await supabase.auth.getUser();
 
       if (!user) {
+        setAuthLoading(false);
         return;
       }
       setUser(user);

@@ -6,16 +6,20 @@
   flex-direction: column;
 }
 
-.loginPrompt {
-  font-size: 2rem;
-  color: var(--color-text-primary);
-  margin-top: 50px;
+.notLoggedIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 30px 0;
 }
 
-.linkLogin {
+.notLoggedInText {
+  color: var(--color-text-primary);
+  font-size: 2rem;
+}
+
+.link {
   color: var(--color-link);
-  text-decoration: none;
-  font-weight: bold;
 }
 
 .header {

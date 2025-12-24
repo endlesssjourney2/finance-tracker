@@ -55,7 +55,7 @@ const Login = () => {
         </div>
 
         <Button variant="contained" onClick={handleLogin}>
-          {loading ? "Signing Up..." : "Sign Up"}
+          {loading ? "Logging in..." : "Sign In"}
         </Button>
 
         <footer className={s.footer}>

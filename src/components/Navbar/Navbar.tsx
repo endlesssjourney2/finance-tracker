@@ -17,6 +17,13 @@ const Navbar: FC = () => {
     navigate("/dashboard");
   };
 
+  const handleNavigateLogin = () => {
+    navigate("/login");
+  };
+
+  const handleNavigateSignUp = () => {
+    navigate("/signup");
+  };
   return (
     <nav className={s.navbar}>
       <Link to={"/"} className={s.logo}>
@@ -34,13 +41,13 @@ const Navbar: FC = () => {
             </button>
           </div>
         ) : (
-          <div className={s.authLinks}>
-            <Link to={"/login"} className={s.link}>
-              Login
-            </Link>
-            <Link to={"/signup"} className={s.link}>
+          <div className={s.buttons}>
+            <button onClick={handleNavigateLogin} className={s.toDbBtn}>
+              Log in
+            </button>
+            <button onClick={handleNavigateSignUp} className={s.logoutBtn}>
               Sign Up
-            </Link>
+            </button>
           </div>
         )}
       </div>

@@ -29,12 +29,11 @@ export const DashboardChartContent = ({
   if (!user) {
     return (
       <div className={s.notLoggedIn}>
-        <h2>
-          Please{" "}
-          <Link className={s.link} to="/login">
-            log in
+        <h2 className={s.notLoggedInText}>
+          <Link className={s.link} to={"/login"}>
+            Log in
           </Link>{" "}
-          to view your dashboard.
+          to view your dashboard
         </h2>
       </div>
     );

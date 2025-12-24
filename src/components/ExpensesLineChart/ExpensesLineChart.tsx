@@ -12,6 +12,7 @@ import {
 import { useMemo, type FC } from "react";
 import { Line } from "react-chartjs-2";
 import { monthTickCallback } from "../../helpers/chartTicks";
+import dayjs from "dayjs";
 
 ChartJS.register(
   CategoryScale,
@@ -54,6 +55,7 @@ const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
       tooltip: {
         callbacks: {
           label: (context) => `$${context.parsed.y}`,
+          title: (contexts) => dayjs(contexts[0].label).format("MMM, YYYY"),
         },
       },
     },

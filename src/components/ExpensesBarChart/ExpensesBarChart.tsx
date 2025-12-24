@@ -12,6 +12,7 @@ import {
 import { monthTickCallback } from "../../helpers/chartTicks";
 import { Bar } from "react-chartjs-2";
 import { COLORS } from "../../constants/Colors";
+import dayjs from "dayjs";
 
 ChartJS.register(
   CategoryScale,
@@ -52,6 +53,7 @@ const ExpensesBarChart: FC<ExpensesBarChartProps> = ({ months, values }) => {
       tooltip: {
         callbacks: {
           label: (context) => `$${context.parsed.y}`,
+          title: (value) => dayjs(value[0].label).format("MMM, YYYY"),
         },
       },
     },

@@ -49,12 +49,14 @@ const View: FC = () => {
   return (
     <div className={s.viewPage}>
       {!user ? (
-        <p className={s.loginPrompt}>
-          Log in to see your finances{" "}
-          <Link className={s.linkLogin} to={"/login"}>
-            Login
-          </Link>
-        </p>
+        <div className={s.notLoggedIn}>
+          <h2 className={s.notLoggedInText}>
+            <Link className={s.link} to={"/login"}>
+              Log in
+            </Link>{" "}
+            to view your dashboard
+          </h2>
+        </div>
       ) : (
         <>
           <header className={s.header}>

@@ -36,8 +36,8 @@ const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
         {
           label: "Total Expenses",
           data: values,
-          borderColor: "#ffffff",
-          backgroundColor: "#000000",
+          borderColor: "#38BDF8",
+          backgroundColor: "#0E172A",
           tension: 0.2,
           pointRadius: 5,
           pointHoverRadius: 7,
@@ -61,10 +61,23 @@ const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
       x: {
         ticks: {
           callback: monthTickCallback("en-US"),
+          color: "#94A3B8",
+        },
+        grid: {
+          color: "#071221ff",
+          lineWidth: 1.5,
         },
       },
       y: {
         beginAtZero: true,
+        ticks: {
+          color: "#94A3B8",
+          callback: (value) => `$${value}`,
+        },
+        grid: {
+          color: "#071221ff",
+          lineWidth: 1.5,
+        },
       },
     },
   };

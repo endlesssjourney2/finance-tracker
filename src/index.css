@@ -39,4 +39,12 @@ body {
 
   --color-link: #38bdf8;
   --color-link-hover: #0ea5e9;
+
+  --color-btn-bg-primary: #3b82f6;
+  --color-btn-hover-primary: #2563eb;
+  --color-btn-text-primary: #f1f5f9;
+  --color-btn-text-hover-primary: #e0e7ff;
+
+  --color-success: #34d399;
+  --color-error: #f43f5e;
 }

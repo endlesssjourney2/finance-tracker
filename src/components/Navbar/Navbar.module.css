@@ -51,18 +51,18 @@
 .toDbBtn {
   border: 1px solid var(--color-border);
   padding: 12px 24px;
-  color: var(--color-text-primary);
+  color: var(--color-btn-text-primary);
   border-radius: 12px;
   font-size: 15px;
-  background-color: transparent;
+  background-color: var(--color-btn-bg-primary);
   cursor: pointer;
   transition: 0.3s background-color ease-in-out;
 }
 
 .logoutBtn:hover,
 .toDbBtn:hover {
-  background-color: var(--color-bg-hover);
-  animation: animateHover ease-in-out 0.8s infinite;
+  background-color: var(--color-btn-hover-primary);
+  animation: animateHover ease-in-out 1.2s infinite;
 }
 
 @keyframes animateHover {

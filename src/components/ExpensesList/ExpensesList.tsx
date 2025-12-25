@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import s from "./ExpensesList.module.css";
+import dayjs from "dayjs";
 
 type ExpensesListProps = {
   id: string;
@@ -22,19 +23,18 @@ const ExpensesList: FC<ExpensesListProps> = ({
     <>
       <li key={id} className={s.expenseItem} onClick={onClick}>
         <h3 className={s.amount}>
-          <span className={s.desc}>Amount: </span> {amount}$
+          <span className={s.desc}>Amount: </span>
+          {amount} $
         </h3>
         <p className={s.category}>
-          <span className={s.desc}>Category: </span> {category}
+          <span className={s.desc}>Category: </span>
+          {category}
         </p>
-        <h3 className={s.date}>
-          <span className={s.desc}>Date: </span>
-          {new Date(date).toLocaleDateString()}
-        </h3>
         <p className={s.description}>
           <span className={s.desc}>Desc: </span>
           {description ? description : "No description"}
         </p>
+        <h3 className={s.date}>{dayjs(date).format("MMM D, YYYY")}</h3>
       </li>
     </>
   );

@@ -1,6 +1,6 @@
 .expenseItem {
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-card-border);
+  background: var(--color-card-bg);
   color: var(--color-text-primary);
   padding: 10px;
   margin: 8px;
@@ -10,6 +10,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.expenseItem:hover {
+  transform: scale(1.04) rotate(0deg) translate(0px, -3px) skewX(0deg);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  filter: brightness(1);
+  background-color: #2b3a57;
 }
 
 .amount {

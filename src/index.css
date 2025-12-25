@@ -33,6 +33,14 @@ body {
   --color-border: #334155;
   --color-shadow: rgba(15, 23, 42, 0.6);
 
+  --color-card-bg: #24314a;
+  --color-card-border: #3b4a66;
+  --color-card-hover: #2b3a57;
+
+  --color-card-bg-secondary: rgba(255, 255, 255, 0.04);
+  --color-card-border-secondary: rgba(255, 255, 255, 0.09);
+  --color-card-hover-secondary: rgba(255, 255, 255, 0.06);
+
   --color-hover-blue: #0ea5e9;
   --color-hover-gold: #f59e0b;
   --color-bg-hover: #1e293b;

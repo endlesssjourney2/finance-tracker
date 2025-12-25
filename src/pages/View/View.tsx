@@ -8,6 +8,8 @@ import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import ExpensesList from "../../components/ExpensesList/ExpensesList";
 import type { Expense } from "../../types/Expense";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
+import LinkButton from "../../components/LinkButton/LinkButton";
+import dayjs from "dayjs";
 
 const View: FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -46,6 +48,10 @@ const View: FC = () => {
     setModalOpen(true);
   };
 
+  const handleNavigateDashboard = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className={s.viewPage}>
       {!user ? (
@@ -64,7 +70,7 @@ const View: FC = () => {
           </header>
           <div className={s.content}>
             <div className={s.totalAmount}>
-              <h2 className={s.totalTitle}>Total: {totalAmount}$</h2>
+              <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
             </div>
             <ul className={s.expensesList}>
               {expenses.map((expense) => (
@@ -92,7 +98,7 @@ const View: FC = () => {
               <h2 className={s.modalCategory}>{selectedExpense.category}</h2>
               <p className={s.modalAmount}>
                 <span className={s.modalDesc}>Amount: </span>
-                {selectedExpense.amount}$
+                {selectedExpense.amount} $
               </p>
               <p className={s.modalDescription}>
                 <span className={s.modalDesc}>Description: </span>
@@ -101,17 +107,14 @@ const View: FC = () => {
                   : "No description"}
               </p>
               <p className={s.modalDate}>
-                <span className={s.modalDesc}>Date: </span>
-                {new Date(selectedExpense.date).toLocaleDateString()}
+                {dayjs(selectedExpense.date).format("MMM D, YYYY")}
               </p>
             </div>
           )
         }
       />
       <footer className={s.footer}>
-        <Link to="/dashboard" className={s.footerLink}>
-          Dashboard
-        </Link>
+        <LinkButton text="Dashboard" onClick={handleNavigateDashboard} />
       </footer>
     </div>
   );

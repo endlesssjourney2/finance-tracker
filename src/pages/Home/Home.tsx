@@ -12,6 +12,7 @@ import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import ExpensesSkeleton from "../../components/SkeletonHome/SkeletonHome";
+import LinkButton from "../../components/LinkButton/LinkButton";
 
 const Home: FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -97,6 +98,10 @@ const Home: FC = () => {
     setExpenses((prev) => prev.filter((e) => e.id !== id));
   };
 
+  const handleNavigateView = () => {
+    navigate("/view");
+  };
+
   return (
     <div className={s.home}>
       <header className={s.header}>
@@ -152,11 +157,13 @@ const Home: FC = () => {
           <ExpensesSkeleton />
         ) : (
           <div className={s.expenses}>
-            <h2 className={s.totalAmount}>Total Amount: {totalAmount}$</h2>
+            <h2 className={s.totalAmount}>Total Amount: {totalAmount} $</h2>
             <ul className={s.expensesList}>
               {expenses.map((expense) => (
                 <li key={expense.id} className={s.expenseItem}>
-                  <h3 className={s.expenseAmount}>Amount: {expense.amount}$</h3>
+                  <h3 className={s.expenseAmount}>
+                    Amount: {expense.amount} $
+                  </h3>
                   <h4 className={s.expenseCategory}>
                     Category: {expense.category}
                   </h4>
@@ -168,7 +175,7 @@ const Home: FC = () => {
                     <p className={s.expenseDescription}>No description</p>
                   )}
                   <p className={s.expenseDate}>
-                    Date: {new Date(expense.date).toLocaleDateString()}
+                    {dayjs(expense.date).format("MMM D, YYYY")}
                   </p>
                   <Button
                     color="error"
@@ -184,9 +191,7 @@ const Home: FC = () => {
         )}
       </div>
       <footer className={s.footer}>
-        <Link to="/view" className={s.footerLink}>
-          View Finances
-        </Link>
+        <LinkButton text="View your finances" onClick={handleNavigateView} />
       </footer>
       <LoadingProgress loading={loading} />
     </div>

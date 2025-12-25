@@ -10,10 +10,10 @@ const ExpensesSkeleton = () => {
       <ul className={s.expensesList}>
         {Array.from({ length: 5 }).map((_, i) => (
           <li key={i} className={s.expenseItem}>
-            <Skeleton width={220} height={20} sx={sxColor} />
-            <Skeleton width={220} height={20} sx={sxColor} />
-            <Skeleton width={220} height={20} sx={sxColor} />
-            <Skeleton width={220} height={20} sx={sxColor} />
+            <Skeleton width={120} height={20} sx={sxColor} />
+            <Skeleton width={120} height={20} sx={sxColor} />
+            <Skeleton width={120} height={20} sx={sxColor} />
+            <Skeleton width={120} height={20} sx={sxColor} />
             <Skeleton
               variant="rectangular"
               height={36}

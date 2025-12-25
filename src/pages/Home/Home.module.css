@@ -62,6 +62,8 @@
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .expenseItem {
@@ -75,17 +77,21 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
   background: var(--color-bg-secondary);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .expenseAmount {
   color: var(--color-text-primary);
   font-size: 1.1rem;
+  flex: 0 0 140px;
 }
 
 .expenseCategory {
   color: var(--color-text-primary);
   font-size: 1.05rem;
+  flex: 0 0 250px;
 }
 
 .expenseDescription {
@@ -94,18 +100,16 @@
   max-width: 40%;
   word-wrap: break-word;
   overflow-wrap: anywhere;
+  flex: 1;
+  min-width: 0;
 }
 
 .expenseDate {
   color: var(--color-text-secondary);
   font-size: 1rem;
+  flex: 0 0 120px;
 }
 
 .footer {
-  margin: 15px 0 15px 0;
-  color: var(--color-text-secondary);
-}
-
-.footerLink {
-  font-size: 1.8rem;
+  margin: 20px 0 20px 0;
 }

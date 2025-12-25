@@ -68,6 +68,8 @@
   flex-direction: column;
   word-break: break-word;
   overflow-wrap: anywhere;
+  flex-wrap: nowrap;
+  text-align: center;
 }
 
 .modalCategory {
@@ -94,10 +96,5 @@
 }
 
 .footer {
-  margin: 15px 0 15px 0;
-  color: var(--color-text-secondary);
-}
-
-.footerLink {
-  font-size: 1.8rem;
+  margin: 20px 0 20px 0;
 }

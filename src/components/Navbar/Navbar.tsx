@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import s from "./Navbar.module.css";
 import type { FC } from "react";
+import NavButton from "../NavButton/NavButton";
 
 const Navbar: FC = () => {
   const { user, loading } = useAuth();
@@ -33,21 +34,13 @@ const Navbar: FC = () => {
       <div className={s.links}>
         {loading ? null : user ? (
           <div className={s.buttons}>
-            <button onClick={handleNavigateDashboard} className={s.toDbBtn}>
-              Dashboard
-            </button>
-            <button onClick={handleLogout} className={s.logoutBtn}>
-              Logout
-            </button>
+            <NavButton text="Dashboard" onClick={handleNavigateDashboard} />
+            <NavButton text="Logout" onClick={handleLogout} />
           </div>
         ) : (
           <div className={s.buttons}>
-            <button onClick={handleNavigateLogin} className={s.toDbBtn}>
-              Log in
-            </button>
-            <button onClick={handleNavigateSignUp} className={s.logoutBtn}>
-              Sign Up
-            </button>
+            <NavButton text="Login" onClick={handleNavigateLogin} />
+            <NavButton text="Sign Up" onClick={handleNavigateSignUp} />
           </div>
         )}
       </div>

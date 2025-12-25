@@ -1,6 +1,6 @@
 import { useEffect, useState, type FC } from "react";
 import s from "./Home.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import type { Expense } from "../../types/Expense";
 import { Button, TextField } from "@mui/material";

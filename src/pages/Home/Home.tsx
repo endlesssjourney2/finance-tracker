@@ -3,7 +3,7 @@ import s from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 import type { Expense } from "../../types/Expense";
-import { Button, TextField } from "@mui/material";
+import { Alert, Button, Snackbar, TextField } from "@mui/material";
 import { datePickerSx, inputSx } from "../../InputStyles";
 import type { Touched } from "../../types/Touched";
 import type { User } from "@supabase/supabase-js";
@@ -25,6 +25,7 @@ const Home: FC = () => {
     amount: false,
     category: false,
   });
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const totalAmount = expenses.reduce(
@@ -45,20 +46,20 @@ const Home: FC = () => {
       setUser(user);
     };
     void init();
-  }, [navigate]);
+  }, []);
 
   const addExpense = async () => {
     if (!user) {
-      console.error("No user logged in.");
+      setErrorMessage("No user logged in.");
       return;
     }
 
-    if (!amount || !category)
-      return console.error("Amount and category are required.");
+    if (!amount || !category || !date)
+      return setErrorMessage("Amount, category, and date are required.");
 
     let parsedAmount = Number(amount);
     if (Number.isNaN(parsedAmount)) {
-      alert("Please enter a valid number for amount.");
+      setErrorMessage("Please enter a valid number for amount.");
       return;
     }
 
@@ -70,7 +71,7 @@ const Home: FC = () => {
           amount: parsedAmount,
           category,
           description: description || null,
-          date: date || dayjs().date(),
+          date: date.toISOString(),
         },
       ])
       .select()
@@ -78,6 +79,7 @@ const Home: FC = () => {
 
     if (error) {
       console.error("Error adding expense:", error.message);
+      setErrorMessage("Failed to add expense. Please try again.");
       return;
     }
 
@@ -85,13 +87,14 @@ const Home: FC = () => {
     setAmount("");
     setCategory("");
     setDescription("");
-    setDate(null);
+    setDate(dayjs());
     setTouched({ amount: false, category: false });
   };
 
   const deleteExpense = async (id: string) => {
     const { error } = await supabase.from("expenses").delete().eq("id", id);
     if (error) {
+      setErrorMessage("Failed to delete expense. Please try again.");
       console.error("Error deleting expense:", error.message);
       return;
     }
@@ -116,7 +119,10 @@ const Home: FC = () => {
             sx={inputSx}
             value={amount}
             label="Amount(USD)"
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              setAmount(e.target.value);
+              if (errorMessage) setErrorMessage("");
+            }}
             onBlur={() => setTouched({ ...touched, amount: true })}
           />
           <TextField
@@ -128,7 +134,10 @@ const Home: FC = () => {
             sx={inputSx}
             value={category}
             label="Category"
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              if (errorMessage) setErrorMessage("");
+            }}
             onBlur={() => setTouched({ ...touched, category: true })}
           />
           <TextField
@@ -141,7 +150,10 @@ const Home: FC = () => {
           <DatePicker
             label="Date"
             value={date}
-            onChange={(newDate) => setDate(newDate)}
+            onChange={(newDate) => {
+              setDate(newDate);
+              if (errorMessage) setErrorMessage("");
+            }}
             slotProps={{
               textField: {
                 fullWidth: true,
@@ -149,7 +161,11 @@ const Home: FC = () => {
               },
             }}
           />
-          <Button variant="contained" onClick={addExpense}>
+          <Button
+            variant="contained"
+            onClick={addExpense}
+            disabled={errorMessage.length > 0}
+          >
             Add expense
           </Button>
         </div>
@@ -194,6 +210,23 @@ const Home: FC = () => {
         <LinkButton text="View your finances" onClick={handleNavigateView} />
       </footer>
       <LoadingProgress loading={loading} />
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={errorMessage !== ""}
+        autoHideDuration={3500}
+        onClose={(_, reason) => {
+          if (reason === "clickaway") return;
+          setErrorMessage("");
+        }}
+      >
+        <Alert
+          severity="error"
+          variant="filled"
+          onClose={() => setErrorMessage("")}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

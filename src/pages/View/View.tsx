@@ -10,6 +10,7 @@ import type { Expense } from "../../types/Expense";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
 import LinkButton from "../../components/LinkButton/LinkButton";
 import dayjs from "dayjs";
+import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 
 const View: FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -72,19 +73,23 @@ const View: FC = () => {
             <div className={s.totalAmount}>
               <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
             </div>
-            <ul className={s.expensesList}>
-              {expenses.map((expense) => (
-                <ExpensesList
-                  key={expense.id}
-                  onClick={() => handleOpenModal(expense)}
-                  id={expense.id}
-                  amount={expense.amount}
-                  category={expense.category}
-                  date={expense.date}
-                  description={expense.description}
-                />
-              ))}
-            </ul>
+            {loading ? (
+              <SkeletonView />
+            ) : (
+              <ul className={s.expensesList}>
+                {expenses.map((expense) => (
+                  <ExpensesList
+                    key={expense.id}
+                    onClick={() => handleOpenModal(expense)}
+                    id={expense.id}
+                    amount={expense.amount}
+                    category={expense.category}
+                    date={expense.date}
+                    description={expense.description}
+                  />
+                ))}
+              </ul>
+            )}
           </div>
         </>
       )}

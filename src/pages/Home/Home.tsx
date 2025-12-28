@@ -11,7 +11,7 @@ import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import ExpensesSkeleton from "../../components/SkeletonHome/SkeletonHome";
+import ExpensesSkeleton from "../../components/Skeleton/SkeletonHome/SkeletonHome";
 import LinkButton from "../../components/LinkButton/LinkButton";
 
 const Home: FC = () => {

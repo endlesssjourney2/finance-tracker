@@ -11,7 +11,7 @@ const Navbar: FC = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -44,12 +44,9 @@ const Navbar: FC = () => {
           </div>
         ) : (
           <div className={s.buttons}>
+            <ThemeToggleButton onClick={toggleTheme} />
             <NavButton text="Login" onClick={handleNavigateLogin} />
             <NavButton text="Sign Up" onClick={handleNavigateSignUp} />
-            <NavButton
-              text={theme === "light" ? "dark" : "light"}
-              onClick={toggleTheme}
-            />
           </div>
         )}
       </div>

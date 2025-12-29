@@ -5,6 +5,7 @@ import s from "./Navbar.module.css";
 import type { FC } from "react";
 import NavButton from "../NavButton/NavButton";
 import { useTheme } from "../../context/ThemeContext";
+import ThemeToggleButton from "../ThemeToggleButton/ThemeToggleButton";
 
 const Navbar: FC = () => {
   const { user, loading } = useAuth();
@@ -37,10 +38,7 @@ const Navbar: FC = () => {
       <div className={s.links}>
         {loading ? null : user ? (
           <div className={s.buttons}>
-            <NavButton
-              text={theme === "light" ? "dark" : "light"}
-              onClick={toggleTheme}
-            />
+            <ThemeToggleButton onClick={toggleTheme} />
             <NavButton text="Dashboard" onClick={handleNavigateDashboard} />
             <NavButton text="Logout" onClick={handleLogout} />
           </div>

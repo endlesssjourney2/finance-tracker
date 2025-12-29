@@ -1,0 +1,42 @@
+.toggleBtn {
+  position: relative;
+  width: 90px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  transition: background 0.3s ease;
+}
+
+.sun,
+.moon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.sun {
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.moon {
+  left: 50%;
+  transform: translate(60px, -50%);
+  opacity: 0;
+}
+
+:global([data-theme="dark"]) .sun {
+  transform: translate(-100px, -50%);
+  opacity: 0;
+}
+
+:global([data-theme="dark"]) .moon {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}

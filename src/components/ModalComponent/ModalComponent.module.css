@@ -1,6 +1,6 @@
 .modalBox {
-  background-color: #2a54ca;
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background-color: var(--color-bg-modal);
+  border: 1px solid var(--border-modal);
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(56, 189, 248, 0.15);
   padding: 16px;

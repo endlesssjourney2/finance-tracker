@@ -1,24 +1,24 @@
 export const inputSx = {
   "& .MuiInputBase-root": {
-    backgroundColor: "#1E293B",
-    color: "#F1F5F9",
+    backgroundColor: "var(--color-bg-input)",
+    color: "var(--color-input)",
     borderRadius: "8px",
   },
   "& .MuiInputLabel-root": {
-    color: "#94A3B8",
+    color: "var(--color-label-input)",
   },
   "& .MuiInputLabel-root.Mui-focused": {
-    color: "#38BDF8",
+    color: "var(--color-label-secondary-input)",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      borderColor: "#334155",
+      borderColor: "var(--color-border-input)",
     },
     "&:hover fieldset": {
-      borderColor: "#38BDF8",
+      borderColor: "var(--color-label-secondary-input)",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#38BDF8",
+      borderColor: "var(--color-label-secondary-input)",
     },
   },
 };
@@ -26,28 +26,28 @@ export const inputSx = {
 export const datePickerSx = {
   InputLabelProps: {
     sx: {
-      color: "#94A3B8",
+      color: "var(--color-label-input)",
       "&.Mui-focused": {
-        color: "#38BDF8",
+        color: "var(--color-label-secondary-input)",
       },
     },
   },
   InputProps: {
     sx: {
-      backgroundColor: "#1E293B",
-      color: "#F1F5F9",
+      backgroundColor: "var(--color-bg-input)",
+      color: "var(--color-input)",
       borderRadius: "8px",
       "& .MuiOutlinedInput": {
-        borderColor: "#334155 !important",
+        borderColor: "var(--color-border-input) !important",
       },
       "&:hover .MuiOutlinedInput": {
-        borderColor: "#38BDF8 !important",
+        borderColor: "var(--color-label-secondary-input) !important",
       },
       "&.Mui-focused .MuiOutlinedInput": {
-        borderColor: "#38BDF8 !important",
+        borderColor: "var(--color-label-secondary-input) !important",
       },
       "& .MuiIconButton-root": {
-        color: "#F1F5F9",
+        color: "var(--color-input)",
       },
     },
   },

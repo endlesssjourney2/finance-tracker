@@ -18,7 +18,7 @@
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
   opacity: 1;
   filter: brightness(1);
-  background-color: #2b3a57;
+  background-color: var(--color-card-hover);
 }
 
 .amount {

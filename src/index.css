@@ -19,6 +19,7 @@ body {
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
   background-color: var(--color-bg-primary);
+  transition: all 0.3s ease-in-out;
 }
 
 :root {
@@ -41,6 +42,20 @@ body {
   --color-card-border-secondary: rgba(255, 255, 255, 0.09);
   --color-card-hover-secondary: rgba(255, 255, 255, 0.06);
 
+  --color-link-btn: #f1f5f9;
+  --border-link-btn: rgba(255, 255, 255, 0.04);
+  --color-bg-link-btn: rgba(255, 255, 255, 0.09);
+  --hover-link-btn: rgba(255, 255, 255, 0.06);
+
+  --color-bg-modal: #2a54ca;
+  --border-modal: rgba(56, 189, 248, 0.3);
+
+  --color-bg-input: #1e293b;
+  --color-input: #f1f5f9;
+  --color-label-input: #94a3b8;
+  --color-label-secondary-input: #38bdf8;
+  --color-border-input: #334155;
+
   --color-hover-blue: #0ea5e9;
   --color-hover-gold: #f59e0b;
   --color-bg-hover: #1e293b;
@@ -55,4 +70,55 @@ body {
 
   --color-success: #34d399;
   --color-error: #f43f5e;
+}
+
+body[data-theme="light"] {
+  --color-bg-primary: #f5e6eb;
+  --color-bg-secondary: #f9e1eb;
+
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #634f61;
+
+  --color-accent-blue: #38bdf8;
+  --color-accent-gold: #fbbf24;
+
+  --color-border: #f2d7e3;
+  --color-shadow: rgba(31, 41, 55, 0.12);
+
+  --color-card-bg: #ffffffcc;
+  --color-card-border: #f0cfe0;
+  --color-card-hover: #fff1f7;
+
+  --color-card-bg-secondary: rgba(0, 0, 0, 0.03);
+  --color-card-border-secondary: rgba(0, 0, 0, 0.08);
+  --color-card-hover-secondary: rgba(0, 0, 0, 0.05);
+
+  --color-hover-blue: #0ea5e9;
+  --color-hover-gold: #f59e0b;
+  --color-bg-hover: #ffe6f1;
+
+  --color-link-btn: #634f61;
+  --border-link-btn: #f0cfe0;
+  --color-bg-link-btn: #ffe6f1;
+  --hover-link-btn: #fcd3e5;
+
+  --color-bg-modal: #ed47ff;
+  --border-modal: rgba(56, 189, 248, 0.3);
+
+  --color-bg-input: #ffffff;
+  --color-input: #1f2937;
+  --color-label-input: #634f61;
+  --color-label-secondary-input: #38bdf8;
+  --color-border-input: #f0cfe0;
+
+  --color-link: #0284c7;
+  --color-link-hover: #0369a1;
+
+  --color-btn-bg-primary: #3b82f6;
+  --color-btn-hover-primary: #2563eb;
+  --color-btn-text-primary: #ffffff;
+  --color-btn-text-hover-primary: #e0e7ff;
+
+  --color-success: #22c55e;
+  --color-error: #e11d48;
 }

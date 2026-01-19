@@ -51,6 +51,13 @@
   animation: animateLink 2s ease-in-out infinite;
 }
 
+.errorMessage {
+  color: var(--color-error);
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: center;
+}
+
 @keyframes animateLink {
   0% {
     transform: translateX(0);

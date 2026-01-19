@@ -10,12 +10,20 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
     if (loading) return;
+
+    if (password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long.");
+      return;
+    }
+
     setLoading(true);
+    setErrorMessage("");
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -26,7 +34,7 @@ const SignUp = () => {
 
     if (error) {
       console.error("Full sign up error object:", error);
-      console.error("Error during sign up:", error.message);
+      setErrorMessage(error.message);
       return;
     }
 
@@ -58,6 +66,7 @@ const SignUp = () => {
             fullWidth
             sx={inputSx}
           />
+          {errorMessage && <div className={s.errorMessage}>{errorMessage}</div>}
         </div>
 
         <Button variant="contained" onClick={handleSignUp}>

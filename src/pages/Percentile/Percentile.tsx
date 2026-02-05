@@ -5,8 +5,6 @@ import type { User } from "@supabase/supabase-js";
 import { supabase } from "../../supabaseClient";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { inputSx } from "../../InputStyles";
-import dayjs from "dayjs";
-import type { ExpenseLike } from "../../types/Expense";
 import {
   monthKey,
   monthLabel,

@@ -30,7 +30,7 @@ const Home: FC = () => {
 
   const totalAmount = expenses.reduce(
     (sum, expense) => sum + expense.amount,
-    0
+    0,
   );
 
   useEffect(() => {

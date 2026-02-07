@@ -32,27 +32,3 @@
   align-items: center;
   gap: 20px;
 }
-
-.result {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 25px;
-}
-
-.monthLabel {
-  color: var(--color-text-primary);
-}
-
-.diff {
-  color: var(--color-text-secondary);
-}
-
-.change {
-  color: var(--color-text-secondary);
-}
-
-.verdict {
-  color: var(--color-text-primary);
-}

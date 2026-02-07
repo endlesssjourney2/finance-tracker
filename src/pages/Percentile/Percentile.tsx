@@ -3,19 +3,15 @@ import { useExpenses } from "../../hooks/useExpenses";
 import s from "./Percentile.module.css";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "../../supabaseClient";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { inputSx } from "../../InputStyles";
-import {
-  monthKey,
-  monthLabel,
-  pctChange,
-  sumForMonth,
-} from "../../helpers/percentileTicks";
+import { monthKey, pctChange } from "../../helpers/percentileTicks";
+import ResultPercentile from "../../components/ResultPercentile/ResultPercentile";
+import type { Verdict } from "../../types/Verdict";
+import MonthSelect from "../../components/MonthSelect/MonthSelect";
+import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 
 const Percentile = () => {
   const [user, setUser] = useState<User | null>(null);
-
-  const { expenses } = useExpenses(user);
+  const { expenses, loading } = useExpenses(user);
 
   const [monthA, setMonthA] = useState<string>("");
   const [monthB, setMonthB] = useState<string>("");
@@ -35,41 +31,70 @@ const Percentile = () => {
     void init();
   }, []);
 
-  const months = useMemo(() => {
-    const unique = new Set<string>();
-    for (const e of expenses) unique.add(monthKey(e.date));
-    return Array.from(unique).sort((a, b) => (a < b ? 1 : -1));
+  const totalByMonths = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const e of expenses) {
+      const key = monthKey(e.date);
+      map.set(key, (map.get(key) ?? 0) + e.amount);
+    }
+    return map;
   }, [expenses]);
 
-  useEffect(() => {
-    if (months.length === 0) return;
+  const months = useMemo(() => {
+    return Array.from(totalByMonths.keys()).sort((a, b) => (a < b ? 1 : -1));
+  }, [totalByMonths]);
 
-    if (!monthA) setMonthA(months[0]);
-    if (!monthB) setMonthB(months[1] ?? months[0]);
+  useEffect(() => {
+    if (months.length === 0) {
+      if (monthA) setMonthA("");
+      if (monthB) setMonthB("");
+      return;
+    }
+
+    const hasA = monthA && months.includes(monthA);
+    const hasB = monthB && months.includes(monthB);
+
+    const nextA = hasA ? monthA : months[0];
+    const nextB = hasB ? monthB : (months[1] ?? months[0]);
+
+    const fixedB = nextB === nextA ? (months[1] ?? months[0]) : nextB;
+
+    if (nextA !== monthA) setMonthA(nextA);
+    if (fixedB !== monthB) setMonthB(fixedB);
   }, [months, monthA, monthB]);
 
-  const spendA = useMemo(() => {
-    return monthA ? sumForMonth(expenses, monthA) : 0;
-  }, [expenses, monthA]);
+  if (loading) {
+    return (
+      <div className={s.percentile}>
+        <div className={s.content}>
+          <LoadingProgress loading={loading} />
+        </div>
+      </div>
+    );
+  }
 
-  const spendB = useMemo(() => {
-    return monthB ? sumForMonth(expenses, monthB) : 0;
-  }, [expenses, monthB]);
+  if (months.length === 0) {
+    return (
+      <div className={s.percentile}>
+        <header className={s.header}>
+          <h2 className={s.headerTitle}>
+            Here you can see (set) the percentile for a given month.
+          </h2>
+        </header>
+        <div className={s.content}>
+          <h2 className={s.noExpenses}>No expenses yet.</h2>
+        </div>
+      </div>
+    );
+  }
 
-  const diff = useMemo(() => {
-    return spendA - spendB;
-  }, [spendA, spendB]);
+  const spendA = totalByMonths.get(monthA) ?? 0;
+  const spendB = totalByMonths.get(monthB) ?? 0;
 
-  const pct = useMemo(() => {
-    return pctChange(spendA, spendB);
-  }, [spendA, spendB]);
+  const diff = spendA - spendB;
+  const pct = pctChange(spendA, spendB);
 
-  const verdict = useMemo(() => {
-    if (!monthA || !monthB) return null;
-    if (diff > 0) return "more";
-    if (diff < 0) return "less";
-    return "same";
-  }, [diff, monthA, monthB]);
+  const verdict: Verdict = diff > 0 ? "more" : diff < 0 ? "less" : "same";
 
   return (
     <div className={s.percentile}>
@@ -80,56 +105,33 @@ const Percentile = () => {
       </header>
       <div className={s.content}>
         <div className={s.inputs}>
-          <FormControl fullWidth sx={inputSx}>
-            <InputLabel>Month A</InputLabel>
-            <Select
-              label="Month A"
-              value={monthA}
-              onChange={(e) => setMonthA(e.target.value)}
-            >
-              {months.map((m) => (
-                <MenuItem key={m} value={m} disabled={m === monthB}>
-                  {monthLabel(m)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <MonthSelect
+            label="Month A"
+            value={monthA}
+            disabledMonth={monthB}
+            onChange={setMonthA}
+            months={months}
+          />
 
-          <FormControl fullWidth sx={inputSx}>
-            <InputLabel>Month B</InputLabel>
-            <Select
-              label="Month B"
-              value={monthB}
-              onChange={(e) => setMonthB(e.target.value)}
-            >
-              {months.map((m) => (
-                <MenuItem key={m} value={m} disabled={m === monthA}>
-                  {monthLabel(m)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <MonthSelect
+            label="Month B"
+            value={monthB}
+            disabledMonth={monthA}
+            onChange={setMonthB}
+            months={months}
+          />
         </div>
-        {months.length === 0 ? (
-          <h2 className={s.noExpenses}>No expenses yet.</h2>
-        ) : (
-          <div className={s.result}>
-            <h2
-              className={s.monthLabel}
-            >{`${monthLabel(monthA)} : ${spendA.toFixed(2)} $`}</h2>
-            <h2
-              className={s.monthLabel}
-            >{`${monthLabel(monthB)} : ${spendB.toFixed(2)} $`}</h2>
-            <h2 className={s.diff}>{`Difference: ${diff.toFixed(2)} $`}</h2>
-            <h2 className={s.change}>{`Change: ${pct?.toFixed(2)} %`}</h2>
-            {verdict && pct !== null && (
-              <h2 className={s.verdict}>
-                in {monthLabel(monthA)} you spent {verdict} by{" "}
-                {Math.abs(pct).toFixed(2)} % than in {monthLabel(monthB)}
-              </h2>
-            )}
-          </div>
-        )}
+        <>
+          <ResultPercentile
+            monthA={monthA}
+            monthB={monthB}
+            diff={diff}
+            pct={pct}
+            verdict={verdict}
+            spendA={spendA}
+            spendB={spendB}
+          />
+        </>
       </div>
     </div>
   );

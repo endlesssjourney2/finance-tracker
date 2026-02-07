@@ -6,3 +6,5 @@ export type Expense = {
   description: string | null;
   date: string;
 };
+
+export type ExpenseLike = Pick<Expense, "amount" | "date">;

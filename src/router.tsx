@@ -5,6 +5,7 @@ import Login from "./pages/Auth/Login/Login";
 import SignUp from "./pages/Auth/SignUp/SignUp";
 import View from "./pages/View/View";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Percentile from "./pages/Percentile/Percentile";
 
 export const router = createBrowserRouter(
   [
@@ -17,6 +18,7 @@ export const router = createBrowserRouter(
         { path: "/signup", element: <SignUp /> },
         { path: "/view", element: <View /> },
         { path: "/dashboard", element: <Dashboard /> },
+        { path: "/percentile", element: <Percentile /> },
       ],
     },
   ],

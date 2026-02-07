@@ -29,6 +29,10 @@ const Navbar: FC = () => {
   const handleNavigateSignUp = () => {
     navigate("/signup");
   };
+
+  const handleNavigatePercentile = () => {
+    navigate("/percentile");
+  };
   return (
     <nav className={s.navbar}>
       <Link to={"/"} className={s.logo}>
@@ -39,6 +43,7 @@ const Navbar: FC = () => {
         {loading ? null : user ? (
           <div className={s.buttons}>
             <ThemeToggleButton onClick={toggleTheme} />
+            <NavButton text="Percentile" onClick={handleNavigatePercentile} />
             <NavButton text="Dashboard" onClick={handleNavigateDashboard} />
             <NavButton text="Logout" onClick={handleLogout} />
           </div>

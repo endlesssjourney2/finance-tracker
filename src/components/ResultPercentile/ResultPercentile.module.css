@@ -1,0 +1,109 @@
+.resultCard {
+  margin-top: 25px;
+  width: min(960px, 100%);
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--color-card-bg-secondary);
+  border: 1px solid var(--color-card-border-secondary);
+  box-shadow: 0 14px 30px var(--color-shadow);
+  display: grid;
+  gap: 18px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.monthItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.monthItem:hover {
+  background-color: var(--color-card-hover);
+  transform: translateY(-1.5px);
+  border-color: var(--color-accent-blue);
+}
+
+.monthName {
+  font-size: 16px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.monthValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-left: 4px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--color-card-bg-secondary);
+  border: 1px solid var(--color-card-border-secondary);
+}
+
+.metricLabel {
+  color: var(--color-text-secondary);
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+
+.metricValue {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.positive {
+  color: var(--color-error);
+}
+
+.negative {
+  color: var(--color-success);
+}
+
+.verdict {
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-card-border-secondary);
+  background: var(--color-card-bg-secondary);
+  color: var(--color-text-primary);
+  font-size: 18px;
+  letter-spacing: 1.2px;
+}
+
+.bold {
+  font-weight: 600;
+}

@@ -29,7 +29,7 @@ export const buildCategoryPieForLastMonth = (expenses: ExpenseMonth[]) => {
   const source = valid.length ? valid : expenses;
 
   const latest = source.reduce((a, b) =>
-    new Date(a.date) > new Date(b.date) ? a : b
+    new Date(a.date) > new Date(b.date) ? a : b,
   );
 
   const lastMonth = getMonthKey(latest.date);

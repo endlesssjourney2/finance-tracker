@@ -21,7 +21,7 @@ ChartJS.register(
   PointElement,
   Tooltip,
   Legend,
-  Title
+  Title,
 );
 
 type ExpensesLineChartProps = {
@@ -45,7 +45,7 @@ const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
         },
       ],
     }),
-    [months, values]
+    [months, values],
   );
 
   const options: ChartOptions<"line"> = {
@@ -62,7 +62,7 @@ const ExpensesLineChart: FC<ExpensesLineChartProps> = ({ months, values }) => {
     scales: {
       x: {
         ticks: {
-          callback: monthTickCallback("en-US"),
+          callback: monthTickCallback(),
           color: "#94A3B8",
         },
         grid: {

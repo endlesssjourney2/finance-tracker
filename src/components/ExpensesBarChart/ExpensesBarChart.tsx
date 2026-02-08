@@ -20,7 +20,7 @@ ChartJS.register(
   BarElement,
   Tooltip,
   Legend,
-  Title
+  Title,
 );
 
 type ExpensesBarChartProps = {
@@ -43,7 +43,7 @@ const ExpensesBarChart: FC<ExpensesBarChartProps> = ({ months, values }) => {
         },
       ],
     }),
-    [months, values]
+    [months, values],
   );
 
   const options: ChartOptions<"bar"> = {
@@ -60,7 +60,7 @@ const ExpensesBarChart: FC<ExpensesBarChartProps> = ({ months, values }) => {
     scales: {
       x: {
         ticks: {
-          callback: monthTickCallback("en-US"),
+          callback: monthTickCallback(),
           color: "#94A3B8",
         },
         grid: {

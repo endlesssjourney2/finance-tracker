@@ -5,6 +5,8 @@ export const monthKey = (date: string) => {
 };
 
 export const pctChange = (a: number, b: number) => {
-  if (b === 0) return null;
-  return ((a - b) / b) * 100;
+  const base = Math.min(a, b);
+  if (base === 0) return null;
+
+  return (Math.abs(a - b) / base) * 100;
 };

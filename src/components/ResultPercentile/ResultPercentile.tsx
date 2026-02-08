@@ -47,7 +47,7 @@ const ResultPercentile: FC<ResultPercentileProps> = ({
           <div className={s.metric}>
             <span className={s.metricLabel}>Change</span>
             <span
-              className={`${s.metricValue} ${pct >= 0 ? s.positive : s.negative}`}
+              className={`${s.metricValue} ${verdict === "more" ? s.positive : s.negative}`}
             >
               {pct?.toFixed(2)} %
             </span>
@@ -58,7 +58,9 @@ const ResultPercentile: FC<ResultPercentileProps> = ({
         <div className={s.verdict}>
           In <span className={s.bold}>{monthLabel(monthA, "MMMM YYYY")}</span>{" "}
           you spent{" "}
-          <span className={`${s.bold} ${pct >= 0 ? s.positive : s.negative}`}>
+          <span
+            className={`${s.bold} ${verdict === "more" ? s.positive : s.negative}`}
+          >
             {verdict}
           </span>{" "}
           by <span className={s.bold}>{Math.abs(pct).toFixed(2)}%</span> than in{" "}

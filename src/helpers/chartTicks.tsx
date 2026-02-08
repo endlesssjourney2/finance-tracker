@@ -1,9 +1,9 @@
 import type { Scale } from "chart.js";
-import { formatMonthLabel } from "./formatMonthLabel";
+import { monthLabel } from "./monthLabel";
 
-export function monthTickCallback(locale = "en-US") {
+export function monthTickCallback() {
   return function (this: Scale, value: string | number) {
     const label = this.getLabelForValue(Number(value));
-    return formatMonthLabel(label, locale);
+    return monthLabel(label, "MMM YY");
   };
 }

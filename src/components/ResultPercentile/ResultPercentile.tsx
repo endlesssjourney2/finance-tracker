@@ -1,6 +1,7 @@
 import type { FC } from "react";
-import { monthLabel } from "../../helpers/percentileTicks";
+
 import s from "./ResultPercentile.module.css";
+import { monthLabel } from "../../helpers/monthLabel";
 
 type ResultPercentileProps = {
   monthA: string;
@@ -25,13 +26,13 @@ const ResultPercentile: FC<ResultPercentileProps> = ({
     <div className={s.resultCard}>
       <div className={s.months}>
         <div className={s.monthItem}>
-          <h2 className={s.monthName}>{monthLabel(monthA)}</h2>
+          <h2 className={s.monthName}>{monthLabel(monthA, "MMMM YYYY")}</h2>
           <span className={s.monthValue}>
             {spendA.toFixed(2)} <span className={s.unit}>$</span>
           </span>
         </div>
         <div className={s.monthItem}>
-          <div className={s.monthName}>{monthLabel(monthB)}</div>
+          <div className={s.monthName}>{monthLabel(monthB, "MMMM YYYY")}</div>
           <div className={s.monthValue}>
             {spendB.toFixed(2)} <span className={s.unit}>$</span>
           </div>
@@ -55,12 +56,13 @@ const ResultPercentile: FC<ResultPercentileProps> = ({
       </div>
       {pct !== null && (
         <div className={s.verdict}>
-          In <span className={s.bold}>{monthLabel(monthA)}</span> you spent{" "}
+          In <span className={s.bold}>{monthLabel(monthA, "MMMM YYYY")}</span>{" "}
+          you spent{" "}
           <span className={`${s.bold} ${pct >= 0 ? s.positive : s.negative}`}>
             {verdict}
           </span>{" "}
           by <span className={s.bold}>{Math.abs(pct).toFixed(2)}%</span> than in{" "}
-          <span className={s.bold}>{monthLabel(monthB)}</span>.
+          <span className={s.bold}>{monthLabel(monthB, "MMMM YYYY")}</span>.
         </div>
       )}
     </div>

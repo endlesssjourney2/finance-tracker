@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { inputSx } from "../../InputStyles";
 import type { FC } from "react";
-import { monthLabel } from "../../helpers/percentileTicks";
+import { monthLabel } from "../../helpers/monthLabel";
 
 type MonthSelectProps = {
   value: string;
@@ -28,7 +28,7 @@ const MonthSelect: FC<MonthSelectProps> = ({
       >
         {months.map((m) => (
           <MenuItem key={m} value={m} disabled={m === disabledMonth}>
-            {monthLabel(m)}
+            {monthLabel(m, "MMMM YYYY")}
           </MenuItem>
         ))}
       </Select>

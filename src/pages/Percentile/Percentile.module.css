@@ -23,3 +23,8 @@
   align-items: center;
   gap: 20px;
 }
+
+.noExpenses {
+  color: var(--color-text-secondary);
+  font-size: 1.8rem;
+}

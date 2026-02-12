@@ -1,9 +1,7 @@
-import type { User } from "@supabase/supabase-js";
-import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import { useMemo, useState, type MouseEvent } from "react";
 import { useExpenses } from "../../hooks/useExpenses";
 import { Link } from "react-router-dom";
 import type { ChartType } from "../../types/ChartType";
-import { supabase } from "../../supabaseClient";
 import s from "./Dashboard.module.css";
 import { Button, Menu, MenuItem } from "@mui/material";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
@@ -15,22 +13,10 @@ import {
 } from "../../helpers/expensesCharts";
 import { DashboardChartContent } from "../../components/DashboardChartContent/DashboardChartContent";
 import Header from "../../components/Header/Header";
+import { useAuth } from "../Auth/AuthContext";
 
 const Dashboard = () => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const init = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      setUser(user ?? null);
-    };
-
-    void init();
-  }, []);
-
+  const { user } = useAuth();
   const { expenses, loading } = useExpenses(user);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedChart, setSelectedChart] = useState<ChartType>("byCategory");

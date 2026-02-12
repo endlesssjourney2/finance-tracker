@@ -1,10 +1,8 @@
-import { useEffect, useState, type FC } from "react";
+import { type FC } from "react";
 import s from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../supabaseClient";
 import { Alert, Button, Snackbar } from "@mui/material";
 import { datePickerSx } from "../../InputStyles";
-import type { User } from "@supabase/supabase-js";
 import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -14,9 +12,10 @@ import ExpensesListHome from "../../components/ExpensesListHome/ExpensesListHome
 import InputHome from "../../components/InputHome/InputHome";
 import { useHome } from "../../hooks/useHome";
 import Header from "../../components/Header/Header";
+import { useAuth } from "../Auth/AuthContext";
 
 const Home: FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuth();
   const { loading, expenses, setExpenses } = useExpenses(user);
   const {
     amount,
@@ -41,21 +40,6 @@ const Home: FC = () => {
     (sum, expense) => sum + expense.amount,
     0,
   );
-
-  useEffect(() => {
-    const init = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        return;
-      }
-
-      setUser(user);
-    };
-    void init();
-  }, []);
 
   const handleNavigateView = () => {
     navigate("/view");

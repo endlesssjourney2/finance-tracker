@@ -1,36 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { useExpenses } from "../../hooks/useExpenses";
 import s from "./Percentile.module.css";
-import type { User } from "@supabase/supabase-js";
-import { supabase } from "../../supabaseClient";
 import { monthKey, pctChange } from "../../helpers/percentileTicks";
 import ResultPercentile from "../../components/ResultPercentile/ResultPercentile";
 import type { Verdict } from "../../types/Verdict";
 import MonthSelect from "../../components/MonthSelect/MonthSelect";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import Header from "../../components/Header/Header";
+import { useAuth } from "../Auth/AuthContext";
 
 const Percentile = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const { expenses, loading } = useExpenses(user);
+  const { user, loading: authLoading } = useAuth();
+  const { expenses, loading: expensesLoading } = useExpenses(user);
+
+  const loading = authLoading || expensesLoading;
 
   const [monthA, setMonthA] = useState<string>("");
   const [monthB, setMonthB] = useState<string>("");
-
-  useEffect(() => {
-    const init = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        return;
-      }
-
-      setUser(user);
-    };
-    void init();
-  }, []);
 
   const totalByMonths = useMemo(() => {
     const map = new Map<string, number>();
@@ -74,14 +60,21 @@ const Percentile = () => {
     );
   }
 
+  if (!user) {
+    return (
+      <div className={s.percentile}>
+        <Header title="Here you can see (set) the percentile for a given month." />
+        <div className={s.content}>
+          <h2 className={s.noExpenses}>Please log in to view your stats.</h2>
+        </div>
+      </div>
+    );
+  }
+
   if (months.length === 0) {
     return (
       <div className={s.percentile}>
-        <header className={s.header}>
-          <h2 className={s.headerTitle}>
-            Here you can see (set) the percentile for a given month.
-          </h2>
-        </header>
+        <Header title="Here you can see (set) the percentile for a given month." />
         <div className={s.content}>
           <h2 className={s.noExpenses}>No expenses yet.</h2>
         </div>

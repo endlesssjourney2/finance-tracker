@@ -6,9 +6,10 @@ import {
   type ReactNode,
 } from "react";
 import { supabase } from "../../supabaseClient";
+import type { User } from "@supabase/supabase-js";
 
 type AuthContextType = {
-  user: any;
+  user: User | null;
   loading: boolean;
 };
 
@@ -18,23 +19,31 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const init = async () => {
-      const { data, error } = await supabase.auth.getUser();
+      try {
+        setLoading(true);
+        const { data, error } = await supabase.auth.getUser();
 
-      error ? setUser(null) : setUser(data.user);
+        if (error) {
+          console.error("auth.getUser error:", error.message);
+        }
+
+        setUser(data.user ?? null);
+      } finally {
+        setLoading(false);
+      }
     };
-
-    init();
+    void init();
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user ?? null);
         setLoading(false);
-      }
+      },
     );
 
     return () => {

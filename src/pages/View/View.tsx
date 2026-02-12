@@ -11,6 +11,7 @@ import ModalComponent from "../../components/ModalComponent/ModalComponent";
 import LinkButton from "../../components/LinkButton/LinkButton";
 import dayjs from "dayjs";
 import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
+import Header from "../../components/Header/Header";
 
 const View: FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -22,7 +23,7 @@ const View: FC = () => {
 
   const totalAmount = expenses.reduce(
     (sum, expense) => sum + expense.amount,
-    0
+    0,
   );
 
   useEffect(() => {
@@ -66,9 +67,7 @@ const View: FC = () => {
         </div>
       ) : (
         <>
-          <header className={s.header}>
-            <h1 className={s.titleHeader}>Your Finances</h1>
-          </header>
+          <Header title="Your Finances" />
           <div className={s.content}>
             <div className={s.totalAmount}>
               <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>

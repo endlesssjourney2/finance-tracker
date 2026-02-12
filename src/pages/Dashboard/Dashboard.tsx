@@ -1,7 +1,7 @@
 import type { User } from "@supabase/supabase-js";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { useExpenses } from "../../hooks/useExpenses";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import type { ChartType } from "../../types/ChartType";
 import { supabase } from "../../supabaseClient";
 import s from "./Dashboard.module.css";
@@ -14,19 +14,29 @@ import {
   buildMonthlyTotals,
 } from "../../helpers/expensesCharts";
 import { DashboardChartContent } from "../../components/DashboardChartContent/DashboardChartContent";
+import Header from "../../components/Header/Header";
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
 
-  const { expenses, loading: expensesLoading } = useExpenses(user);
+  useEffect(() => {
+    const init = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-  const navigate = useNavigate();
+      setUser(user ?? null);
+    };
 
+    void init();
+  }, []);
+
+  const { expenses, loading } = useExpenses(user);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedChart, setSelectedChart] = useState<ChartType>("byCategory");
 
   const menuOpen = Boolean(anchorEl);
+  const isLoading = user === null || loading;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -39,25 +49,6 @@ const Dashboard = () => {
     setSelectedChart(chart);
     setAnchorEl(null);
   };
-
-  useEffect(() => {
-    const init = async () => {
-      setAuthLoading(true);
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        setAuthLoading(false);
-        return;
-      }
-      setUser(user);
-      setAuthLoading(false);
-    };
-    void init();
-  }, [navigate]);
-
-  const loading = authLoading || expensesLoading;
 
   const { pieLabels, pieValues } = useMemo(() => {
     return buildCategoryPieForLastMonth(expenses);
@@ -73,9 +64,7 @@ const Dashboard = () => {
 
   return (
     <div className={s.dashboardPage}>
-      <header className={s.header}>
-        <h1 className={s.headerTitle}>Dashboard</h1>
-      </header>
+      <Header title="Dashboard" />
       <div className={s.content}>
         <div className={s.menuBar}>
           <Button
@@ -115,7 +104,7 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-        {!authLoading && (
+        {!isLoading && (
           <DashboardChartContent
             user={user}
             selectedChart={selectedChart}

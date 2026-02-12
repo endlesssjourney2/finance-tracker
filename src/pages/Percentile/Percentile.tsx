@@ -8,6 +8,7 @@ import ResultPercentile from "../../components/ResultPercentile/ResultPercentile
 import type { Verdict } from "../../types/Verdict";
 import MonthSelect from "../../components/MonthSelect/MonthSelect";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
+import Header from "../../components/Header/Header";
 
 const Percentile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -98,11 +99,7 @@ const Percentile = () => {
 
   return (
     <div className={s.percentile}>
-      <header className={s.header}>
-        <h2 className={s.headerTitle}>
-          Here you can see (set) the percentile for a given month.
-        </h2>
-      </header>
+      <Header title="Here you can see (set) the percentile for a given month." />
       <div className={s.content}>
         <div className={s.inputs}>
           <MonthSelect

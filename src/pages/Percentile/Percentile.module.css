@@ -7,17 +7,8 @@
   transition: all 0.3s ease-in-out;
 }
 
-.header {
-  margin: 15px 0 15px 0;
-  color: var(--color-text-primary);
-}
-
-.headerTitle {
-  font-size: 2.3rem;
-  font-weight: bold;
-}
-
 .content {
+  margin: 20px 0 20px 0;
   width: 90%;
   display: flex;
   justify-content: center;

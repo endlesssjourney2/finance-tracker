@@ -48,4 +48,19 @@ export type dateFormat =
   | "MMM-YYYY"
   | "MMMM YYYY"
   | "MMMM/YYYY"
-  | "MMMM-YYYY";
+  | "MMMM-YYYY"
+  // day month year
+  | "D M YY"
+  | "DD MM YY"
+  | "D MMM YY"
+  | "D MMMM YY"
+  | "DD M YYYY"
+  | "DD MM YYYY"
+  | "D MMM YYYY"
+  | "D MMMM YYYY"
+  | "MMM D YYYY"
+  | "MMMM D YYYY"
+  | "MMM DD YYYY"
+  | "MMMM DD YYYY"
+  | "MMM D, YYYY"
+  | "MMMM D, YYYY";

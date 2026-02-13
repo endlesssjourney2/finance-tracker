@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
+import { monthLabel } from "../../helpers/monthLabel";
 
 const View: FC = () => {
   const { user, loading: authLoading } = useAuth();
@@ -105,7 +106,7 @@ const View: FC = () => {
                   : "No description"}
               </p>
               <p className={s.modalDate}>
-                {dayjs(selectedExpense.date).format("MMM D, YYYY")}
+                {monthLabel(selectedExpense.date, "MMMM D, YYYY")}
               </p>
             </div>
           )

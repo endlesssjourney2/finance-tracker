@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import s from "./ExpensesList.module.css";
 import dayjs from "dayjs";
+import { monthLabel } from "../../helpers/monthLabel";
 
 type ExpensesListProps = {
   id: string;
@@ -36,7 +37,7 @@ const ExpensesList: FC<ExpensesListProps> = ({
           </p>
         </div>
         <div className={s.itemDate}>
-          <h3 className={s.date}>{dayjs(date).format("MMM D, YYYY")}</h3>
+          <h3 className={s.date}>{monthLabel(date, "MMM D, YYYY")}</h3>
         </div>
       </li>
     </>

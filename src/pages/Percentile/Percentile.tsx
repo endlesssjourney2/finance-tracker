@@ -8,6 +8,7 @@ import MonthSelect from "../../components/MonthSelect/MonthSelect";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
+import { Link } from "react-router-dom";
 
 const Percentile = () => {
   const { user, loading: authLoading } = useAuth();
@@ -122,6 +123,14 @@ const Percentile = () => {
             spendB={spendB}
           />
         </>
+      </div>
+      <div className={s.links}>
+        <Link to="/" className={s.link}>
+          Home
+        </Link>
+        <Link to="/view" className={s.link}>
+          View
+        </Link>
       </div>
     </div>
   );

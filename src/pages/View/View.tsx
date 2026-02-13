@@ -100,7 +100,6 @@ const View: FC = () => {
                 {selectedExpense.amount} $
               </p>
               <p className={s.modalDescription}>
-                <span className={s.modalDesc}>Description: </span>
                 {selectedExpense.description
                   ? selectedExpense.description
                   : "No description"}

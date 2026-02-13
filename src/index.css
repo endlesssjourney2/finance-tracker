@@ -41,6 +41,7 @@ body {
   --color-card-bg-secondary: rgba(255, 255, 255, 0.04);
   --color-card-border-secondary: rgba(255, 255, 255, 0.09);
   --color-card-hover-secondary: rgba(255, 255, 255, 0.06);
+  --color-card-bg-third: rgba(255, 255, 255, 0.041);
 
   --color-link-btn: #f1f5f9;
   --border-link-btn: rgba(255, 255, 255, 0.04);
@@ -92,6 +93,7 @@ body[data-theme="light"] {
   --color-card-bg-secondary: rgba(0, 0, 0, 0.03);
   --color-card-border-secondary: rgba(0, 0, 0, 0.08);
   --color-card-hover-secondary: rgba(0, 0, 0, 0.05);
+  --color-card-bg-third: rgba(94, 90, 90, 0.02);
 
   --color-hover-blue: #0ea5e9;
   --color-hover-gold: #f59e0b;

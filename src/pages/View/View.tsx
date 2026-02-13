@@ -7,7 +7,6 @@ import ExpensesList from "../../components/ExpensesList/ExpensesList";
 import type { Expense } from "../../types/Expense";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
 import LinkButton from "../../components/LinkButton/LinkButton";
-import dayjs from "dayjs";
 import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";

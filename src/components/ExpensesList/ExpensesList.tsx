@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import s from "./ExpensesList.module.css";
-import dayjs from "dayjs";
 import { monthLabel } from "../../helpers/monthLabel";
 
 type ExpensesListProps = {

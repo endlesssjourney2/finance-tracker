@@ -5,7 +5,7 @@ import { monthLabel } from "../../helpers/monthLabel";
 
 type MonthSelectProps = {
   value: string;
-  disabledMonth?: string;
+  disabledValue?: string;
   onChange: (e: string) => void;
   months: string[];
   label: string;
@@ -13,7 +13,7 @@ type MonthSelectProps = {
 
 const MonthSelect: FC<MonthSelectProps> = ({
   value,
-  disabledMonth,
+  disabledValue,
   onChange,
   months,
   label,
@@ -27,7 +27,7 @@ const MonthSelect: FC<MonthSelectProps> = ({
         onChange={(e) => onChange(e.target.value)}
       >
         {months.map((m) => (
-          <MenuItem key={m} value={m} disabled={m === disabledMonth}>
+          <MenuItem key={m} value={m} disabled={m === disabledValue}>
             {monthLabel(m, "MMMM YYYY")}
           </MenuItem>
         ))}

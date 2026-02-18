@@ -10,13 +10,13 @@
   gap: 18px;
 }
 
-.months {
+.values {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
-.monthItem {
+.valueItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,13 +30,13 @@
     border-color 0.3s ease;
 }
 
-.monthItem:hover {
+.valueItem:hover {
   background-color: var(--color-card-hover);
   transform: translateY(-1.5px);
   border-color: var(--color-accent-blue);
 }
 
-.monthName {
+.valueName {
   font-size: 16px;
   letter-spacing: 2px;
   font-weight: 600;
@@ -44,7 +44,7 @@
   color: var(--color-text-secondary);
 }
 
-.monthValue {
+.value {
   font-size: 22px;
   font-weight: 700;
   color: var(--color-text-primary);

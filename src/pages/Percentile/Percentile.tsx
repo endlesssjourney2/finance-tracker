@@ -8,6 +8,7 @@ import type { PercentileType } from "../../types/PercentileType";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { percentileLabels } from "../../helpers/PercentileLables";
 import PercentileByMonths from "../../components/PercentileByMonths/PercentileByMonths";
+import PercentileByCategory from "../../components/PercentileByCategory/PercentileByCategory";
 
 const Percentile = () => {
   const [view, setView] = useState<PercentileType>("byMonths");
@@ -31,7 +32,7 @@ const Percentile = () => {
 
   return (
     <div className={s.percentile}>
-      <Header title="Here you can see (set) the percentile for a given month." />
+      <Header title="Set values to see percentile comparison" />
 
       <Button
         variant="contained"
@@ -59,8 +60,13 @@ const Percentile = () => {
         <PercentileByMonths expenses={expenses} user={user} loading={loading} />
       )}
 
-      {/*Here will be content for categories*/}
-      {/* {view === "byCategory" && <div>{for cats}</div>} */}
+      {view === "byCategory" && (
+        <PercentileByCategory
+          expenses={expenses}
+          user={user}
+          loading={loading}
+        />
+      )}
       <div className={s.links}>
         <Link to="/" className={s.link}>
           Home

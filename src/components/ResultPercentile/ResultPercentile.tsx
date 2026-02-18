@@ -1,12 +1,10 @@
 import type { FC } from "react";
-
 import s from "./ResultPercentile.module.css";
-import { monthLabel } from "../../helpers/monthLabel";
 
 type ResultPercentileProps = {
-  monthA: string;
+  valueA: string;
   spendA: number;
-  monthB: string;
+  valueB: string;
   spendB: number;
   diff: number;
   pct: number | null;
@@ -14,8 +12,8 @@ type ResultPercentileProps = {
 };
 
 const ResultPercentile: FC<ResultPercentileProps> = ({
-  monthA,
-  monthB,
+  valueA,
+  valueB,
   spendA,
   spendB,
   diff,
@@ -24,16 +22,16 @@ const ResultPercentile: FC<ResultPercentileProps> = ({
 }) => {
   return (
     <div className={s.resultCard}>
-      <div className={s.months}>
-        <div className={s.monthItem}>
-          <h2 className={s.monthName}>{monthLabel(monthA, "MMMM YYYY")}</h2>
-          <span className={s.monthValue}>
+      <div className={s.values}>
+        <div className={s.valueItem}>
+          <h2 className={s.valueName}>{valueA}</h2>
+          <span className={s.value}>
             {spendA.toFixed(2)} <span className={s.unit}>$</span>
           </span>
         </div>
-        <div className={s.monthItem}>
-          <div className={s.monthName}>{monthLabel(monthB, "MMMM YYYY")}</div>
-          <div className={s.monthValue}>
+        <div className={s.valueItem}>
+          <div className={s.valueName}>{valueB}</div>
+          <div className={s.value}>
             {spendB.toFixed(2)} <span className={s.unit}>$</span>
           </div>
         </div>
@@ -56,15 +54,14 @@ const ResultPercentile: FC<ResultPercentileProps> = ({
       </div>
       {pct !== null && (
         <div className={s.verdict}>
-          In <span className={s.bold}>{monthLabel(monthA, "MMMM YYYY")}</span>{" "}
-          you spent{" "}
+          In <span className={s.bold}>{valueA}</span> you spent{" "}
           <span
             className={`${s.bold} ${verdict === "more" ? s.positive : s.negative}`}
           >
             {verdict}
           </span>{" "}
           by <span className={s.bold}>{Math.abs(pct).toFixed(2)}%</span> than in{" "}
-          <span className={s.bold}>{monthLabel(monthB, "MMMM YYYY")}</span>.
+          <span className={s.bold}>{valueB}</span>.
         </div>
       )}
     </div>

@@ -1,23 +1,26 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { inputSx } from "../../InputStyles";
 import type { FC } from "react";
-import { monthLabel } from "../../helpers/monthLabel";
 
-type MonthSelectProps = {
+type ControlSelectProps = {
   value: string;
-  disabledMonth?: string;
+  disabledValue?: string;
   onChange: (e: string) => void;
-  months: string[];
+  values: string[];
   label: string;
+  formatValue?: (v: string) => string;
 };
 
-const MonthSelect: FC<MonthSelectProps> = ({
+const ControlSelect: FC<ControlSelectProps> = ({
   value,
-  disabledMonth,
+  disabledValue,
   onChange,
-  months,
+  values,
   label,
+  formatValue,
 }) => {
+  const format = formatValue ?? ((v) => v);
+
   return (
     <FormControl fullWidth sx={inputSx}>
       <InputLabel>{label}</InputLabel>
@@ -26,9 +29,9 @@ const MonthSelect: FC<MonthSelectProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        {months.map((m) => (
-          <MenuItem key={m} value={m} disabled={m === disabledMonth}>
-            {monthLabel(m, "MMMM YYYY")}
+        {values.map((v) => (
+          <MenuItem key={v} value={v} disabled={v === disabledValue}>
+            {format(v)}
           </MenuItem>
         ))}
       </Select>
@@ -36,4 +39,4 @@ const MonthSelect: FC<MonthSelectProps> = ({
   );
 };
 
-export default MonthSelect;
+export default ControlSelect;

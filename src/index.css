@@ -27,6 +27,7 @@ body {
   --color-bg-secondary: #1e293b;
   --color-text-primary: #f1f5f9;
   --color-text-secondary: #cbd5e1;
+  --color-text-total: #0a1223;
 
   --color-accent-blue: #38bdf8;
   --color-accent-gold: #fbbf24;
@@ -76,6 +77,7 @@ body {
 body[data-theme="light"] {
   --color-bg-primary: #f5e6eb;
   --color-bg-secondary: #f9e1eb;
+  --color-text-total: #dfbdcb;
 
   --color-text-primary: #1f2937;
   --color-text-secondary: #634f61;

@@ -10,13 +10,17 @@ import LinkButton from "../../components/LinkButton/LinkButton";
 import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
-import { monthLabel } from "../../helpers/monthLabel";
+import ModalContent from "../../components/ModalContent/ModalContent";
 
 const View: FC = () => {
   const { user, loading: authLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
-  const { loading: expensesLoading, expenses } = useExpenses(user);
+  const {
+    loading: expensesLoading,
+    expenses,
+    deleteExpense,
+  } = useExpenses(user);
 
   const navigate = useNavigate();
 
@@ -34,6 +38,11 @@ const View: FC = () => {
   const handleOpenModal = (expense: Expense) => {
     setSelectedExpense(expense);
     setModalOpen(true);
+  };
+
+  const deleteAndCloseModal = async (id: string) => {
+    await deleteExpense(id);
+    handleCloseModal();
   };
 
   const handleNavigateDashboard = () => {
@@ -93,21 +102,10 @@ const View: FC = () => {
         onClose={handleCloseModal}
         content={
           selectedExpense && (
-            <div className={s.modalContent}>
-              <h2 className={s.modalCategory}>{selectedExpense.category}</h2>
-              <p className={s.modalAmount}>
-                <span className={s.modalDesc}>Amount: </span>
-                {selectedExpense.amount} $
-              </p>
-              <p className={s.modalDescription}>
-                {selectedExpense.description
-                  ? selectedExpense.description
-                  : "No description"}
-              </p>
-              <p className={s.modalDate}>
-                {monthLabel(selectedExpense.date, "MMMM D, YYYY")}
-              </p>
-            </div>
+            <ModalContent
+              selectedExpense={selectedExpense}
+              onDelete={deleteAndCloseModal}
+            />
           )
         }
       />

@@ -16,7 +16,7 @@ import { useAuth } from "../Auth/AuthContext";
 
 const Home: FC = () => {
   const { user } = useAuth();
-  const { loading, expenses, setExpenses } = useExpenses(user);
+  const { loading, expenses, setExpenses, deleteExpense } = useExpenses(user);
   const {
     amount,
     setAmount,
@@ -31,7 +31,6 @@ const Home: FC = () => {
     errorMessage,
     setErrorMessage,
     addExpense,
-    deleteExpense,
   } = useHome(user, setExpenses);
 
   const navigate = useNavigate();

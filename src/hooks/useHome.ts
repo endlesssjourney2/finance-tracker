@@ -63,16 +63,6 @@ export const useHome = (
     setTouched({ amount: false, category: false });
   };
 
-  const deleteExpense = async (id: string) => {
-    const { error } = await supabase.from("expenses").delete().eq("id", id);
-    if (error) {
-      setErrorMessage("Failed to delete expense. Please try again.");
-      console.error("Error deleting expense:", error.message);
-      return;
-    }
-    setExpenses((prev) => prev.filter((e) => e.id !== id));
-  };
-
   return {
     amount,
     setAmount,
@@ -87,6 +77,5 @@ export const useHome = (
     errorMessage,
     setErrorMessage,
     addExpense,
-    deleteExpense,
   };
 };

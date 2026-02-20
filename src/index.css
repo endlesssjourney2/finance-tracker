@@ -72,6 +72,7 @@ body {
 
   --color-success: #34d399;
   --color-error: #f43f5e;
+  --color-error-hover: #e11d48;
 }
 
 body[data-theme="light"] {
@@ -125,4 +126,5 @@ body[data-theme="light"] {
 
   --color-success: #22c55e;
   --color-error: #e11d48;
+  --color-error-hover: #c52c3a;
 }

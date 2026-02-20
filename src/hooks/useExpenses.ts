@@ -25,9 +25,16 @@ export const useExpenses = (user: User | null) => {
       }
       setLoading(false);
     };
-
     void fetchExpenses();
   }, [user]);
 
-  return { expenses, loading, setExpenses };
+  const deleteExpense = async (id: string) => {
+    const { error } = await supabase.from("expenses").delete().eq("id", id);
+    if (error) {
+      console.error("Error deleting expense:", error.message);
+      return;
+    }
+    setExpenses((prev) => prev.filter((e) => e.id !== id));
+  };
+  return { expenses, loading, setExpenses, deleteExpense };
 };

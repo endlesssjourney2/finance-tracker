@@ -1,0 +1,49 @@
+.modalContent {
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  flex-wrap: nowrap;
+  text-align: center;
+}
+
+.modalCategory {
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.modalAmount {
+  font-size: 1.6rem;
+}
+
+.modalDescription {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+
+.modalDate {
+  font-size: 1.4rem;
+}
+
+.modalDesc {
+  color: var(--color-text-secondary);
+}
+
+.deleteButton {
+  background-color: var(--color-error);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+}
+
+.deleteButton:hover {
+  background-color: var(--color-error-hover);
+}

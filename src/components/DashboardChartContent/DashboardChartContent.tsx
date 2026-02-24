@@ -30,8 +30,8 @@ export const DashboardChartContent = ({
     return (
       <div className={s.notLoggedIn}>
         <h2 className={s.notLoggedInText}>
-          <Link className={s.link} to={"/login"}>
-            Log in
+          <Link className={s.link} to={"/signin"}>
+            Sign In
           </Link>{" "}
           to view your dashboard
         </h2>

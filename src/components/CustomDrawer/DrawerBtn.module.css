@@ -1,0 +1,22 @@
+.drawerBtn {
+  background-color: transparent;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  transition:
+    color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.drawerBtn:hover {
+  color: #fff;
+  background-color: #444444;
+}

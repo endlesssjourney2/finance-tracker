@@ -1,0 +1,19 @@
+.drawer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.drawerHeader {
+  text-align: center;
+  font-size: 24px;
+}
+
+.drawerContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}

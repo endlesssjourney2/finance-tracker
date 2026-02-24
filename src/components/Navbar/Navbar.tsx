@@ -10,6 +10,8 @@ import CustomDrawer from "../CustomDrawer/CustomDrawer";
 import DrawerBtn from "../CustomDrawer/DrawerBtn";
 import PercentIcon from "@mui/icons-material/Percent";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import GridViewIcon from "@mui/icons-material/GridView";
+import AddHomeIcon from "@mui/icons-material/AddHome";
 
 const Navbar: FC = () => {
   const [open, setOpen] = useState(false);
@@ -31,8 +33,12 @@ const Navbar: FC = () => {
     navigate("/dashboard");
   };
 
-  const handleNavigateLogin = () => {
-    navigate("/login");
+  const handleNavigateView = () => {
+    navigate("/view");
+  };
+
+  const handleNavigateSignIn = () => {
+    navigate("/signin");
   };
 
   const handleNavigateSignUp = () => {
@@ -60,6 +66,16 @@ const Navbar: FC = () => {
               content={
                 <>
                   <DrawerBtn
+                    text="Home"
+                    Icon={AddHomeIcon}
+                    onClick={() => navigate("/")}
+                  />
+                  <DrawerBtn
+                    text="View"
+                    Icon={GridViewIcon}
+                    onClick={handleNavigateView}
+                  />
+                  <DrawerBtn
                     text="Dashboard"
                     Icon={DashboardIcon}
                     onClick={handleNavigateDashboard}
@@ -76,7 +92,7 @@ const Navbar: FC = () => {
         ) : (
           <div className={s.buttons}>
             <ThemeToggleButton onClick={toggleTheme} />
-            <NavButton text="Login" onClick={handleNavigateLogin} />
+            <NavButton text="Sign In" onClick={handleNavigateSignIn} />
             <NavButton text="Sign Up" onClick={handleNavigateSignUp} />
           </div>
         )}

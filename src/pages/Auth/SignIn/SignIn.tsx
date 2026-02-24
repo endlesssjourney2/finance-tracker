@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../../supabaseClient";
 import { Button, TextField } from "@mui/material";
-import s from "./Login.module.css";
+import s from "./SignIn.module.css";
 import { inputSx } from "../../../InputStyles";
 import LoadingProgress from "../../../components/LoadingProgress/LoadingProgress";
 
-const Login = () => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ const Login = () => {
   return (
     <div className={s.loginPage}>
       <div className={s.content}>
-        <h2 className={s.title}>Login</h2>
+        <h2 className={s.title}>Sign In</h2>
 
         <div className={s.inputContainer}>
           <TextField
@@ -72,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;

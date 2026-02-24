@@ -76,8 +76,8 @@ const SignUp = () => {
         <footer className={s.footer}>
           <p className={s.footerText}>
             Already have an account?
-            <Link className={s.loginLink} to={"/login"}>
-              Login
+            <Link className={s.loginLink} to={"/signin"}>
+              Sign In
             </Link>
           </p>
         </footer>

@@ -11,9 +11,10 @@
   color: #ccc;
   padding: 12px;
   border-radius: 8px;
+  font-family: "Montserrat", sans-serif;
   transition:
     color 0.3s ease-in-out,
-    background-color 0.3s ease-in-out;
+    background-color 0.3s ease;
 }
 
 .drawerBtn:hover {

@@ -5,6 +5,7 @@ import { Button, TextField } from "@mui/material";
 import s from "./SignIn.module.css";
 import { inputSx } from "../../../InputStyles";
 import LoadingProgress from "../../../components/LoadingProgress/LoadingProgress";
+import Header from "../../../components/Header/Header";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const SignIn = () => {
   return (
     <div className={s.loginPage}>
       <div className={s.content}>
-        <h2 className={s.title}>Sign In</h2>
+        <Header title="Sign In" />
 
         <div className={s.inputContainer}>
           <TextField

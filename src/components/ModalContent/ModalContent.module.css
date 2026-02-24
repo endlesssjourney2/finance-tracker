@@ -3,13 +3,16 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 5px;
   word-break: break-word;
   overflow-wrap: anywhere;
   flex-wrap: nowrap;
   text-align: center;
+  font-family: "Montserrat", sans-serif;
 }
 
 .modalCategory {
+  margin-top: 12px;
   font-size: 2rem;
   font-weight: bold;
   text-transform: capitalize;

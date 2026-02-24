@@ -7,6 +7,8 @@
 .drawerHeader {
   text-align: center;
   font-size: 24px;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 5px;
 }
 
 .drawerContent {

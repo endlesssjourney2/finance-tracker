@@ -33,6 +33,7 @@
   width: 20%;
   margin: 0 auto;
   margin-bottom: 20px;
+  padding: 6px;
   text-align: center;
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
@@ -51,6 +52,7 @@
 }
 
 .totalTitle {
+  font-family: "Montserrat", sans-serif;
   font-size: 1.8rem;
   opacity: 0.8;
 }

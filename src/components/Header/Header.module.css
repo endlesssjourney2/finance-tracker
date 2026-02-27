@@ -1,6 +1,7 @@
 .header {
   margin: 15px 0 15px 0;
   color: var(--color-text-primary);
+  font-family: "Montserrat", sans-serif;
 }
 
 .headerTitle {

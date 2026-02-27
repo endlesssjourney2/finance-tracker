@@ -5,6 +5,7 @@ import { Button, TextField } from "@mui/material";
 import { supabase } from "../../../supabaseClient";
 import { inputSx } from "../../../InputStyles";
 import LoadingProgress from "../../../components/LoadingProgress/LoadingProgress";
+import Header from "../../../components/Header/Header";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -46,7 +47,7 @@ const SignUp = () => {
   return (
     <div className={s.signUpPage}>
       <div className={s.content}>
-        <h2 className={s.title}>Sign Up</h2>
+        <Header title="Sign Up" />
 
         <div className={s.inputContainer}>
           <TextField

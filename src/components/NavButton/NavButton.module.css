@@ -7,6 +7,7 @@
   background-color: var(--color-btn-bg-primary);
   cursor: pointer;
   transition: 0.3s background-color ease-in-out;
+  font-family: "Montserrat", sans-serif;
 }
 
 .navButton:hover {

@@ -91,6 +91,10 @@ const View: FC = () => {
         <div className={s.totalAmount}>
           <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
         </div>
+
+        {
+          //changes here soon(with styles or could be universal component)
+        }
         <div className={s.searchContainer}>
           <input
             className={s.searchInput}

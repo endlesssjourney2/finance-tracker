@@ -29,6 +29,20 @@
   margin: 0 auto;
 }
 
+.noResults {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 30px 0;
+}
+
+.noResultsText {
+  color: var(--color-text-secondary);
+  font-family: "Montserrat", sans-serif;
+  font-size: 26px;
+  text-transform: uppercase;
+}
+
 .totalAmount {
   width: 20%;
   margin: 0 auto;
@@ -57,11 +71,36 @@
   opacity: 0.8;
 }
 
+.searchContainer {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin: 20px 0 20px 0;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--color-border-input);
+  border-radius: 8px;
+  background-color: var(--color-bg-input);
+  color: var(--color-input);
+  transition: all 0.125s ease-in-out;
+}
+
+.searchInput:hover {
+  border-color: var(--color-label-secondary-input);
+}
+
 .expensesList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  grid-template-rows: auto;
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, 228px);
+  justify-content: start;
+  gap: 12px;
   list-style: none;
   word-break: break-word;
   overflow-wrap: anywhere;

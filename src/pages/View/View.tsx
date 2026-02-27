@@ -11,6 +11,7 @@ import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
 import ModalContent from "../../components/ModalContent/ModalContent";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const View: FC = () => {
   const { user, loading: authLoading } = useAuth();
@@ -22,6 +23,9 @@ const View: FC = () => {
     deleteExpense,
   } = useExpenses(user);
 
+  const [searchItem, setSearchItem] = useState("");
+  const debouncedValue = useDebounce(searchItem, 300);
+
   const navigate = useNavigate();
 
   const loading = authLoading || expensesLoading;
@@ -29,6 +33,10 @@ const View: FC = () => {
   const totalAmount = expenses.reduce(
     (sum, expense) => sum + expense.amount,
     0,
+  );
+
+  const filteredExpenses = expenses.filter((expense) =>
+    expense.category.toLowerCase().includes(debouncedValue.toLowerCase()),
   );
 
   const handleCloseModal = () => {
@@ -83,8 +91,24 @@ const View: FC = () => {
         <div className={s.totalAmount}>
           <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
         </div>
+        <div className={s.searchContainer}>
+          <input
+            className={s.searchInput}
+            type="text"
+            placeholder="Search finances..."
+            value={searchItem}
+            onChange={(e) => setSearchItem(e.target.value)}
+          />
+        </div>
+
+        {filteredExpenses.length === 0 && (
+          <div className={s.noResults}>
+            <h2 className={s.noResultsText}>No expenses found.</h2>
+          </div>
+        )}
+
         <ul className={s.expensesList}>
-          {expenses.map((expense) => (
+          {filteredExpenses.map((expense) => (
             <ExpensesList
               key={expense.id}
               onClick={() => handleOpenModal(expense)}

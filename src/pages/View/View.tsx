@@ -35,8 +35,12 @@ const View: FC = () => {
     0,
   );
 
-  const filteredExpenses = expenses.filter((expense) =>
-    expense.category.toLowerCase().includes(debouncedValue.toLowerCase()),
+  // Need to think about null desc("desc") like in type
+
+  const filteredExpenses = expenses.filter(
+    (expense) =>
+      expense.category.toLowerCase().includes(debouncedValue.toLowerCase()) ||
+      expense.description.toLowerCase().includes(debouncedValue.toLowerCase()),
   );
 
   const handleCloseModal = () => {

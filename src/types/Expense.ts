@@ -3,7 +3,7 @@ export type Expense = {
   amount: number;
   user_id: string;
   category: string;
-  description: string | "desc";
+  description: string;
   date: string;
 };
 

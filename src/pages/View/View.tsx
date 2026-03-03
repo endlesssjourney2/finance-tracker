@@ -17,10 +17,14 @@ const View: FC = () => {
   const { user, loading: authLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
+
+  //test
   const {
     loading: expensesLoading,
     expenses,
     deleteExpense,
+    exportExpensesJSON,
+    exportExpensesCsv,
   } = useExpenses(user);
 
   const [searchItem, setSearchItem] = useState("");
@@ -144,6 +148,10 @@ const View: FC = () => {
       />
       <footer className={s.footer}>
         <LinkButton text="Dashboard" onClick={handleNavigateDashboard} />
+
+        {/* test */}
+        <button onClick={exportExpensesCsv}>Export Csv</button>
+        <button onClick={exportExpensesJSON}>Export JSON</button>
       </footer>
     </div>
   );

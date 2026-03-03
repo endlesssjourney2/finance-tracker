@@ -71,6 +71,10 @@ body {
   --color-btn-text-primary: #f1f5f9;
   --color-btn-text-hover-primary: #e0e7ff;
 
+  --color-btn-bg-secondary: #14b8a6;
+  --color-btn-text-secondary: #ffffff;
+  --color-btn-hover-secondary: #0d9488;
+
   --color-success: #34d399;
   --color-error: #f43f5e;
   --color-error-hover: #e11d48;
@@ -124,6 +128,11 @@ body[data-theme="light"] {
   --color-btn-hover-primary: #2563eb;
   --color-btn-text-primary: #ffffff;
   --color-btn-text-hover-primary: #e0e7ff;
+
+  /* changes may be */
+  --color-btn-bg-secondary: #ec4899;
+  --color-btn-text-secondary: #ffffff;
+  --color-btn-hover-secondary: #db2777;
 
   --color-success: #22c55e;
   --color-error: #e11d48;

@@ -12,6 +12,7 @@ import PercentIcon from "@mui/icons-material/Percent";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GridViewIcon from "@mui/icons-material/GridView";
 import AddHomeIcon from "@mui/icons-material/AddHome";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 const Navbar: FC = () => {
   const [open, setOpen] = useState(false);
@@ -48,6 +49,11 @@ const Navbar: FC = () => {
   const handleNavigatePercentile = () => {
     navigate("/percentile");
   };
+
+  const handleNavigateExport = () => {
+    navigate("/export");
+  };
+
   return (
     <nav className={s.navbar}>
       <Link to={"/"} className={s.logo}>
@@ -84,6 +90,11 @@ const Navbar: FC = () => {
                     text="Percentile"
                     Icon={PercentIcon}
                     onClick={handleNavigatePercentile}
+                  />
+                  <DrawerBtn
+                    text="Export"
+                    Icon={FileDownloadIcon}
+                    onClick={handleNavigateExport}
                   />
                 </>
               }

@@ -6,6 +6,7 @@ import View from "./pages/View/View";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Percentile from "./pages/Percentile/Percentile";
 import SignIn from "./pages/Auth/SignIn/SignIn";
+import Export from "./pages/Export/Export";
 
 export const router = createBrowserRouter(
   [
@@ -19,6 +20,7 @@ export const router = createBrowserRouter(
         { path: "/view", element: <View /> },
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/percentile", element: <Percentile /> },
+        { path: "/export", element: <Export /> },
       ],
     },
   ],

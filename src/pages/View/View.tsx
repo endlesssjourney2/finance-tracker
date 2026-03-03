@@ -17,6 +17,7 @@ const View: FC = () => {
   const { user, loading: authLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
+
   const {
     loading: expensesLoading,
     expenses,
@@ -96,6 +97,10 @@ const View: FC = () => {
         <div className={s.totalAmount}>
           <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
         </div>
+
+        {
+          //changes here soon(with styles or could be universal component)
+        }
         <div className={s.searchContainer}>
           <input
             className={s.searchInput}

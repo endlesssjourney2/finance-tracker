@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import type { Expense } from "../types/Expense";
 import type { User } from "@supabase/supabase-js";
-import dayjs from "dayjs";
 import { downloadBlob, toCsv } from "../helpers/downloadExpenses";
+import { abbreviatedDate } from "../helpers/abbreviatedDate";
 
 export const useExpenses = (user: User | null) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -43,21 +43,21 @@ export const useExpenses = (user: User | null) => {
   const exportExpensesJSON = () => {
     if (!user) return;
     const payload = {
-      exportedAt: dayjs(),
+      exportedAt: abbreviatedDate(),
       expenses,
       userId: user.id,
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
       type: "application/json",
     });
-    downloadBlob(blob, `expenses-${dayjs()}.json`);
+    downloadBlob(blob, `expenses-${abbreviatedDate()}.json`);
   };
 
   const exportExpensesCsv = () => {
     if (!user) return;
     const csv = toCsv(expenses);
     const blob = new Blob([csv], { type: "text/csv" });
-    downloadBlob(blob, `expenses-${dayjs()}.csv`);
+    downloadBlob(blob, `expenses-${abbreviatedDate()}.csv`);
   };
 
   return {

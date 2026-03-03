@@ -35,8 +35,13 @@ const View: FC = () => {
     0,
   );
 
-  const filteredExpenses = expenses.filter((expense) =>
-    expense.category.toLowerCase().includes(debouncedValue.toLowerCase()),
+  const filteredExpenses = expenses.filter(
+    (expense) =>
+      expense.category.toLowerCase().includes(debouncedValue.toLowerCase()) ||
+      (expense.description !== null &&
+        expense.description
+          .toLowerCase()
+          .includes(debouncedValue.toLowerCase())),
   );
 
   const handleCloseModal = () => {

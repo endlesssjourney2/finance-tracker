@@ -23,17 +23,14 @@ const ExpensesList: FC<ExpensesListProps> = ({
     <>
       <li key={id} className={s.expenseItem} onClick={onClick}>
         <div className={s.item}>
+          <h2 className={s.category}>{category}</h2>
+          <p className={s.description}>
+            {description ? description : "No description"}
+          </p>
           <h3 className={s.amount}>
             <span className={s.desc}>Amount: </span>
             {amount} $
           </h3>
-          <p className={s.category}>
-            <span className={s.desc}>Category: </span>
-            {category}
-          </p>
-          <p className={s.description}>
-            {description ? description : "No description"}
-          </p>
         </div>
         <div className={s.itemDate}>
           <h3 className={s.date}>{monthLabel(date, "MMM D, YYYY")}</h3>

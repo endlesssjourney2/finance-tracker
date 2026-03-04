@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import s from "./View.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useExpenses } from "../../hooks/useExpenses";
@@ -22,7 +22,14 @@ const View: FC = () => {
     loading: expensesLoading,
     expenses,
     deleteExpense,
+    updateExpense,
   } = useExpenses(user);
+
+  useEffect(() => {
+    if (!selectedExpense) return;
+    const updated = expenses.find((e) => e.id === selectedExpense.id);
+    if (updated) setSelectedExpense(updated);
+  }, [expenses]);
 
   const [searchItem, setSearchItem] = useState("");
   const debouncedValue = useDebounce(searchItem, 300);
@@ -139,6 +146,7 @@ const View: FC = () => {
             <ModalContent
               selectedExpense={selectedExpense}
               onDelete={deleteAndCloseModal}
+              onUpdate={updateExpense}
             />
           )
         }

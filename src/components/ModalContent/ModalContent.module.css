@@ -39,8 +39,49 @@
   color: var(--color-text-secondary);
 }
 
-.deleteButton {
-  background-color: var(--color-error);
+/* edit  */
+
+.modalContentEdit {
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  flex-wrap: nowrap;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  width: 600px;
+}
+
+.modalHeader {
+  color: var(--color-text-primary);
+  margin-top: 20px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 85%;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* buttons */
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.button {
   color: white;
   border: none;
   padding: 12px 24px;
@@ -51,6 +92,26 @@
   text-transform: uppercase;
 }
 
-.deleteButton:hover {
+.save {
+  background-color: var(--color-success);
+}
+
+.save:hover {
+  background-color: var(--color-success-hover);
+}
+
+.cancel {
+  background-color: var(--color-error);
+}
+
+.cancel:hover {
   background-color: var(--color-error-hover);
+}
+
+.edit {
+  background-color: var(--color-edit);
+}
+
+.edit:hover {
+  background-color: var(--color-edit-hover);
 }

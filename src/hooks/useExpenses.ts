@@ -40,6 +40,27 @@ export const useExpenses = (user: User | null) => {
     setExpenses((prev) => prev.filter((e) => e.id !== id));
   };
 
+  const updateExpense = async (
+    id: string,
+    updated: Omit<Expense, "id" | "user_id">,
+  ) => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from("expenses")
+      .update(updated)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error updating expense", error.message);
+      return;
+    }
+    setExpenses((prev) => {
+      return prev.map((e) => (e.id === id ? (data as Expense) : e));
+    });
+  };
+
   const exportExpensesJSON = () => {
     if (!user) return;
     const payload = {
@@ -67,5 +88,6 @@ export const useExpenses = (user: User | null) => {
     deleteExpense,
     exportExpensesJSON,
     exportExpensesCsv,
+    updateExpense,
   };
 };

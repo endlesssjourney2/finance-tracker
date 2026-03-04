@@ -9,6 +9,7 @@ type InputHomeProps = {
   onChange: (e: string) => void;
   onBlur?: () => void;
   label: string;
+  required?: boolean;
 };
 
 const InputHome: FC<InputHomeProps> = ({
@@ -18,9 +19,11 @@ const InputHome: FC<InputHomeProps> = ({
   onChange,
   onBlur,
   label = "Label",
+  required,
 }) => {
   return (
     <TextField
+      required={required}
       error={error}
       helperText={helperText}
       fullWidth

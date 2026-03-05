@@ -4,6 +4,7 @@ import type { Expense } from "../types/Expense";
 import type { User } from "@supabase/supabase-js";
 import { downloadBlob, toCsv } from "../helpers/downloadExpenses";
 import { abbreviatedDate } from "../helpers/abbreviatedDate";
+import Papa from "papaparse";
 
 export const useExpenses = (user: User | null) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -81,6 +82,62 @@ export const useExpenses = (user: User | null) => {
     downloadBlob(blob, `expenses-${abbreviatedDate()}.csv`);
   };
 
+  const importExpensesCsv = async (file: File) => {
+    if (!user) return;
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: async (results) => {
+        const parsed = (results.data as Record<string, string>[]).map(
+          (row) => ({
+            user_id: user.id,
+            amount: Number(row.amount),
+            category: row.category,
+            description: row.description || "",
+            date: row.date,
+          }),
+        );
+        const { data, error } = await supabase
+          .from("expenses")
+          .update(parsed)
+          .select();
+
+        if (error) {
+          console.error("Error importing expenses", error.message);
+          return;
+        }
+
+        setExpenses((prev) => [...(data as Expense[]), ...prev]);
+      },
+    });
+  };
+
+  const importExpensesJSON = async (file: File) => {
+    if (!user) return;
+
+    const text = await file.text();
+    const json = JSON.parse(text);
+
+    const parsed = (json.expenses as Expense[]).map((row) => ({
+      user_id: user.id,
+      amount: row.amount,
+      category: row.category,
+      description: row.description,
+      date: row.date,
+    }));
+
+    const { data, error } = await supabase
+      .from("expenses")
+      .update(parsed)
+      .select();
+
+    if (error) {
+      console.error("Error importing expenses", error.message);
+      return;
+    }
+    setExpenses((prev) => [...(data as Expense[]), ...prev]);
+  };
+
   return {
     expenses,
     loading,
@@ -89,5 +146,7 @@ export const useExpenses = (user: User | null) => {
     exportExpensesJSON,
     exportExpensesCsv,
     updateExpense,
+    importExpensesCsv,
+    importExpensesJSON,
   };
 };

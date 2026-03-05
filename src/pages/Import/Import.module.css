@@ -1,0 +1,16 @@
+.importPage {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.content {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+}

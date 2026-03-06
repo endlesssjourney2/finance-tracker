@@ -99,7 +99,7 @@ export const useExpenses = (user: User | null) => {
         );
         const { data, error } = await supabase
           .from("expenses")
-          .update(parsed)
+          .insert(parsed)
           .select();
 
         if (error) {
@@ -128,7 +128,7 @@ export const useExpenses = (user: User | null) => {
 
     const { data, error } = await supabase
       .from("expenses")
-      .update(parsed)
+      .insert(parsed)
       .select();
 
     if (error) {

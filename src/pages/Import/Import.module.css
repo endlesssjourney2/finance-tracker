@@ -12,5 +12,40 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 30px;
+}
+
+.inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.label {
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-btn-bg-secondary);
+  color: var(--color-btn-text-secondary);
+  transition: background-color 0.3s ease;
+}
+
+.label:hover {
+  background-color: var(--color-btn-hover-secondary);
+}
+
+.description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.descHeading {
+  color: var(--color-text-secondary);
 }

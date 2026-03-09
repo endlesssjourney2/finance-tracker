@@ -95,11 +95,15 @@
 
 .cardTitle {
   color: var(--color-text-primary);
+  font-size: 28px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .text {
   text-align: center;
   line-height: 1.7;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
 }
 
 .code {

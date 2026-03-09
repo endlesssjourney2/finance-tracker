@@ -1,12 +1,14 @@
-import { Divider } from "@mui/material";
+import { Alert, Divider, Snackbar } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { useExpenses } from "../../hooks/useExpenses";
 import { useAuth } from "../Auth/AuthContext";
 import s from "./Import.module.css";
+import { useState } from "react";
 
 const Import = () => {
   const { user } = useAuth();
   const { importExpensesCsv, importExpensesJSON } = useExpenses(user);
+  const [message, setMessage] = useState("");
 
   return (
     <div className={s.importPage}>
@@ -17,9 +19,18 @@ const Import = () => {
             type="file"
             accept=".csv"
             id="importCsv"
-            onChange={(e) => {
+            onChange={async (e) => {
               const file = e.target.files?.[0];
-              if (file) importExpensesCsv(file);
+              const input = e.currentTarget;
+              if (!file) return;
+              try {
+                await importExpensesCsv(file);
+                setMessage("Import complete!");
+              } catch (e) {
+                console.error(e);
+              } finally {
+                input.value = "";
+              }
             }}
             style={{ display: "none" }}
           />
@@ -27,9 +38,18 @@ const Import = () => {
             type="file"
             accept=".json"
             id="importJSON"
-            onChange={(e) => {
+            onChange={async (e) => {
               const file = e.target.files?.[0];
-              if (file) importExpensesJSON(file);
+              const input = e.currentTarget;
+              if (!file) return;
+              try {
+                await importExpensesJSON(file);
+                setMessage("Import complete!");
+              } catch (e) {
+                console.error(e);
+              } finally {
+                input.value = "";
+              }
             }}
             style={{ display: "none" }}
           />
@@ -90,7 +110,7 @@ const Import = () => {
 
               <pre className={s.code}>
                 {`amount,category,description,date
-100,Food,lunch,2026-03-01T12:00:00+00:00`}
+100(amount),category,desc,2026-03-01T12:00:00+00:00`}
               </pre>
               <p className={s.warning}>
                 The first row <b>must</b> contain column names. Do not include{" "}
@@ -101,6 +121,23 @@ const Import = () => {
           </div>
         </div>
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={message !== ""}
+        autoHideDuration={2500}
+        onClose={(_, reason) => {
+          if (reason === "clickaway") return;
+          setMessage("");
+        }}
+      >
+        <Alert
+          severity="success"
+          variant="filled"
+          onClose={() => setMessage("")}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

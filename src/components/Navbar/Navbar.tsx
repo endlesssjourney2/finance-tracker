@@ -13,6 +13,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import GridViewIcon from "@mui/icons-material/GridView";
 import AddHomeIcon from "@mui/icons-material/AddHome";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import PublishIcon from "@mui/icons-material/Publish";
 
 const Navbar: FC = () => {
   const [open, setOpen] = useState(false);
@@ -52,6 +53,10 @@ const Navbar: FC = () => {
 
   const handleNavigateExport = () => {
     navigate("/export");
+  };
+
+  const handleNavigateImport = () => {
+    navigate("/import");
   };
 
   return (
@@ -95,6 +100,11 @@ const Navbar: FC = () => {
                     text="Export"
                     Icon={FileDownloadIcon}
                     onClick={handleNavigateExport}
+                  />
+                  <DrawerBtn
+                    text="Import"
+                    Icon={PublishIcon}
+                    onClick={handleNavigateImport}
                   />
                 </>
               }

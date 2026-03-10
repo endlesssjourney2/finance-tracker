@@ -86,8 +86,8 @@ const Import = () => {
   "expenses": [
     {
       "amount": 100,
-      "category": "Food",
-      "description": "lunch",
+      "category": "Food(category)",
+      "description": "lunch(description)",
       "date": "2026-03-01T12:00:00+00:00"
     }
   ]
@@ -110,7 +110,7 @@ const Import = () => {
 
               <pre className={s.code}>
                 {`amount,category,description,date
-100(amount),category,desc,2026-03-01T12:00:00+00:00`}
+100(amount),Food(category),lunch(description),2026-03-01T12:00:00+00:00`}
               </pre>
               <p className={s.warning}>
                 The first row <b>must</b> contain column names. Do not include{" "}

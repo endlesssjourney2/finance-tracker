@@ -71,6 +71,7 @@ const useGoals = (user: User | null) => {
     if (error) {
       console.error("Error deleting goal", error.message);
     }
+    setGoals((prev) => prev.filter((g) => g.id !== id));
   };
 
   return {

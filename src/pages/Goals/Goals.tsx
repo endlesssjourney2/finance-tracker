@@ -7,6 +7,7 @@ import { useExpenses } from "../../hooks/useExpenses";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import { Button } from "@mui/material";
 import { useMemo } from "react";
+import SkeletonGoals from "../../components/Skeleton/SkeletonGoals/SkeletonGoals";
 const Goals = () => {
   const { user, loading: authLoading } = useAuth();
   const { expenses } = useExpenses(user);
@@ -34,9 +35,16 @@ const Goals = () => {
   const loading = authLoading || goalsLoading;
 
   if (loading) {
-    return <LoadingProgress loading={loading} />;
+    return (
+      <div className={s.goals}>
+        <Header title="Goals page" />
+        <div className={s.content}>
+          <SkeletonGoals />
+        </div>
+        <LoadingProgress loading={loading} />
+      </div>
+    );
   }
-
   return (
     <div className={s.goals}>
       <Header title="Goals page" />

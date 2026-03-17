@@ -2,7 +2,7 @@ import s from "./ModalContent.module.css";
 import { useState, type FC } from "react";
 import type { Expense } from "../../types/Expense";
 import { monthLabel } from "../../helpers/monthLabel";
-import InputHome from "../InputHome/InputHome";
+import InputHome from "../CustomInput/CustomInput";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { datePickerSx } from "../../InputStyles";

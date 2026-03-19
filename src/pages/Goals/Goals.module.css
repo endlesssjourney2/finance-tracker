@@ -1,4 +1,4 @@
-.goals {
+.goalsPage {
   min-height: 100vh;
   background: var(--color-bg-primary);
   display: flex;
@@ -22,6 +22,36 @@
   align-items: center;
   flex-direction: column;
   gap: 8px;
+}
+
+.helper {
+  text-align: center;
+  color: var(--color-text-primary);
+  font-size: 18px;
+}
+
+.goalsInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoTitle {
+  font-family: "Montserrat", sans-serif;
+}
+
+.totalTitle {
+  color: var(--color-text-secondary);
+  font-size: 28px;
+}
+
+.completedGoals {
+  color: var(--color-text-secondary);
+  font-size: 20px;
+  opacity: 0.8;
 }
 
 .list {
@@ -120,6 +150,12 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--color-text-primary);
+}
+
+.goalCategory {
+  font-size: 16px;
+  font-weight: 450;
+  color: var(--color-text-secondary);
 }
 
 .buttons {

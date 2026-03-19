@@ -9,6 +9,7 @@ const useGoals = (user: User | null) => {
   const [amount, setAmount] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
+  const [animation, setAnimation] = useState<boolean>(false);
 
   useEffect(() => {
     if (!user) return;
@@ -74,6 +75,17 @@ const useGoals = (user: User | null) => {
     setGoals((prev) => prev.filter((g) => g.id !== id));
   };
 
+  const completeGoal = async (id: string) => {
+    if (!user) return;
+
+    const { error } = await supabase.from("goals").delete().eq("id", id);
+    if (error) {
+      console.error("Error completing goal", error.message);
+    }
+    setAnimation(true);
+    setGoals((prev) => prev.filter((g) => g.id !== id));
+  };
+
   return {
     goals,
     loading,
@@ -85,6 +97,9 @@ const useGoals = (user: User | null) => {
     setCategory,
     name,
     setName,
+    animation,
+    completeGoal,
+    setAnimation,
   };
 };
 

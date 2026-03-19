@@ -8,6 +8,7 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import { Button } from "@mui/material";
 import { useMemo } from "react";
 import SkeletonGoals from "../../components/Skeleton/SkeletonGoals/SkeletonGoals";
+import Confetti from "react-confetti";
 const Goals = () => {
   const { user, loading: authLoading } = useAuth();
   const { expenses } = useExpenses(user);
@@ -23,6 +24,9 @@ const Goals = () => {
     setCategory,
     name,
     setName,
+    completeGoal,
+    animation,
+    setAnimation,
   } = useGoals(user);
 
   const spentByCategory = useMemo(() => {
@@ -31,6 +35,16 @@ const Goals = () => {
       return acc;
     }, {});
   }, [expenses]);
+
+  const totalGoals = useMemo(() => {
+    return goals.length;
+  }, [goals]);
+
+  const completedGoals = useMemo(() => {
+    return goals.filter(
+      (goal) => (spentByCategory[goal.category] ?? 0) >= goal.goal,
+    ).length;
+  }, [goals, spentByCategory]);
 
   const loading = authLoading || goalsLoading;
 
@@ -46,7 +60,7 @@ const Goals = () => {
     );
   }
   return (
-    <div className={s.goals}>
+    <div className={s.goalsPage}>
       <Header title="Goals page" />
       <div className={s.content}>
         <div className={s.inputs}>
@@ -68,9 +82,21 @@ const Goals = () => {
             label="Category"
             required
           />
+          <span className={s.helper}>
+            When you add a new expense, make sure the category name exactly
+            matches the goal category
+          </span>
           <Button onClick={addGoal} className={s.addBtn} variant="contained">
             Add goal
           </Button>
+        </div>
+        <div className={s.goalsInfo}>
+          <h2 className={`${s.infoTitle} ${s.totalTitle}`}>
+            Your goals : {totalGoals}
+          </h2>
+          <span className={`${s.infoTitle} ${s.completedGoals}`}>
+            Completed: {completedGoals}
+          </span>
         </div>
         <div className={s.list}>
           <ul className={s.goalsList}>
@@ -89,9 +115,11 @@ const Goals = () => {
 
                   <progress className={s.progress} value={progress} max={100} />
                   <div className={s.itemBottom}>
+                    <span className={s.goalCategory}>{goal.category}</span>
                     <span className={s.goalPercent}>
                       {Math.round(progress)}%
                     </span>
+
                     <div className={s.buttons}>
                       <button
                         className={`${s.btn} ${s.deleteBtn}`}
@@ -101,8 +129,8 @@ const Goals = () => {
                       </button>
                       <button
                         className={`${s.btn} ${s.completeBtn}`}
-                        onClick={() => deleteGoal(goal.id)}
-                        disabled={spent < goal.goal}
+                        onClick={() => completeGoal(goal.id)}
+                        disabled={spent < goal.goal || animation}
                       >
                         Complete
                       </button>
@@ -114,6 +142,20 @@ const Goals = () => {
           </ul>
         </div>
       </div>
+      {animation && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          onConfettiComplete={() => setAnimation(false)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 9999,
+          }}
+        />
+      )}
     </div>
   );
 };

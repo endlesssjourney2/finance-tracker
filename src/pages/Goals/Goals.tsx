@@ -90,14 +90,17 @@ const Goals = () => {
             Add goal
           </Button>
         </div>
-        <div className={s.goalsInfo}>
-          <h2 className={`${s.infoTitle} ${s.totalTitle}`}>
-            Your goals : {totalGoals}
-          </h2>
-          <span className={`${s.infoTitle} ${s.completedGoals}`}>
-            Completed: {completedGoals}
-          </span>
-        </div>
+        {goals.length > 0 && (
+          <div className={s.goalsInfo}>
+            <h2 className={`${s.infoTitle} ${s.totalTitle}`}>
+              Your goals: {totalGoals}
+            </h2>
+            <span className={`${s.infoTitle} ${s.completedGoals}`}>
+              Completed: {completedGoals}
+            </span>
+          </div>
+        )}
+
         <div className={s.list}>
           <ul className={s.goalsList}>
             {goals.map((goal) => {

@@ -12,13 +12,13 @@ type InputHomeProps = {
   required?: boolean;
 };
 
-const InputHome: FC<InputHomeProps> = ({
+const CustomInput: FC<InputHomeProps> = ({
   error,
   helperText,
   value,
   onChange,
   onBlur,
-  label = "Label",
+  label = value,
   required,
 }) => {
   return (
@@ -36,4 +36,4 @@ const InputHome: FC<InputHomeProps> = ({
   );
 };
 
-export default InputHome;
+export default CustomInput;

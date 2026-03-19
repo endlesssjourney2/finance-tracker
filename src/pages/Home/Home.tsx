@@ -9,10 +9,10 @@ import { DatePicker } from "@mui/x-date-pickers";
 import ExpensesSkeleton from "../../components/Skeleton/SkeletonHome/SkeletonHome";
 import LinkButton from "../../components/LinkButton/LinkButton";
 import ExpensesListHome from "../../components/ExpensesListHome/ExpensesListHome";
-import InputHome from "../../components/InputHome/InputHome";
 import { useHome } from "../../hooks/useHome";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
+import CustomInput from "../../components/CustomInput/CustomInput";
 
 const Home: FC = () => {
   const { user } = useAuth();
@@ -49,7 +49,7 @@ const Home: FC = () => {
       <Header title="Add your finance" />
       <div className={s.content}>
         <div className={s.addExpense}>
-          <InputHome
+          <CustomInput
             error={touched.amount && amount === ""}
             helperText={touched.amount && amount === "" && "Amount is required"}
             value={amount}
@@ -57,7 +57,7 @@ const Home: FC = () => {
             onChange={setAmount}
             onBlur={() => setTouched({ ...touched, amount: true })}
           />
-          <InputHome
+          <CustomInput
             error={touched.category && category === ""}
             helperText={
               touched.category && category === "" && "Category is required"
@@ -67,7 +67,7 @@ const Home: FC = () => {
             onChange={setCategory}
             onBlur={() => setTouched({ ...touched, category: true })}
           />
-          <InputHome
+          <CustomInput
             value={description}
             label="Description"
             onChange={setDescription}

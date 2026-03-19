@@ -8,6 +8,7 @@ import Percentile from "./pages/Percentile/Percentile";
 import SignIn from "./pages/Auth/SignIn/SignIn";
 import Export from "./pages/Export/Export";
 import Import from "./pages/Import/Import";
+import Goals from "./pages/Goals/Goals";
 
 export const router = createBrowserRouter(
   [
@@ -23,6 +24,7 @@ export const router = createBrowserRouter(
         { path: "/percentile", element: <Percentile /> },
         { path: "/export", element: <Export /> },
         { path: "/import", element: <Import /> },
+        { path: "/goals", element: <Goals /> },
       ],
     },
   ],

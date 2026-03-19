@@ -1,0 +1,203 @@
+.goalsPage {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+}
+
+.content {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inputs {
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.helper {
+  text-align: center;
+  color: var(--color-text-primary);
+  font-size: 18px;
+}
+
+.goalsInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoTitle {
+  font-family: "Montserrat", sans-serif;
+}
+
+.totalTitle {
+  color: var(--color-text-secondary);
+  font-size: 28px;
+}
+
+.completedGoals {
+  color: var(--color-text-secondary);
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.goalsList {
+  list-style: none;
+  width: 100%;
+  max-width: 600px;
+}
+
+.item {
+  background-color: var(--color-card-bg);
+  color: var(--color-text-primary);
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid var(--color-card-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 24px var(--color-shadow);
+  transition: all 0.2s ease;
+}
+
+.item:hover {
+  background-color: var(--color-card-hover);
+  transform: translateY(-2px);
+}
+
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.goalName {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.goalAmount {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+/* Chrome */
+.progress::-webkit-progress-bar {
+  background-color: var(--color-bg-secondary);
+  border-radius: 10px;
+}
+
+.progress::-webkit-progress-value {
+  background: linear-gradient(
+    90deg,
+    var(--color-btn-bg-primary),
+    var(--color-accent-blue)
+  );
+  border-radius: 10px;
+}
+
+/* Firefox */
+.progress::-moz-progress-bar {
+  background: linear-gradient(
+    90deg,
+    var(--color-btn-bg-primary),
+    var(--color-accent-blue)
+  );
+}
+
+.itemBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.goalPercent {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.goalCategory {
+  font-size: 16px;
+  font-weight: 450;
+  color: var(--color-text-secondary);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.deleteBtn {
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-error);
+  color: var(--color-btn-text-secondary);
+}
+
+.completeBtn {
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.completeBtn:hover {
+  background-color: var(--color-success);
+  color: var(--color-btn-text-secondary);
+}
+
+.completeBtn:disabled {
+  background: transparent;
+  color: var(--color-card-border);
+  border: 1px solid var(--color-card-border);
+  cursor: not-allowed;
+}

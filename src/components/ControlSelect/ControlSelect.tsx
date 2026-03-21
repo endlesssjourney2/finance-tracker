@@ -9,6 +9,7 @@ type ControlSelectProps = {
   values: string[];
   label: string;
   formatValue?: (v: string) => string;
+  allValues?: string;
 };
 
 const ControlSelect: FC<ControlSelectProps> = ({
@@ -18,6 +19,7 @@ const ControlSelect: FC<ControlSelectProps> = ({
   values,
   label,
   formatValue,
+  allValues,
 }) => {
   const format = formatValue ?? ((v) => v);
 
@@ -29,6 +31,7 @@ const ControlSelect: FC<ControlSelectProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
+        {allValues && <MenuItem value="">{allValues}</MenuItem>}
         {values.map((v) => (
           <MenuItem key={v} value={v} disabled={v === disabledValue}>
             {format(v)}

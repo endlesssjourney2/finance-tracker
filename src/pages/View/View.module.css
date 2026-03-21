@@ -74,26 +74,9 @@
 .searchContainer {
   width: 100%;
   display: flex;
-  justify-content: right;
+  justify-content: center;
+  align-items: center;
   margin: 20px 0 20px 0;
-}
-
-.searchInput {
-  width: 100%;
-  max-width: 400px;
-  font-size: 18px;
-  font-family: "Montserrat", sans-serif;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid var(--color-border-input);
-  border-radius: 8px;
-  background-color: var(--color-bg-input);
-  color: var(--color-input);
-  transition: all 0.125s ease-in-out;
-}
-
-.searchInput:hover {
-  border-color: var(--color-label-secondary-input);
 }
 
 .expensesList {

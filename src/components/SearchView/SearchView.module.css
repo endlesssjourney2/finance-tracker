@@ -1,0 +1,18 @@
+.search {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.searchMonths {
+  width: 100%;
+  max-width: 250px;
+  margin-bottom: 20px;
+}

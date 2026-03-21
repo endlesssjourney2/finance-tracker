@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useMemo, useState, type FC } from "react";
 import s from "./View.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useExpenses } from "../../hooks/useExpenses";
@@ -12,6 +12,7 @@ import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
 import ModalContent from "../../components/ModalContent/ModalContent";
 import { useDebounce } from "../../hooks/useDebounce";
+import SearchView from "../../components/SearchView/SearchView";
 
 const View: FC = () => {
   const { user, loading: authLoading } = useAuth();
@@ -32,6 +33,7 @@ const View: FC = () => {
   }, [expenses]);
 
   const [searchItem, setSearchItem] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
   const debouncedValue = useDebounce(searchItem, 300);
 
   const navigate = useNavigate();
@@ -43,14 +45,29 @@ const View: FC = () => {
     0,
   );
 
-  const filteredExpenses = expenses.filter(
-    (expense) =>
-      expense.category.toLowerCase().includes(debouncedValue.toLowerCase()) ||
-      (expense.description !== null &&
-        expense.description
-          .toLowerCase()
-          .includes(debouncedValue.toLowerCase())),
-  );
+  const monthsFromExpenses = Array.from(
+    new Set(
+      expenses.map((expense) => {
+        return expense.date.slice(0, 7);
+      }),
+    ),
+  ).sort();
+
+  const filteredExpenses = useMemo(() => {
+    return expenses.filter((expense) => {
+      const expenseByName =
+        expense.category.toLowerCase().includes(debouncedValue.toLowerCase()) ||
+        (expense.description !== null &&
+          expense.description
+            .toLowerCase()
+            .includes(debouncedValue.toLowerCase()));
+
+      const expenseByMonths =
+        selectedMonth === "" || expense.date.slice(0, 7) === selectedMonth;
+
+      return expenseByName && expenseByMonths;
+    });
+  }, [expenses, debouncedValue, selectedMonth]);
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -104,20 +121,13 @@ const View: FC = () => {
         <div className={s.totalAmount}>
           <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
         </div>
-
-        {
-          //changes here soon(with styles or could be universal component)
-        }
-        <div className={s.searchContainer}>
-          <input
-            className={s.searchInput}
-            type="text"
-            placeholder="Search finances..."
-            value={searchItem}
-            onChange={(e) => setSearchItem(e.target.value)}
-          />
-        </div>
-
+        <SearchView
+          value={searchItem}
+          onChangeValue={setSearchItem}
+          months={monthsFromExpenses}
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+        />
         {filteredExpenses.length === 0 && (
           <div className={s.noResults}>
             <h2 className={s.noResultsText}>No expenses found.</h2>

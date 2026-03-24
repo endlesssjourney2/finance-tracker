@@ -21,3 +21,19 @@
   color: #fff;
   background-color: #444444;
 }
+
+.text {
+  font-size: 28px;
+}
+
+@media (max-width: 768px) {
+  .text {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text {
+    font-size: 18px;
+  }
+}

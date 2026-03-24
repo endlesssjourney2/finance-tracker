@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useMemo, type FC } from "react";
 import s from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { Alert, Button, Snackbar } from "@mui/material";
@@ -35,10 +35,9 @@ const Home: FC = () => {
 
   const navigate = useNavigate();
 
-  const totalAmount = expenses.reduce(
-    (sum, expense) => sum + expense.amount,
-    0,
-  );
+  const totalAmount = useMemo(() => {
+    return expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  }, [expenses]);
 
   const handleNavigateView = () => {
     navigate("/view");

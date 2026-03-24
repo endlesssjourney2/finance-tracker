@@ -15,6 +15,8 @@ import AddHomeIcon from "@mui/icons-material/AddHome";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PublishIcon from "@mui/icons-material/Publish";
 import FlagIcon from "@mui/icons-material/Flag";
+import ContrastIcon from "@mui/icons-material/Contrast";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar: FC = () => {
   const [open, setOpen] = useState(false);
@@ -69,55 +71,12 @@ const Navbar: FC = () => {
         <h1 className={s.title}>Expense Tracker</h1>
       </Link>
 
-      <div className={s.links}>
+      <div className={s.desktopLinks}>
         {loading ? null : user ? (
           <div className={s.buttons}>
             <ThemeToggleButton onClick={toggleTheme} />
             <NavButton text="Logout" onClick={handleLogout} />
             <NavButton text="Pages" onClick={toggleDrawer} />
-            <CustomDrawer
-              onClose={toggleDrawer}
-              open={open}
-              content={
-                <>
-                  <DrawerBtn
-                    text="Home"
-                    Icon={AddHomeIcon}
-                    onClick={() => navigate("/")}
-                  />
-                  <DrawerBtn
-                    text="View"
-                    Icon={GridViewIcon}
-                    onClick={handleNavigateView}
-                  />
-                  <DrawerBtn
-                    text="Dashboard"
-                    Icon={DashboardIcon}
-                    onClick={handleNavigateDashboard}
-                  />
-                  <DrawerBtn
-                    text="Percentile"
-                    Icon={PercentIcon}
-                    onClick={handleNavigatePercentile}
-                  />
-                  <DrawerBtn
-                    text="Goals"
-                    Icon={FlagIcon}
-                    onClick={handleNavigateGoals}
-                  />
-                  <DrawerBtn
-                    text="Export"
-                    Icon={FileDownloadIcon}
-                    onClick={handleNavigateExport}
-                  />
-                  <DrawerBtn
-                    text="Import"
-                    Icon={PublishIcon}
-                    onClick={handleNavigateImport}
-                  />
-                </>
-              }
-            />
           </div>
         ) : (
           <div className={s.buttons}>
@@ -127,6 +86,74 @@ const Navbar: FC = () => {
           </div>
         )}
       </div>
+
+      <button className={s.menuBtn} onClick={toggleDrawer}>
+        ☰
+      </button>
+
+      <CustomDrawer
+        onClose={toggleDrawer}
+        open={open}
+        content={
+          <>
+            {loading ? null : user ? (
+              <>
+                <DrawerBtn
+                  text="Home"
+                  Icon={AddHomeIcon}
+                  onClick={() => navigate("/")}
+                />
+                <DrawerBtn
+                  text="View"
+                  Icon={GridViewIcon}
+                  onClick={handleNavigateView}
+                />
+                <DrawerBtn
+                  text="Dashboard"
+                  Icon={DashboardIcon}
+                  onClick={handleNavigateDashboard}
+                />
+                <DrawerBtn
+                  text="Percentile"
+                  Icon={PercentIcon}
+                  onClick={handleNavigatePercentile}
+                />
+                <DrawerBtn
+                  text="Goals"
+                  Icon={FlagIcon}
+                  onClick={handleNavigateGoals}
+                />
+                <DrawerBtn
+                  text="Export"
+                  Icon={FileDownloadIcon}
+                  onClick={handleNavigateExport}
+                />
+                <DrawerBtn
+                  text="Import"
+                  Icon={PublishIcon}
+                  onClick={handleNavigateImport}
+                />
+                <DrawerBtn
+                  text="Theme"
+                  Icon={ContrastIcon}
+                  onClick={toggleTheme}
+                />
+                <DrawerBtn
+                  text="Logout"
+                  Icon={LogoutIcon}
+                  onClick={handleLogout}
+                />
+              </>
+            ) : (
+              <>
+                <ThemeToggleButton onClick={toggleTheme} />
+                <NavButton text="Sign In" onClick={handleNavigateSignIn} />
+                <NavButton text="Sign Up" onClick={handleNavigateSignUp} />
+              </>
+            )}
+          </>
+        }
+      />
     </nav>
   );
 };

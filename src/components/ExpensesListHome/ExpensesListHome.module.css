@@ -10,45 +10,92 @@
 }
 
 .expenseItem {
-  list-style: none;
-  width: 70%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  list-style: none;
+  width: 65%;
   gap: 10px;
   padding: 10px;
   border: 1px solid var(--color-border);
   border-radius: 8px;
   background: var(--color-bg-secondary);
   flex-wrap: nowrap;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+}
+
+.itemTop {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.itemMiddle {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  border-top: 0.5px solid var(--color-border-input);
+  border-bottom: 0.5px solid var(--color-border-input);
+}
+
+.itemBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .expenseAmount {
   color: var(--color-text-primary);
-  font-size: 1.1rem;
-  flex: 0 0 140px;
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 .expenseCategory {
   color: var(--color-text-primary);
   font-size: 1.05rem;
-  flex: 0 0 250px;
+  max-width: 40%;
+  font-weight: 500;
 }
 
 .expenseDescription {
   color: var(--color-text-secondary);
   font-size: 1rem;
-  max-width: 40%;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-  flex: 1;
-  min-width: 0;
+  font-weight: 450;
 }
 
 .expenseDate {
-  color: var(--color-text-secondary);
-  font-size: 1rem;
-  flex: 0 0 120px;
+  color: var(--color-text-primary);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .expenseItem {
+    width: 80%;
+  }
+  .expenseCategory {
+    font-size: 0.9rem;
+  }
+  .expenseAmount {
+    font-size: 0.95rem;
+  }
+  .expenseDescription {
+    font-size: 0.85rem;
+  }
+  .expenseDate {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .expenseCategory {
+    font-size: 0.7rem;
+  }
+  .expenseAmount {
+    font-size: 0.8rem;
+  }
+  .expenseDescription {
+    font-size: 0.8rem;
+  }
+  .expenseDate {
+    font-size: 0.85rem;
+  }
 }

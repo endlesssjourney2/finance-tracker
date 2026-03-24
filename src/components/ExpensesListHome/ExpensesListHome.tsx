@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
 import type { Expense } from "../../types/Expense";
 import s from "./ExpensesListHome.module.css";
 import { Button } from "@mui/material";
 import type { FC } from "react";
+import { monthLabel } from "../../helpers/monthLabel";
 
 type ExpensesListHomeProps = {
   expenses: Expense[];
@@ -17,25 +17,29 @@ const ExpensesListHome: FC<ExpensesListHomeProps> = ({
     <ul className={s.expensesList}>
       {expenses.map((expense) => (
         <li key={expense.id} className={s.expenseItem}>
-          <h3 className={s.expenseAmount}>Amount: {expense.amount} $</h3>
-          <h4 className={s.expenseCategory}>Category: {expense.category}</h4>
-          {expense.description ? (
+          <div className={s.itemTop}>
+            <span className={s.expenseCategory}>
+              Category: {expense.category}
+            </span>
+            <span className={s.expenseAmount}>Amount: {expense.amount} $</span>
+          </div>
+          <div className={s.itemMiddle}>
             <p className={s.expenseDescription}>
-              Description: {expense.description}
+              {expense.description ? expense.description : "No description"}
             </p>
-          ) : (
-            <p className={s.expenseDescription}>No description</p>
-          )}
-          <p className={s.expenseDate}>
-            {dayjs(expense.date).format("MMM D, YYYY")}
-          </p>
-          <Button
-            color="error"
-            variant="contained"
-            onClick={() => deleteExpense(expense.id)}
-          >
-            Delete
-          </Button>
+          </div>
+          <div className={s.itemBottom}>
+            <p className={s.expenseDate}>
+              {monthLabel(expense.date, "MMMM D, YYYY")}
+            </p>
+            <Button
+              color="error"
+              variant="outlined"
+              onClick={() => deleteExpense(expense.id)}
+            >
+              Delete
+            </Button>
+          </div>
         </li>
       ))}
     </ul>

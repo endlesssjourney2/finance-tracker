@@ -10,7 +10,7 @@ type CustomDrawerProps = {
 
 const CustomDrawer: FC<CustomDrawerProps> = ({ onClose, open, content }) => {
   const DrawerList = (
-    <div className={s.drawer} onClick={onClose}>
+    <div className={s.drawer}>
       <div className={s.drawerHeader}>
         <h2>Choose a page</h2>
       </div>

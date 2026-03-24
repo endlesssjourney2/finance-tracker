@@ -15,7 +15,7 @@ const DrawerBtn: FC<DrawerBtnProps> = ({ text, Icon, onClick }) => {
   return (
     <button className={s.drawerBtn} onClick={onClick}>
       <Icon />
-      {text}
+      <span className={s.text}>{text}</span>
     </button>
   );
 };

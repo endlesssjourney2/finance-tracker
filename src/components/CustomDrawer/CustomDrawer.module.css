@@ -19,3 +19,15 @@
   gap: 10px;
   margin-top: 10px;
 }
+
+@media (max-width: 768px) {
+  .drawer {
+    width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .drawer {
+    width: 220px;
+  }
+}

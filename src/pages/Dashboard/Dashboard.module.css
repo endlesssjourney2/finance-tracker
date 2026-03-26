@@ -53,3 +53,9 @@
     transform: translateY(0px);
   }
 }
+
+@media (max-width: 768px) {
+  .links {
+    display: none;
+  }
+}

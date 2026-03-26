@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { COLORS } from "../../constants/Colors";
+import s from "./ChartsComponents.module.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -30,7 +31,7 @@ const ExpensesPieChart: FC<ExpensesPieChartProps> = ({ labels, values }) => {
         },
       ],
     }),
-    [labels, values]
+    [labels, values],
   );
 
   const options: ChartOptions<"pie"> = {
@@ -48,7 +49,7 @@ const ExpensesPieChart: FC<ExpensesPieChartProps> = ({ labels, values }) => {
   };
 
   return (
-    <div style={{ minWidth: "600px", maxWidth: "800px" }}>
+    <div className={s.chart}>
       <Pie data={data} options={options} />
     </div>
   );

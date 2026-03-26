@@ -16,3 +16,17 @@
   max-width: 200px;
   margin-bottom: 20px;
 }
+
+@media (max-width: 480px) {
+  .search {
+    flex-direction: column;
+  }
+
+  .searchInput {
+    max-width: 360px;
+  }
+
+  .searchMonths {
+    max-width: 360px;
+  }
+}

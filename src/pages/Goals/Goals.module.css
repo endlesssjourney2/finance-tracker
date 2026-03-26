@@ -27,7 +27,7 @@
 .helper {
   text-align: center;
   color: var(--color-text-primary);
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .goalsInfo {
@@ -45,12 +45,12 @@
 
 .totalTitle {
   color: var(--color-text-secondary);
-  font-size: 28px;
+  font-size: 1.75rem;
 }
 
 .completedGoals {
   color: var(--color-text-secondary);
-  font-size: 20px;
+  font-size: 1.25rem;
   opacity: 0.8;
 }
 
@@ -97,13 +97,13 @@
 }
 
 .goalName {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
 .goalAmount {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--color-text-secondary);
 }
@@ -147,13 +147,13 @@
 }
 
 .goalPercent {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
 .goalCategory {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 450;
   color: var(--color-text-secondary);
 }
@@ -169,7 +169,7 @@
   padding: 8px 14px;
   border-radius: 10px;
   font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   background-color: transparent;
   transition: all 0.2s ease;
@@ -200,4 +200,22 @@
   color: var(--color-card-border);
   border: 1px solid var(--color-card-border);
   cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .helper {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .helper {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .helper {
+    font-size: 0.785rem;
+  }
 }

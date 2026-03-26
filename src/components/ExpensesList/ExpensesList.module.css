@@ -66,3 +66,15 @@
 .desc {
   color: var(--color-text-secondary);
 }
+
+@media (max-width: 480px) {
+  .expenseItem {
+    max-width: 320px;
+  }
+  .item {
+    width: 100%;
+  }
+  .itemDate {
+    width: 95%;
+  }
+}

@@ -71,26 +71,40 @@
   opacity: 0.8;
 }
 
-.searchContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0 20px 0;
-}
-
 .expensesList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 228px);
-  justify-content: start;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 12px;
   list-style: none;
   word-break: break-word;
   overflow-wrap: anywhere;
-  text-align: center;
   width: 100%;
 }
 
 .footer {
   margin: 20px 0 20px 0;
+}
+
+@media (max-width: 1024px) {
+  .totalTitle {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .totalTitle {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .totalTitle {
+    font-size: 0.7rem;
+  }
+  .expensesList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 }

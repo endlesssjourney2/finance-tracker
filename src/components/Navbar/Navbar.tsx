@@ -17,6 +17,7 @@ import PublishIcon from "@mui/icons-material/Publish";
 import FlagIcon from "@mui/icons-material/Flag";
 import ContrastIcon from "@mui/icons-material/Contrast";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const Navbar: FC = () => {
   const [open, setOpen] = useState(false);
@@ -146,9 +147,21 @@ const Navbar: FC = () => {
               </>
             ) : (
               <>
-                <ThemeToggleButton onClick={toggleTheme} />
-                <NavButton text="Sign In" onClick={handleNavigateSignIn} />
-                <NavButton text="Sign Up" onClick={handleNavigateSignUp} />
+                <DrawerBtn
+                  text="Theme"
+                  Icon={ContrastIcon}
+                  onClick={toggleTheme}
+                />
+                <DrawerBtn
+                  text="Sign In"
+                  Icon={ExitToAppIcon}
+                  onClick={handleNavigateSignIn}
+                />
+                <DrawerBtn
+                  text="Sign Up"
+                  Icon={ExitToAppIcon}
+                  onClick={handleNavigateSignUp}
+                />
               </>
             )}
           </>

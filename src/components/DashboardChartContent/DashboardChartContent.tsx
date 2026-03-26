@@ -1,9 +1,9 @@
 import type { ChartType } from "../../types/ChartType";
 import { Link } from "react-router-dom";
-import ExpensesPieChart from "../ExpensesPieChart/ExpensesPieChart";
+import ExpensesPieChart from "../ChartsComponents/ExpensesPieChart";
 import s from "./DashboardChartContent.module.css";
-import ExpensesLineChart from "../ExpensesLineChart/ExpensesLineChart";
-import ExpensesBarChart from "../ExpensesBarChart/ExpensesBarChart";
+import ExpensesLineChart from "../ChartsComponents/ExpensesLineChart";
+import ExpensesBarChart from "../ChartsComponents/ExpensesBarChart";
 
 type DashboardChartContentProps = {
   user: unknown | null;

@@ -118,7 +118,10 @@ const Goals = () => {
 
                   <progress className={s.progress} value={progress} max={100} />
                   <div className={s.itemBottom}>
-                    <span className={s.goalCategory}>{goal.category}</span>
+                    <span className={s.goalCategory}>
+                      Category:{" "}
+                      <span className={s.categoryText}>{goal.category}</span>
+                    </span>
                     <span className={s.goalPercent}>
                       {Math.round(progress)}%
                     </span>

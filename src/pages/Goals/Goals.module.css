@@ -158,6 +158,13 @@
   color: var(--color-text-secondary);
 }
 
+.categoryText {
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  font-weight: 450;
+  opacity: 0.9;
+}
+
 .buttons {
   display: flex;
   justify-content: center;

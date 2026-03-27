@@ -3,7 +3,6 @@ import s from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { Alert, Button, Snackbar } from "@mui/material";
 import { datePickerSx } from "../../InputStyles";
-import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { DatePicker } from "@mui/x-date-pickers";
 import ExpensesSkeleton from "../../components/Skeleton/SkeletonHome/SkeletonHome";
@@ -11,13 +10,12 @@ import LinkButton from "../../components/LinkButton/LinkButton";
 import ExpensesListHome from "../../components/ExpensesListHome/ExpensesListHome";
 import { useHome } from "../../hooks/useHome";
 import Header from "../../components/Header/Header";
-import { useAuth } from "../Auth/AuthContext";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import useGoals from "../../hooks/useGoals";
+import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
 
 const Home: FC = () => {
-  const { user } = useAuth();
-  const { loading, expenses, setExpenses, deleteExpense } = useExpenses(user);
+  const { loading, expensesWithGoals, setExpenses, deleteExpense } =
+    useExpensesWithGoals();
   const {
     amount,
     setAmount,
@@ -32,30 +30,17 @@ const Home: FC = () => {
     errorMessage,
     setErrorMessage,
     addExpense,
-  } = useHome(user, setExpenses);
-
-  const { goals } = useGoals(user);
+  } = useHome(setExpenses);
 
   const navigate = useNavigate();
 
   const totalAmount = useMemo(() => {
-    return expenses.reduce((sum, expense) => sum + expense.amount, 0);
-  }, [expenses]);
+    return expensesWithGoals.reduce((sum, expense) => sum + expense.amount, 0);
+  }, [expensesWithGoals]);
 
   const handleNavigateView = () => {
     navigate("/view");
   };
-
-  const expensesWithGoals = useMemo(() => {
-    return expenses.map((expense) => ({
-      ...expense,
-      hasGoal: goals.some(
-        (goal) =>
-          goal.user_id === expense.user_id &&
-          goal.category === expense.category,
-      ),
-    }));
-  }, [expenses, goals]);
 
   return (
     <div className={s.home}>

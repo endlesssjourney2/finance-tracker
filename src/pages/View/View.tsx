@@ -1,36 +1,41 @@
 import { useEffect, useMemo, useState, type FC } from "react";
 import s from "./View.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useExpenses } from "../../hooks/useExpenses";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import ExpensesList from "../../components/ExpensesList/ExpensesList";
-import type { Expense } from "../../types/Expense";
+import type { Expense, ExpenseAndGoal } from "../../types/Expense";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
 import LinkButton from "../../components/LinkButton/LinkButton";
 import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 import Header from "../../components/Header/Header";
-import { useAuth } from "../Auth/AuthContext";
 import ModalContent from "../../components/ModalContent/ModalContent";
 import { useDebounce } from "../../hooks/useDebounce";
 import SearchView from "../../components/SearchView/SearchView";
+import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
 
 const View: FC = () => {
-  const { user, loading: authLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
+  const [selectedExpense, setSelectedExpense] = useState<ExpenseAndGoal | null>(
+    null,
+  );
 
+  //  Composable hook — combines useExpenses and useGoals.
+  // Using instead of useExpenses wherever need hasGoal or totalAmount.
   const {
+    authLoading,
     loading: expensesLoading,
-    expenses,
+    expensesWithGoals,
     deleteExpense,
     updateExpense,
-  } = useExpenses(user);
+    totalAmount,
+    user,
+  } = useExpensesWithGoals();
 
   useEffect(() => {
     if (!selectedExpense) return;
-    const updated = expenses.find((e) => e.id === selectedExpense.id);
+    const updated = expensesWithGoals.find((e) => e.id === selectedExpense.id);
     if (updated) setSelectedExpense(updated);
-  }, [expenses]);
+  }, [expensesWithGoals]);
 
   const [searchItem, setSearchItem] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -40,21 +45,16 @@ const View: FC = () => {
 
   const loading = authLoading || expensesLoading;
 
-  const totalAmount = expenses.reduce(
-    (sum, expense) => sum + expense.amount,
-    0,
-  );
-
   const monthsFromExpenses = Array.from(
     new Set(
-      expenses.map((expense) => {
+      expensesWithGoals.map((expense) => {
         return expense.date.slice(0, 7);
       }),
     ),
   ).sort();
 
   const filteredExpenses = useMemo(() => {
-    return expenses.filter((expense) => {
+    return expensesWithGoals.filter((expense) => {
       const expenseByName =
         expense.category.toLowerCase().includes(debouncedValue.toLowerCase()) ||
         (expense.description !== null &&
@@ -67,7 +67,7 @@ const View: FC = () => {
 
       return expenseByName && expenseByMonths;
     });
-  }, [expenses, debouncedValue, selectedMonth]);
+  }, [expensesWithGoals, debouncedValue, selectedMonth]);
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -107,7 +107,7 @@ const View: FC = () => {
             <Link className={s.link} to={"/login"}>
               Log in
             </Link>{" "}
-            to view your dashboard
+            to view your Finances
           </h2>
         </div>
       </div>
@@ -144,6 +144,7 @@ const View: FC = () => {
               category={expense.category}
               date={expense.date}
               description={expense.description}
+              hasGoal={expense.hasGoal}
             />
           ))}
         </ul>

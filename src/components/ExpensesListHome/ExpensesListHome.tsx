@@ -27,7 +27,7 @@ const ExpensesListHome: FC<ExpensesListHomeProps> = ({
             <p className={s.expenseDescription}>
               {expense.description ? expense.description : "No description"}
             </p>
-            {expense.hasGoal && <span className={s.forGoal}>Your goal</span>}
+            {expense.hasGoal && <span className={s.goal}>Your goal</span>}
           </div>
           <div className={s.itemBottom}>
             <p className={s.expenseDate}>

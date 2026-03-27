@@ -1,4 +1,4 @@
-import { useMemo, type FC } from "react";
+import { type FC } from "react";
 import s from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { Alert, Button, Snackbar } from "@mui/material";
@@ -14,8 +14,13 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
 
 const Home: FC = () => {
-  const { loading, expensesWithGoals, setExpenses, deleteExpense } =
-    useExpensesWithGoals();
+  const {
+    loading,
+    expensesWithGoals,
+    setExpenses,
+    deleteExpense,
+    totalAmount,
+  } = useExpensesWithGoals();
   const {
     amount,
     setAmount,
@@ -33,10 +38,6 @@ const Home: FC = () => {
   } = useHome(setExpenses);
 
   const navigate = useNavigate();
-
-  const totalAmount = useMemo(() => {
-    return expensesWithGoals.reduce((sum, expense) => sum + expense.amount, 0);
-  }, [expensesWithGoals]);
 
   const handleNavigateView = () => {
     navigate("/view");

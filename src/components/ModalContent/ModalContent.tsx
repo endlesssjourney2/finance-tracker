@@ -1,6 +1,6 @@
 import s from "./ModalContent.module.css";
 import { useState, type FC } from "react";
-import type { Expense } from "../../types/Expense";
+import type { Expense, ExpenseAndGoal } from "../../types/Expense";
 import { monthLabel } from "../../helpers/monthLabel";
 import InputHome from "../CustomInput/CustomInput";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { datePickerSx } from "../../InputStyles";
 
 type ModalContentProps = {
-  selectedExpense: Expense;
+  selectedExpense: ExpenseAndGoal;
   onDelete: (id: string) => Promise<void>;
   onUpdate: (
     id: string,
@@ -128,6 +128,7 @@ const ModalContent: FC<ModalContentProps> = ({
       <p className={s.modalDate}>
         {monthLabel(selectedExpense.date, "MMMM D, YYYY")}
       </p>
+      {selectedExpense.hasGoal && <span className={s.goal}>Your goal</span>}
       <div className={s.buttons}>
         <button
           className={`${s.button} ${s.cancel}`}

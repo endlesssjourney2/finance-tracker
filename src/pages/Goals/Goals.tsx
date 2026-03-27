@@ -1,17 +1,15 @@
 import s from "./Goals.module.css";
 import useGoals from "../../hooks/useGoals";
-import { useAuth } from "../Auth/AuthContext";
 import Header from "../../components/Header/Header";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
-import { useExpenses } from "../../hooks/useExpenses";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import { Button } from "@mui/material";
 import { useMemo } from "react";
 import SkeletonGoals from "../../components/Skeleton/SkeletonGoals/SkeletonGoals";
 import Confetti from "react-confetti";
+import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
 const Goals = () => {
-  const { user, loading: authLoading } = useAuth();
-  const { expenses } = useExpenses(user);
+  const { user, authLoading, spentByCategory } = useExpensesWithGoals();
 
   const {
     goals,
@@ -28,13 +26,6 @@ const Goals = () => {
     animation,
     setAnimation,
   } = useGoals(user);
-
-  const spentByCategory = useMemo(() => {
-    return expenses.reduce<Record<string, number>>((acc, e) => {
-      acc[e.category] = (acc[e.category] ?? 0) + e.amount;
-      return acc;
-    }, {});
-  }, [expenses]);
 
   const totalGoals = useMemo(() => {
     return goals.length;

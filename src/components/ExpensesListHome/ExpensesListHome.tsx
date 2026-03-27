@@ -1,11 +1,11 @@
-import type { Expense } from "../../types/Expense";
+import type { ExpenseAndGoal } from "../../types/Expense";
 import s from "./ExpensesListHome.module.css";
 import { Button } from "@mui/material";
 import type { FC } from "react";
 import { monthLabel } from "../../helpers/monthLabel";
 
 type ExpensesListHomeProps = {
-  expenses: Expense[];
+  expenses: ExpenseAndGoal[];
   deleteExpense: (id: string) => void;
 };
 
@@ -27,6 +27,7 @@ const ExpensesListHome: FC<ExpensesListHomeProps> = ({
             <p className={s.expenseDescription}>
               {expense.description ? expense.description : "No description"}
             </p>
+            {expense.hasGoal && <span className={s.goal}>Your goal</span>}
           </div>
           <div className={s.itemBottom}>
             <p className={s.expenseDate}>

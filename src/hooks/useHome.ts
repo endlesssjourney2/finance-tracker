@@ -1,15 +1,12 @@
-import type { User } from "@supabase/supabase-js";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import type { Touched } from "../types/Touched";
 import { supabase } from "../supabaseClient";
 import type { Expense } from "../types/Expense";
+import { useAuth } from "../pages/Auth/AuthContext";
 
-export const useHome = (
-  user: User | null,
-  setExpenses: Dispatch<SetStateAction<Expense[]>>,
-) => {
+export const useHome = (setExpenses: Dispatch<SetStateAction<Expense[]>>) => {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -19,6 +16,7 @@ export const useHome = (
     category: false,
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const { user } = useAuth();
 
   const addExpense = async () => {
     if (!user) {

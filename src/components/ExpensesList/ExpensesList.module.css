@@ -46,8 +46,14 @@
   gap: 5px;
 }
 
+.goal {
+  color: var(--color-success);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
 .amount {
-  font-size: 1.3rem;
+  font-size: 1.18rem;
   font-weight: bold;
 }
 

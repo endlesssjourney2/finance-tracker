@@ -27,10 +27,8 @@ const ExpensesList: FC<ExpensesListProps> = ({
           <p className={s.description}>
             {description ? description : "No description"}
           </p>
-          <h3 className={s.amount}>
-            <span className={s.desc}>Amount: </span>
-            {amount} $
-          </h3>
+
+          <span className={s.amount}>Amount: {amount} $</span>
         </div>
         <div className={s.itemDate}>
           <h3 className={s.date}>{monthLabel(date, "MMM D, YYYY")}</h3>

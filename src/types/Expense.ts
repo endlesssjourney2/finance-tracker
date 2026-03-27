@@ -7,4 +7,6 @@ export type Expense = {
   date: string;
 };
 
+export type ExpenseAndGoal = Expense & { hasGoal?: boolean };
+
 export type ExpenseLike = Pick<Expense, "amount" | "date">;

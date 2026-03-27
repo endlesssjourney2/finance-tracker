@@ -13,6 +13,7 @@ import { useHome } from "../../hooks/useHome";
 import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
 import CustomInput from "../../components/CustomInput/CustomInput";
+import useGoals from "../../hooks/useGoals";
 
 const Home: FC = () => {
   const { user } = useAuth();
@@ -33,6 +34,8 @@ const Home: FC = () => {
     addExpense,
   } = useHome(user, setExpenses);
 
+  const { goals } = useGoals(user);
+
   const navigate = useNavigate();
 
   const totalAmount = useMemo(() => {
@@ -42,6 +45,17 @@ const Home: FC = () => {
   const handleNavigateView = () => {
     navigate("/view");
   };
+
+  const expensesWithGoals = useMemo(() => {
+    return expenses.map((expense) => ({
+      ...expense,
+      hasGoal: goals.some(
+        (goal) =>
+          goal.user_id === expense.user_id &&
+          goal.category === expense.category,
+      ),
+    }));
+  }, [expenses, goals]);
 
   return (
     <div className={s.home}>
@@ -99,7 +113,7 @@ const Home: FC = () => {
           <div className={s.expenses}>
             <h2 className={s.totalAmount}>Total Amount: {totalAmount} $</h2>
             <ExpensesListHome
-              expenses={expenses}
+              expenses={expensesWithGoals}
               deleteExpense={deleteExpense}
             />
           </div>

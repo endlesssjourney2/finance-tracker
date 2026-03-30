@@ -38,7 +38,7 @@ const View: FC = () => {
   }, [expensesWithGoals]);
 
   const [searchItem, setSearchItem] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState<string[]>([]);
   const debouncedValue = useDebounce(searchItem, 300);
 
   const navigate = useNavigate();
@@ -63,7 +63,8 @@ const View: FC = () => {
             .includes(debouncedValue.toLowerCase()));
 
       const expenseByMonths =
-        selectedMonth === "" || expense.date.slice(0, 7) === selectedMonth;
+        selectedMonth.length === 0 ||
+        selectedMonth.includes(expense.date.slice(0, 7));
 
       return expenseByName && expenseByMonths;
     });

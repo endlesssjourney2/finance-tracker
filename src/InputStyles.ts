@@ -52,3 +52,31 @@ export const datePickerSx = {
     },
   },
 };
+
+export const menuSx = {
+  PaperProps: {
+    sx: {
+      backgroundColor: "var(--color-bg-input)",
+      color: "var(--color-input)",
+      border: "1px solid var(--color-border-input)",
+      borderRadius: "8px",
+      "& .MuiMenuItem-root": {
+        "&:hover": {
+          backgroundColor: "var(--color-card-hover)",
+        },
+        "&.Mui-selected": {
+          backgroundColor: "var(--color-card-bg)",
+          "&:hover": {
+            backgroundColor: "var(--color-card-hover)",
+          },
+        },
+      },
+      "& .MuiCheckbox-root": {
+        color: "var(--color-label-input)",
+        "&.Mui-checked": {
+          color: "var(--color-label-secondary-input)",
+        },
+      },
+    },
+  },
+};

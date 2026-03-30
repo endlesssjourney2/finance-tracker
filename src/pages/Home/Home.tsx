@@ -21,6 +21,7 @@ const Home: FC = () => {
     deleteExpense,
     totalAmount,
   } = useExpensesWithGoals();
+
   const {
     amount,
     setAmount,

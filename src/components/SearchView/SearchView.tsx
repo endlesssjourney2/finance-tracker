@@ -1,14 +1,13 @@
 import type { FC } from "react";
 import s from "./SearchView.module.css";
-import { monthLabel } from "../../helpers/monthLabel";
-import ControlSelect from "../ControlSelect/ControlSelect";
 import CustomInput from "../CustomInput/CustomInput";
+import SearchSelect from "../ControlSelect/SearchSelect";
 
 type SearchViewProps = {
   value: string;
   onChangeValue: (e: string) => void;
-  selectedMonth: string;
-  setSelectedMonth: (e: string) => void;
+  selectedMonth: string[];
+  setSelectedMonth: (e: string[]) => void;
   months: string[];
 };
 
@@ -20,18 +19,14 @@ const SearchView: FC<SearchViewProps> = ({
   months,
 }) => {
   return (
-    // maybe some changes in the future with Control Select component,
-    // maybe will be component for this logic,
-    // its work but i think its not comfortable to read
     <div className={s.search}>
       <div className={s.searchMonths}>
-        <ControlSelect
-          value={selectedMonth}
+        {/* a new component for month selection, with multiple select and checkboxes.*/}
+        <SearchSelect
           label="By months"
           values={months}
+          selectedValues={selectedMonth}
           onChange={setSelectedMonth}
-          formatValue={(m) => monthLabel(m, "MMMM YY")}
-          allValues="All months"
         />
       </div>
       <div className={s.searchInput}>

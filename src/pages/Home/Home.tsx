@@ -98,7 +98,7 @@ const Home: FC = () => {
           <ExpensesSkeleton />
         ) : (
           <div className={s.expenses}>
-            <h2 className={s.totalAmount}>Total Amount: {totalAmount} $</h2>
+            <h2 className={s.totalAmount}>Total Amount: ${totalAmount}</h2>
             <ExpensesListHome
               expenses={expensesWithGoals}
               deleteExpense={deleteExpense}

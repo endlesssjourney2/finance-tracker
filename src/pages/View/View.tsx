@@ -28,6 +28,7 @@ const View: FC = () => {
     deleteExpense,
     updateExpense,
     totalAmount,
+    avgAmount,
     user,
   } = useExpensesWithGoals();
 
@@ -119,9 +120,15 @@ const View: FC = () => {
     <div className={s.viewPage}>
       <Header title="Your Finances" />
       <div className={s.content}>
-        <div className={s.totalAmount}>
-          <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
+        <div className={s.amountInfo}>
+          <div className={`${s.totalAmount} ${s.amount}`}>
+            <h2 className={s.totalTitle}>Total: ${totalAmount}</h2>
+          </div>
+          <div className={`${s.avgAmount} ${s.amount}`}>
+            <h2 className={s.avgTitle}>Average: ${avgAmount.toFixed(2)}</h2>
+          </div>
         </div>
+
         <SearchView
           value={searchItem}
           onChangeValue={setSearchItem}

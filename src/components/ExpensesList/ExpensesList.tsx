@@ -43,7 +43,7 @@ const ExpensesList: FC<ExpensesListProps> = ({
             <span className={s.amountValue}>${amount}</span>
           </div>
           <span className={`${s.avg} ${isMoreThanAvg ? s.moreAvg : s.lessAvg}`}>
-            {isMoreThanAvg ? "↑" : "↓"} average
+            {isMoreThanAvg ? "↑ above" : "↓ below"} average
           </span>
         </div>
         <div className={s.itemDate}>

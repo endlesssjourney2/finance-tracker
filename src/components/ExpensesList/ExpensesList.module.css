@@ -13,7 +13,6 @@
   transition: all 0.3s ease;
   gap: 12px;
   font-family: "Montserrat", sans-serif;
-  /* min-height: 230px; */
 }
 
 .expenseItem:hover {
@@ -100,31 +99,41 @@
 }
 
 .amountValue {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 500;
   color: var(--color-text-primary);
 }
 
 .avg {
   text-align: center;
-  padding: 5px 10px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 100px;
 }
 
 .moreAvg {
   color: var(--color-accent-gold);
+  background-color: var(--color-accent-gold-bg);
 }
 
 .lessAvg {
   color: var(--color-accent-blue);
+  background-color: var(--color-accent-blue-bg);
+}
+
+.itemDate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--color-card-bg-secondary);
 }
 
 .date {
   font-size: 1.1rem;
-}
-
-.desc {
+  font-weight: 500;
   color: var(--color-text-secondary);
 }
 

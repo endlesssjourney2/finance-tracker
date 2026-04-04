@@ -31,7 +31,9 @@ body {
   --color-text-total: #0a1223;
 
   --color-accent-blue: #38bdf8;
+  --color-accent-blue-bg: #38bdf81f;
   --color-accent-gold: #fbbf24;
+  --color-accent-gold-bg: #fbbf241f;
 
   --color-border: #334155;
   --color-shadow: rgba(15, 23, 42, 0.6);

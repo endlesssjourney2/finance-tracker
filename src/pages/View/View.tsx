@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState, type FC } from "react";
 import s from "./View.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import ExpensesList from "../../components/ExpensesList/ExpensesList";
 import type { Expense, ExpenseAndGoal } from "../../types/Expense";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
-import LinkButton from "../../components/LinkButton/LinkButton";
 import SkeletonView from "../../components/Skeleton/SkeletonView/SkeletonView";
 import Header from "../../components/Header/Header";
 import ModalContent from "../../components/ModalContent/ModalContent";
@@ -28,6 +27,7 @@ const View: FC = () => {
     deleteExpense,
     updateExpense,
     totalAmount,
+    avgAmount,
     user,
   } = useExpensesWithGoals();
 
@@ -41,17 +41,17 @@ const View: FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<string[]>([]);
   const debouncedValue = useDebounce(searchItem, 300);
 
-  const navigate = useNavigate();
-
   const loading = authLoading || expensesLoading;
 
-  const monthsFromExpenses = Array.from(
-    new Set(
-      expensesWithGoals.map((expense) => {
-        return expense.date.slice(0, 7);
-      }),
-    ),
-  ).sort();
+  const monthsFromExpenses = useMemo(() => {
+    return Array.from(
+      new Set(
+        expensesWithGoals.map((expense) => {
+          return expense.date.slice(0, 7);
+        }),
+      ),
+    ).sort();
+  }, [expensesWithGoals]);
 
   const filteredExpenses = useMemo(() => {
     return expensesWithGoals.filter((expense) => {
@@ -82,10 +82,6 @@ const View: FC = () => {
   const deleteAndCloseModal = async (id: string) => {
     await deleteExpense(id);
     handleCloseModal();
-  };
-
-  const handleNavigateDashboard = () => {
-    navigate("/dashboard");
   };
 
   if (loading) {
@@ -119,9 +115,15 @@ const View: FC = () => {
     <div className={s.viewPage}>
       <Header title="Your Finances" />
       <div className={s.content}>
-        <div className={s.totalAmount}>
-          <h2 className={s.totalTitle}>Total: {totalAmount} $</h2>
+        <div className={s.amountInfo}>
+          <div className={`${s.totalAmount} ${s.amount}`}>
+            <h2 className={s.totalTitle}>Total: ${totalAmount}</h2>
+          </div>
+          <div className={`${s.avgAmount} ${s.amount}`}>
+            <h2 className={s.avgTitle}>Average: ${avgAmount.toFixed(2)}</h2>
+          </div>
         </div>
+
         <SearchView
           value={searchItem}
           onChangeValue={setSearchItem}
@@ -146,6 +148,7 @@ const View: FC = () => {
               date={expense.date}
               description={expense.description}
               hasGoal={expense.hasGoal}
+              avg={avgAmount}
             />
           ))}
         </ul>
@@ -163,9 +166,6 @@ const View: FC = () => {
           )
         }
       />
-      <footer className={s.footer}>
-        <LinkButton text="Dashboard" onClick={handleNavigateDashboard} />
-      </footer>
     </div>
   );
 };

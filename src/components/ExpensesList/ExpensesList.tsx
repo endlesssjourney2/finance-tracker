@@ -10,6 +10,7 @@ type ExpensesListProps = {
   description: string | null;
   hasGoal?: boolean;
   onClick?: () => void;
+  avg: number;
 };
 
 const ExpensesList: FC<ExpensesListProps> = ({
@@ -20,17 +21,30 @@ const ExpensesList: FC<ExpensesListProps> = ({
   description,
   onClick,
   hasGoal,
+  avg,
 }) => {
+  const isMoreThanAvg = amount > avg;
+
   return (
     <>
       <li key={id} className={s.expenseItem} onClick={onClick}>
-        <div className={s.item}>
-          {hasGoal && <span className={s.goal}>Your goal</span>}
-          <h2 className={s.category}>{category}</h2>
+        <div className={s.itemTop}>
+          <div className={s.header}>
+            <h2 className={s.category}>{category}</h2>
+            {hasGoal && <span className={s.goal}>Your goal</span>}
+          </div>
           <p className={s.description}>
             {description ? description : "No description"}
           </p>
-          <span className={s.amount}>Amount: {amount} $</span>
+        </div>
+        <div className={s.itemBottom}>
+          <div className={s.amount}>
+            <span className={s.amountText}>Amount: </span>
+            <span className={s.amountValue}>${amount}</span>
+          </div>
+          <span className={`${s.avg} ${isMoreThanAvg ? s.moreAvg : s.lessAvg}`}>
+            {isMoreThanAvg ? "↑ above" : "↓ below"} average
+          </span>
         </div>
         <div className={s.itemDate}>
           <h3 className={s.date}>{monthLabel(date, "MMM D, YYYY")}</h3>

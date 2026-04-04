@@ -23,6 +23,12 @@ const useExpensesWithGoals = () => {
     return expensesWithGoals.reduce((sum, expense) => sum + expense.amount, 0);
   }, [expenses]);
 
+  const avgAmount = useMemo(() => {
+    return expensesWithGoals.length
+      ? totalAmount / expensesWithGoals.length
+      : 0;
+  }, [totalAmount]);
+
   const spentByCategory = useMemo(() => {
     return expensesWithGoals.reduce<Record<string, number>>((acc, e) => {
       acc[e.category] = (acc[e.category] ?? 0) + e.amount;
@@ -37,6 +43,7 @@ const useExpensesWithGoals = () => {
     authLoading,
     user,
     ...rest,
+    avgAmount,
   };
 };
 

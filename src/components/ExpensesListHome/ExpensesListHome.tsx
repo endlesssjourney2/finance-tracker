@@ -21,7 +21,7 @@ const ExpensesListHome: FC<ExpensesListHomeProps> = ({
             <span className={s.expenseCategory}>
               Category: {expense.category}
             </span>
-            <span className={s.expenseAmount}>Amount: {expense.amount} $</span>
+            <span className={s.expenseAmount}>Amount: ${expense.amount}</span>
           </div>
           <div className={s.itemMiddle}>
             <p className={s.expenseDescription}>

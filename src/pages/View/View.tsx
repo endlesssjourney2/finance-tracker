@@ -153,6 +153,7 @@ const View: FC = () => {
               date={expense.date}
               description={expense.description}
               hasGoal={expense.hasGoal}
+              avg={avgAmount}
             />
           ))}
         </ul>

@@ -27,11 +27,7 @@ const ExpensesListHome: FC<ExpensesListHomeProps> = ({
 
   return (
     <>
-      <CustomPagination
-        page={page}
-        count={pageCount}
-        onChange={(_, newPage) => setPage(newPage)}
-      />
+      <CustomPagination page={page} count={pageCount} onChange={setPage} />
       <ul className={s.expensesList}>
         {paginatedExpenses.map((expense) => (
           <li key={expense.id} className={s.expenseItem}>

@@ -7,7 +7,7 @@ type PaginationColor = "primary" | "secondary" | "standard";
 type PaginationProps = {
   count: number;
   page: number;
-  onChange: (event: React.ChangeEvent<unknown>, page: number) => void;
+  onChange: (page: number) => void;
   color?: PaginationColor;
 };
 
@@ -19,7 +19,12 @@ const CustomPagination: FC<PaginationProps> = ({
 }) => {
   return (
     <div className={s.paginationContainer}>
-      <Pagination count={count} page={page} onChange={onChange} color={color} />
+      <Pagination
+        count={count}
+        page={page}
+        onChange={(_, page) => onChange(page)}
+        color={color}
+      />
     </div>
   );
 };

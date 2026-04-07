@@ -5,6 +5,7 @@ import type { Touched } from "../types/Touched";
 import { supabase } from "../supabaseClient";
 import type { Expense } from "../types/Expense";
 import { useAuth } from "../pages/Auth/AuthContext";
+import { useAlert } from "../context/AlertContext";
 
 export const useHome = (setExpenses: Dispatch<SetStateAction<Expense[]>>) => {
   const [amount, setAmount] = useState("");
@@ -17,6 +18,7 @@ export const useHome = (setExpenses: Dispatch<SetStateAction<Expense[]>>) => {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const { user } = useAuth();
+  const { showAlert } = useAlert();
 
   const addExpense = async () => {
     if (!user) {
@@ -48,11 +50,13 @@ export const useHome = (setExpenses: Dispatch<SetStateAction<Expense[]>>) => {
       .single();
 
     if (error) {
-      console.error("Error adding expense:", error.message);
-      setErrorMessage("Failed to add expense. Please try again.");
+      showAlert("Failed to add expense. Please try again.", {
+        severity: "error",
+      });
       return;
     }
 
+    showAlert("Expense added successfully", { severity: "success" });
     setExpenses((prev) => [data as Expense, ...prev]);
     setAmount("");
     setCategory("");

@@ -5,10 +5,12 @@ import type { User } from "@supabase/supabase-js";
 import { downloadBlob, toCsv } from "../helpers/downloadExpenses";
 import { abbreviatedDate } from "../helpers/abbreviatedDate";
 import Papa from "papaparse";
+import { useAlert } from "../context/AlertContext";
 
 export const useExpenses = (user: User | null) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(false);
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     if (!user) return;
@@ -34,10 +36,15 @@ export const useExpenses = (user: User | null) => {
   const deleteExpense = async (id: string) => {
     if (!user) return;
     const { error } = await supabase.from("expenses").delete().eq("id", id);
+
     if (error) {
       console.error("Error deleting expense:", error.message);
+      showAlert("Failed to delete expense. Please try again.", {
+        severity: "error",
+      });
       return;
     }
+    showAlert("Expense deleted successfully", { severity: "success" });
     setExpenses((prev) => prev.filter((e) => e.id !== id));
   };
 
@@ -55,8 +62,12 @@ export const useExpenses = (user: User | null) => {
 
     if (error) {
       console.error("Error updating expense", error.message);
+      showAlert("Failed to update expense. Please try again.", {
+        severity: "error",
+      });
       return;
     }
+    showAlert("Expense updated successfully", { severity: "success" });
     setExpenses((prev) => {
       return prev.map((e) => (e.id === id ? (data as Expense) : e));
     });
@@ -64,22 +75,41 @@ export const useExpenses = (user: User | null) => {
 
   const exportExpensesJSON = () => {
     if (!user) return;
-    const payload = {
-      exportedAt: abbreviatedDate(),
-      expenses,
-      userId: user.id,
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], {
-      type: "application/json",
-    });
-    downloadBlob(blob, `expenses-${abbreviatedDate()}.json`);
+    try {
+      const payload = {
+        exportedAt: abbreviatedDate(),
+        expenses,
+        userId: user.id,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {
+        type: "application/json",
+      });
+      downloadBlob(blob, `expenses-${abbreviatedDate()}.json`);
+      showAlert("Expenses exported successfully", { severity: "success" });
+    } catch (error) {
+      if (error) {
+        showAlert("Failed to export expenses. Please try again.", {
+          severity: "error",
+        });
+      }
+    }
   };
 
   const exportExpensesCsv = () => {
     if (!user) return;
-    const csv = toCsv(expenses);
-    const blob = new Blob([csv], { type: "text/csv" });
-    downloadBlob(blob, `expenses-${abbreviatedDate()}.csv`);
+
+    try {
+      const csv = toCsv(expenses);
+      const blob = new Blob([csv], { type: "text/csv" });
+      downloadBlob(blob, `expenses-${abbreviatedDate()}.csv`);
+      showAlert("Expenses exported successfully", { severity: "success" });
+    } catch (error) {
+      if (error) {
+        showAlert("Failed to export expenses. Please try again.", {
+          severity: "error",
+        });
+      }
+    }
   };
 
   const importExpensesCsv = async (file: File) => {
@@ -104,9 +134,12 @@ export const useExpenses = (user: User | null) => {
 
         if (error) {
           console.error("Error importing expenses", error.message);
+          showAlert("Failed to import expenses. Please try again.", {
+            severity: "error",
+          });
           return;
         }
-
+        showAlert("Expenses imported successfully", { severity: "success" });
         setExpenses((prev) => [...(data as Expense[]), ...prev]);
       },
     });
@@ -115,27 +148,42 @@ export const useExpenses = (user: User | null) => {
   const importExpensesJSON = async (file: File) => {
     if (!user) return;
 
-    const text = await file.text();
-    const json = JSON.parse(text);
+    try {
+      const text = await file.text();
+      const json = JSON.parse(text);
 
-    const parsed = (json.expenses as Expense[]).map((row) => ({
-      user_id: user.id,
-      amount: row.amount,
-      category: row.category,
-      description: row.description,
-      date: row.date,
-    }));
+      const parsed = (json.expenses as Expense[]).map((row) => ({
+        user_id: user.id,
+        amount: row.amount,
+        category: row.category,
+        description: row.description,
+        date: row.date,
+      }));
 
-    const { data, error } = await supabase
-      .from("expenses")
-      .insert(parsed)
-      .select();
+      const { data, error } = await supabase
+        .from("expenses")
+        .insert(parsed)
+        .select();
 
-    if (error) {
-      console.error("Error importing expenses", error.message);
+      if (error) {
+        console.error("Error importing expenses", error.message);
+        showAlert("Failed to import expenses. Please try again.", {
+          severity: "error",
+        });
+        return;
+      }
+      showAlert("Expenses imported successfully", { severity: "success" });
+      setExpenses((prev) => [...(data as Expense[]), ...prev]);
+    } catch (error) {
+      console.error("Error parsing JSON file", error);
+      showAlert(
+        "Failed to parse JSON file. Please ensure it's in the correct format.",
+        {
+          severity: "error",
+        },
+      );
       return;
     }
-    setExpenses((prev) => [...(data as Expense[]), ...prev]);
   };
 
   return {

@@ -1,7 +1,7 @@
-import { type FC } from "react";
+import { useEffect, type FC } from "react";
 import s from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import { datePickerSx } from "../../InputStyles";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -12,6 +12,7 @@ import { useHome } from "../../hooks/useHome";
 import Header from "../../components/Header/Header";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
+import { useAlert } from "../../context/AlertContext";
 
 const Home: FC = () => {
   const {
@@ -39,6 +40,13 @@ const Home: FC = () => {
   } = useHome(setExpenses);
 
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
+
+  useEffect(() => {
+    if (!errorMessage) return;
+    showAlert(errorMessage, { severity: "error" });
+    setErrorMessage("");
+  }, [errorMessage, setErrorMessage, showAlert]);
 
   const handleNavigateView = () => {
     navigate("/view");
@@ -77,7 +85,6 @@ const Home: FC = () => {
             value={date}
             onChange={(newDate) => {
               setDate(newDate);
-              if (errorMessage) setErrorMessage("");
             }}
             slotProps={{
               textField: {
@@ -86,11 +93,7 @@ const Home: FC = () => {
               },
             }}
           />
-          <Button
-            variant="contained"
-            onClick={addExpense}
-            disabled={errorMessage.length > 0}
-          >
+          <Button variant="contained" onClick={addExpense}>
             Add expense
           </Button>
         </div>
@@ -110,23 +113,6 @@ const Home: FC = () => {
         <LinkButton text="View your finances" onClick={handleNavigateView} />
       </footer>
       <LoadingProgress loading={loading} />
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={errorMessage !== ""}
-        autoHideDuration={3500}
-        onClose={(_, reason) => {
-          if (reason === "clickaway") return;
-          setErrorMessage("");
-        }}
-      >
-        <Alert
-          severity="error"
-          variant="filled"
-          onClose={() => setErrorMessage("")}
-        >
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

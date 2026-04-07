@@ -69,7 +69,7 @@ const Navbar: FC = () => {
   return (
     <nav className={s.navbar}>
       <Link to={"/"} className={s.logo}>
-        <h1 className={s.title}>Expense Tracker</h1>
+        <h1 className={s.logoText}>Finance Tracker</h1>
       </Link>
 
       <div className={s.desktopLinks}>

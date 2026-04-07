@@ -76,6 +76,9 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
           onClose={hideAlert}
           severity={alertState.severity}
           variant="filled"
+          sx={{
+            borderRadius: "18px",
+          }}
         >
           {alertState.message}
         </Alert>

@@ -11,6 +11,8 @@ import ModalContent from "../../components/ModalContent/ModalContent";
 import { useDebounce } from "../../hooks/useDebounce";
 import SearchView from "../../components/SearchView/SearchView";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
+import usePaginate from "../../hooks/usePaginate";
+import CustomPagination from "../../components/CustomPagination/CustomPagination";
 
 const View: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -69,6 +71,11 @@ const View: FC = () => {
       return expenseByName && expenseByMonths;
     });
   }, [expensesWithGoals, debouncedValue, selectedMonth]);
+
+  const { page, pageCount, setPage, paginatedItems } = usePaginate({
+    items: filteredExpenses,
+    itemsPerPage: 10,
+  });
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -131,14 +138,25 @@ const View: FC = () => {
           selectedMonth={selectedMonth}
           setSelectedMonth={setSelectedMonth}
         />
+
         {filteredExpenses.length === 0 && (
           <div className={s.noResults}>
             <h2 className={s.noResultsText}>No expenses found.</h2>
           </div>
         )}
 
+        {pageCount > 1 && (
+          <div className={s.pagination}>
+            <CustomPagination
+              page={page}
+              count={pageCount}
+              onChange={setPage}
+            />
+          </div>
+        )}
+
         <ul className={s.expensesList}>
-          {filteredExpenses.map((expense) => (
+          {paginatedItems.map((expense) => (
             <ExpensesList
               key={expense.id}
               onClick={() => handleOpenModal(expense)}

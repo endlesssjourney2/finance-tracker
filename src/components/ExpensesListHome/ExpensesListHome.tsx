@@ -1,35 +1,35 @@
 import type { ExpenseAndGoal } from "../../types/Expense";
 import s from "./ExpensesListHome.module.css";
 import { Button } from "@mui/material";
-import { useMemo, useState, type FC } from "react";
+import { type FC } from "react";
 import { monthLabel } from "../../helpers/monthLabel";
 import CustomPagination from "../CustomPagination/CustomPagination";
+import usePaginate from "../../hooks/usePaginate";
 
 type ExpensesListHomeProps = {
   expenses: ExpenseAndGoal[];
   deleteExpense: (id: string) => void;
 };
 
-const ITEMS_PER_PAGE = 8;
-
 const ExpensesListHome: FC<ExpensesListHomeProps> = ({
   expenses,
   deleteExpense,
 }) => {
-  const [page, setPage] = useState(1);
-  const paginatedExpenses = useMemo(() => {
-    const start = (page - 1) * ITEMS_PER_PAGE;
-    const end = start + ITEMS_PER_PAGE;
-    return expenses.slice(start, end);
-  }, [page, expenses]);
-
-  const pageCount = Math.ceil(expenses.length / ITEMS_PER_PAGE);
+  const { paginatedItems, pageCount, page, setPage } = usePaginate({
+    items: expenses,
+    itemsPerPage: 8,
+  });
 
   return (
     <>
-      <CustomPagination page={page} count={pageCount} onChange={setPage} />
+      {pageCount > 1 && (
+        <div className={s.pagination}>
+          <CustomPagination page={page} count={pageCount} onChange={setPage} />
+        </div>
+      )}
+
       <ul className={s.expensesList}>
-        {paginatedExpenses.map((expense) => (
+        {paginatedItems.map((expense) => (
           <li key={expense.id} className={s.expenseItem}>
             <div className={s.itemTop}>
               <span className={s.expenseCategory}>

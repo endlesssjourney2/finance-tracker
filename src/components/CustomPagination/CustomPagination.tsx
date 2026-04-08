@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import Pagination from "@mui/material/Pagination";
-import s from "./Pagination.module.css";
+import s from "./CustomPagination.module.css";
+import { paginationSx } from "../../InputStyles";
 
 type PaginationColor = "primary" | "secondary" | "standard";
 
@@ -24,6 +25,7 @@ const CustomPagination: FC<PaginationProps> = ({
         page={page}
         onChange={(_, page) => onChange(page)}
         color={color}
+        sx={paginationSx}
       />
     </div>
   );

@@ -77,6 +77,12 @@ const View: FC = () => {
     itemsPerPage: 10,
   });
 
+  useEffect(() => {
+    if (filteredExpenses.length === 0) {
+      setPage(1);
+    }
+  }, [filteredExpenses]);
+
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedExpense(null);

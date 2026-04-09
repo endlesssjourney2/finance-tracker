@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import type { Expense } from "../types/Expense";
-import type { User } from "@supabase/supabase-js";
 import { downloadBlob, toCsv } from "../helpers/downloadExpenses";
 import { abbreviatedDate } from "../helpers/abbreviatedDate";
 import Papa from "papaparse";
 import { useAlert } from "../context/AlertContext";
+import { useAuth } from "../pages/Auth/AuthContext";
+import type { Dayjs } from "dayjs";
 
-export const useExpenses = (user: User | null) => {
+export const useExpenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(false);
   const { showAlert } = useAlert();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) return;
@@ -32,6 +34,56 @@ export const useExpenses = (user: User | null) => {
     };
     void fetchExpenses();
   }, [user]);
+
+  const addExpense = async (formData: {
+    amount: string;
+    category: string;
+    description: string;
+    date: Dayjs | null;
+  }) => {
+    if (!user) return false;
+
+    if (!formData.amount || !formData.category || !formData.date) {
+      showAlert("Amount, category, and date are required.", {
+        severity: "error",
+      });
+      return false;
+    }
+
+    const parsedAmount = Number(formData.amount);
+
+    if (Number.isNaN(parsedAmount)) {
+      showAlert("Please enter a valid number for amount.", {
+        severity: "error",
+      });
+      return false;
+    }
+
+    const { data, error } = await supabase
+      .from("expenses")
+      .insert([
+        {
+          user_id: user.id,
+          amount: parsedAmount,
+          category: formData.category,
+          description: formData.description || null,
+          date: formData.date.toISOString(),
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      showAlert("Failed to add expense. Please try again.", {
+        severity: "error",
+      });
+      return false;
+    }
+
+    showAlert("Expense added successfully", { severity: "success" });
+    setExpenses((prev) => [data as Expense, ...prev]);
+    return true;
+  };
 
   const deleteExpense = async (id: string) => {
     if (!user) return;
@@ -190,6 +242,7 @@ export const useExpenses = (user: User | null) => {
     expenses,
     loading,
     setExpenses,
+    addExpense,
     deleteExpense,
     exportExpensesJSON,
     exportExpensesCsv,

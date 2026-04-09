@@ -1,0 +1,14 @@
+.inputs {
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.helper {
+  text-align: center;
+  color: var(--color-text-primary);
+  font-size: 1.125rem;
+}

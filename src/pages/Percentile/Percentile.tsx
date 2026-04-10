@@ -26,7 +26,7 @@ const Percentile = () => {
   };
 
   const { user, loading: authLoading } = useAuth();
-  const { expenses, loading: expensesLoading } = useExpenses(user);
+  const { expenses, loading: expensesLoading } = useExpenses();
 
   const loading = authLoading || expensesLoading;
 

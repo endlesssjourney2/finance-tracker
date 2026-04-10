@@ -17,7 +17,7 @@ import { useAuth } from "../Auth/AuthContext";
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { expenses, loading } = useExpenses(user);
+  const { expenses, loading } = useExpenses();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedChart, setSelectedChart] = useState<ChartType>("byCategory");
 

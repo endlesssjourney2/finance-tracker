@@ -5,12 +5,12 @@ import { useAuth } from "../Auth/AuthContext";
 import s from "./Export.module.css";
 
 const Export = () => {
-  const { user, loading: authLoading } = useAuth();
+  const { loading: authLoading } = useAuth();
   const {
     exportExpensesCsv,
     exportExpensesJSON,
     loading: expensesLoading,
-  } = useExpenses(user);
+  } = useExpenses();
 
   const loading = authLoading || expensesLoading;
 

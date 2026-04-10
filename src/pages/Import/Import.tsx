@@ -1,13 +1,11 @@
 import { Alert, Divider, Snackbar } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { useExpenses } from "../../hooks/useExpenses";
-import { useAuth } from "../Auth/AuthContext";
 import s from "./Import.module.css";
 import { useState } from "react";
 
 const Import = () => {
-  const { user } = useAuth();
-  const { importExpensesCsv, importExpensesJSON } = useExpenses(user);
+  const { importExpensesCsv, importExpensesJSON } = useExpenses();
   const [message, setMessage] = useState("");
 
   return (

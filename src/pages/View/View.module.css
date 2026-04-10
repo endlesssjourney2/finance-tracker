@@ -43,6 +43,13 @@
   text-transform: uppercase;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .amountInfo {
   display: flex;
   justify-content: center;
@@ -91,6 +98,7 @@
   word-break: break-word;
   overflow-wrap: anywhere;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .footer {

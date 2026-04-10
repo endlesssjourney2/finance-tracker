@@ -2,34 +2,26 @@ import s from "./Goals.module.css";
 import useGoals from "../../hooks/useGoals";
 import Header from "../../components/Header/Header";
 import LoadingProgress from "../../components/LoadingProgress/LoadingProgress";
-import CustomInput from "../../components/CustomInput/CustomInput";
-import { Button } from "@mui/material";
 import { useMemo } from "react";
 import SkeletonGoals from "../../components/Skeleton/SkeletonGoals/SkeletonGoals";
 import Confetti from "react-confetti";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
+import AddGoalForm from "../../components/Form/AddGoalForm/AddGoalForm";
+
 const Goals = () => {
-  const { user, authLoading, spentByCategory } = useExpensesWithGoals();
+  const { authLoading, spentByCategory } = useExpensesWithGoals();
 
   const {
     goals,
     loading: goalsLoading,
     addGoal,
     deleteGoal,
-    amount,
-    setAmount,
-    category,
-    setCategory,
-    name,
-    setName,
     completeGoal,
     animation,
     setAnimation,
-  } = useGoals(user);
+  } = useGoals();
 
-  const totalGoals = useMemo(() => {
-    return goals.length;
-  }, [goals]);
+  const totalGoals = goals.length;
 
   const completedGoals = useMemo(() => {
     return goals.filter(
@@ -54,33 +46,7 @@ const Goals = () => {
     <div className={s.goalsPage}>
       <Header title="Goals page" />
       <div className={s.content}>
-        <div className={s.inputs}>
-          <CustomInput
-            value={amount}
-            onChange={setAmount}
-            label="Goal"
-            required
-          />
-          <CustomInput
-            value={name}
-            onChange={setName}
-            label="Goal Name"
-            required
-          />
-          <CustomInput
-            value={category}
-            onChange={setCategory}
-            label="Category"
-            required
-          />
-          <span className={s.helper}>
-            When you add a new expense, make sure the category name exactly
-            matches the goal category
-          </span>
-          <Button onClick={addGoal} className={s.addBtn} variant="contained">
-            Add goal
-          </Button>
-        </div>
+        <AddGoalForm onAddGoal={addGoal} />
         {goals.length > 0 && (
           <div className={s.goalsInfo}>
             <h2 className={`${s.infoTitle} ${s.totalTitle}`}>

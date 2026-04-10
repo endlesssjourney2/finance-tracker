@@ -1,0 +1,9 @@
+.addExpense {
+  margin: 20px 0 40px 0;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+}

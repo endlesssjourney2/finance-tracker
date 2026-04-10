@@ -5,8 +5,8 @@ import useGoals from "./useGoals";
 
 const useExpensesWithGoals = () => {
   const { user, loading: authLoading } = useAuth();
-  const { expenses, ...rest } = useExpenses(user);
-  const { goals } = useGoals(user);
+  const { expenses, ...rest } = useExpenses();
+  const { goals } = useGoals();
 
   const expensesWithGoals = useMemo(() => {
     return expenses.map((expense) => ({

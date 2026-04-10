@@ -80,3 +80,24 @@ export const menuSx = {
     },
   },
 };
+
+export const paginationSx = {
+  "& .MuiPaginationItem-root": {
+    color: "var(--color-text-primary)",
+    borderColor: "var(--color-border)",
+    backgroundColor: "transparent",
+    transition: "all 0.2s ease-in-out",
+  },
+  "& .MuiPaginationItem-root:hover": {
+    backgroundColor: "var(--color-card-hover-secondary)",
+    borderColor: "var(--color-accent-blue)",
+  },
+  "& .MuiPaginationItem-root.Mui-selected": {
+    color: "var(--color-btn-text-primary)",
+    backgroundColor: "var(--color-btn-bg-primary)",
+    borderColor: "var(--color-btn-bg-primary)",
+  },
+  "& .MuiPaginationItem-root.Mui-selected:hover": {
+    backgroundColor: "var(--color-btn-hover-primary)",
+  },
+};

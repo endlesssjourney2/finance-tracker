@@ -25,7 +25,7 @@ const ModalComponent: FC<ModalProps> = ({ open, onClose, content }) => {
         slots={{ backdrop: Backdrop }}
         slotProps={{
           backdrop: {
-            timeout: 250,
+            timeout: 200,
             sx: {
               backgroundColor: "rgba(0, 0, 0, 0.5)",
             },
@@ -33,7 +33,7 @@ const ModalComponent: FC<ModalProps> = ({ open, onClose, content }) => {
         }}
         sx={style}
       >
-        <Zoom in={open} timeout={250} style={{ zIndex: 1500 }}>
+        <Zoom in={open} timeout={200} style={{ zIndex: 1500 }}>
           <div className={s.modalBox} onClick={(e) => e.stopPropagation()}>
             <IconButton className={s.closeBtn} onClick={onClose}>
               <CloseIcon className={s.icon} />

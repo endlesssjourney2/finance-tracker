@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import type { Goal } from "../types/Goal";
-import type { User } from "@supabase/supabase-js";
 import { supabase } from "../supabaseClient";
+import { useAuth } from "../pages/Auth/AuthContext";
+import { useAlert } from "../context/AlertContext";
 
-const useGoals = (user: User | null) => {
+const useGoals = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(false);
-  const [amount, setAmount] = useState("");
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
   const [animation, setAnimation] = useState<boolean>(false);
+  const { user } = useAuth();
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     if (!user) return;
@@ -31,15 +31,23 @@ const useGoals = (user: User | null) => {
     void fetchGoals();
   }, [user]);
 
-  const addGoal = async () => {
-    if (!user) return;
+  const addGoal = async (formData: {
+    amount: string;
+    name: string;
+    category: string;
+  }) => {
+    if (!user) return false;
 
-    if (!amount || !category || !name) return;
+    if (!formData.amount || !formData.category || !formData.name) {
+      showAlert("All fields are required.", { severity: "error" });
+      return false;
+    }
 
-    let parsedAmount = Number(amount);
+    const parsedAmount = Number(formData.amount);
 
     if (Number.isNaN(parsedAmount)) {
-      return;
+      showAlert("Please enter a valid amount.", { severity: "error" });
+      return false;
     }
 
     const { data, error } = await supabase
@@ -48,21 +56,22 @@ const useGoals = (user: User | null) => {
         {
           user_id: user.id,
           goal: parsedAmount,
-          name,
-          category,
+          name: formData.name,
+          category: formData.category,
         },
       ])
       .select()
       .single();
 
     if (error) {
-      return console.error("Error adding goals");
+      console.error("Error adding goal:", error.message);
+      showAlert("Error adding goal: " + error.message, { severity: "error" });
+      return false;
     }
-
+    showAlert("Goal added successfully!", { severity: "success" });
     setGoals((prev) => [data as Goal, ...prev]);
-    setAmount("");
-    setName("");
-    setCategory("");
+
+    return true;
   };
 
   const deleteGoal = async (id: string) => {
@@ -70,8 +79,11 @@ const useGoals = (user: User | null) => {
 
     const { error } = await supabase.from("goals").delete().eq("id", id);
     if (error) {
-      console.error("Error deleting goal", error.message);
+      console.error("Error deleting goal:", error.message);
+      showAlert("Error deleting goal: " + error.message, { severity: "error" });
+      return;
     }
+    showAlert("Goal deleted successfully!", { severity: "success" });
     setGoals((prev) => prev.filter((g) => g.id !== id));
   };
 
@@ -80,8 +92,13 @@ const useGoals = (user: User | null) => {
 
     const { error } = await supabase.from("goals").delete().eq("id", id);
     if (error) {
-      console.error("Error completing goal", error.message);
+      console.error("Error completing goal:", error.message);
+      showAlert("Error completing goal: " + error.message, {
+        severity: "error",
+      });
+      return;
     }
+    showAlert("Goal completed! Congratulations!", { severity: "success" });
     setAnimation(true);
     setGoals((prev) => prev.filter((g) => g.id !== id));
   };
@@ -91,12 +108,6 @@ const useGoals = (user: User | null) => {
     loading,
     addGoal,
     deleteGoal,
-    amount,
-    setAmount,
-    category,
-    setCategory,
-    name,
-    setName,
     animation,
     completeGoal,
     setAnimation,

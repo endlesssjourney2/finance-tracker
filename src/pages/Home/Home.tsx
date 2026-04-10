@@ -7,7 +7,7 @@ import LinkButton from "../../components/LinkButton/LinkButton";
 import ExpensesListHome from "../../components/ExpensesListHome/ExpensesListHome";
 import Header from "../../components/Header/Header";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
-import AddHomeForm from "../../components/Form/AddExpenseForm/AddExpenseForm";
+import AddExpenseForm from "../../components/Form/AddExpenseForm/AddExpenseForm";
 
 const Home: FC = () => {
   const { loading, expensesWithGoals, deleteExpense, totalAmount, addExpense } =
@@ -22,7 +22,7 @@ const Home: FC = () => {
     <div className={s.home}>
       <Header title="Add your finance" />
       <div className={s.content}>
-        <AddHomeForm onAddExpense={addExpense} />
+        <AddExpenseForm onAddExpense={addExpense} />
         {loading ? (
           <ExpensesSkeleton />
         ) : (

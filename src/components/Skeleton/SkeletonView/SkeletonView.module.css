@@ -4,6 +4,14 @@
   margin: 0 auto;
 }
 
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
 .expensesList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

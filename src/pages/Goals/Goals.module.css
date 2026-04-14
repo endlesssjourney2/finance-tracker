@@ -38,21 +38,3 @@
   font-size: 1.25rem;
   opacity: 0.8;
 }
-
-@media (max-width: 1024px) {
-  .helper {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .helper {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .helper {
-    font-size: 0.785rem;
-  }
-}

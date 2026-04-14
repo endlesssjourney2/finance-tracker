@@ -13,6 +13,7 @@ import {
   importExpensesApi,
   updateExpenseApi,
 } from "../api/expenses";
+import dayjs from "dayjs";
 
 export const useExpenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -167,7 +168,7 @@ export const useExpenses = () => {
             amount: Number(row.amount),
             category: row.category,
             description: row.description || "",
-            date: row.date,
+            date: dayjs(row.date).format("YYYY-MM-DD"),
           }),
         );
         const [data, error] = await importExpensesApi(parsed);
@@ -196,7 +197,7 @@ export const useExpenses = () => {
         amount: row.amount,
         category: row.category,
         description: row.description,
-        date: row.date,
+        date: dayjs(row.date).format("YYYY-MM-DD"),
       }));
 
       const [data, error] = await importExpensesApi(parsed);

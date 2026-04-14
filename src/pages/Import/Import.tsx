@@ -1,14 +1,10 @@
-import { Alert, Divider, Snackbar } from "@mui/material";
+import { Divider } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { useExpenses } from "../../hooks/useExpenses";
-import { useAuth } from "../Auth/AuthContext";
 import s from "./Import.module.css";
-import { useState } from "react";
 
 const Import = () => {
-  const { user } = useAuth();
-  const { importExpensesCsv, importExpensesJSON } = useExpenses(user);
-  const [message, setMessage] = useState("");
+  const { importExpensesCsv, importExpensesJSON } = useExpenses();
 
   return (
     <div className={s.importPage}>
@@ -25,7 +21,6 @@ const Import = () => {
               if (!file) return;
               try {
                 await importExpensesCsv(file);
-                setMessage("Import complete!");
               } catch (e) {
                 console.error(e);
               } finally {
@@ -44,7 +39,6 @@ const Import = () => {
               if (!file) return;
               try {
                 await importExpensesJSON(file);
-                setMessage("Import complete!");
               } catch (e) {
                 console.error(e);
               } finally {
@@ -121,23 +115,6 @@ const Import = () => {
           </div>
         </div>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={message !== ""}
-        autoHideDuration={2500}
-        onClose={(_, reason) => {
-          if (reason === "clickaway") return;
-          setMessage("");
-        }}
-      >
-        <Alert
-          severity="success"
-          variant="filled"
-          onClose={() => setMessage("")}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

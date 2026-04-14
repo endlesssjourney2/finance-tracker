@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Goal } from "../types/Goal";
-import { supabase } from "../supabaseClient";
 import { useAuth } from "../pages/Auth/AuthContext";
 import { useAlert } from "../context/AlertContext";
+import { addGoalApi, deleteGoalApi, getGoals } from "../api/goals";
 
 const useGoals = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -16,13 +16,11 @@ const useGoals = () => {
 
     const fetchGoals = async () => {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("goals")
-        .select("*")
-        .eq("user_id", user.id);
-
+      const [data, error] = await getGoals(user.id);
       if (error) {
-        return console.error("Error loading goals", error.message);
+        showAlert("Failed to load goals. Please try again.", {
+          severity: "error",
+        });
       } else {
         setGoals(data as Goal[]);
       }
@@ -50,21 +48,14 @@ const useGoals = () => {
       return false;
     }
 
-    const { data, error } = await supabase
-      .from("goals")
-      .insert([
-        {
-          user_id: user.id,
-          goal: parsedAmount,
-          name: formData.name,
-          category: formData.category,
-        },
-      ])
-      .select()
-      .single();
+    const [data, error] = await addGoalApi(
+      user.id,
+      parsedAmount,
+      formData.name,
+      formData.category,
+    );
 
     if (error) {
-      console.error("Error adding goal:", error.message);
       showAlert("Error adding goal: " + error.message, { severity: "error" });
       return false;
     }
@@ -77,9 +68,8 @@ const useGoals = () => {
   const deleteGoal = async (id: string) => {
     if (!user) return;
 
-    const { error } = await supabase.from("goals").delete().eq("id", id);
+    const error = await deleteGoalApi(id);
     if (error) {
-      console.error("Error deleting goal:", error.message);
       showAlert("Error deleting goal: " + error.message, { severity: "error" });
       return;
     }
@@ -90,7 +80,7 @@ const useGoals = () => {
   const completeGoal = async (id: string) => {
     if (!user) return;
 
-    const { error } = await supabase.from("goals").delete().eq("id", id);
+    const error = await deleteGoalApi(id);
     if (error) {
       console.error("Error completing goal:", error.message);
       showAlert("Error completing goal: " + error.message, {

@@ -25,7 +25,7 @@ const Guide = () => {
       "amount": 100,
       "category": "Food",
       "description": "lunch",
-      "date": "2026-03-01"
+      "date": "2026-03-31"
     }
   ]
 }`}
@@ -47,7 +47,7 @@ const Guide = () => {
 
           <pre className={s.code}>
             {`amount,category,description,date
-100, Food, lunch, 2026-03-01`}
+100, Food, lunch, 2026-03-31`}
           </pre>
           <p className={s.warning}>
             The first row <b>must</b> contain column names. Do not include{" "}

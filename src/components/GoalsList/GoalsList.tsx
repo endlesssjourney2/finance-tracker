@@ -1,6 +1,7 @@
 import { type FC } from "react";
 import type { Goal } from "../../types/Goal";
 import s from "./GoalsList.module.css";
+import CopyButton from "../CopyButton/CopyButton";
 
 type GoalsListProps = {
   goals: Goal[];
@@ -55,6 +56,12 @@ const GoalsList: FC<GoalsListProps> = ({
                   >
                     Complete
                   </button>
+                </div>
+                <div className={s.copyButton}>
+                  <CopyButton
+                    text={goal.category}
+                    textForButton="Copy category"
+                  />
                 </div>
               </div>
             </li>

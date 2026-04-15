@@ -83,6 +83,8 @@
 }
 
 .itemBottom {
+  position: relative;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,4 +153,17 @@
   color: var(--color-card-border);
   border: 1px solid var(--color-card-border);
   cursor: not-allowed;
+}
+
+.copyButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+@media (max-width: 530px) {
+  .copyButton {
+    position: static;
+    margin-top: 10px;
+  }
 }

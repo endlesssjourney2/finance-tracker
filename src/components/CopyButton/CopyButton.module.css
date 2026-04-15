@@ -1,0 +1,29 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-link-btn);
+  background-color: var(--color-bg-link-btn);
+  color: var(--color-link-btn);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--hover-link-btn);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}

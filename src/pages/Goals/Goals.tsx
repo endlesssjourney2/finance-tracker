@@ -34,7 +34,7 @@ const Goals = () => {
 
   if (loading) {
     return (
-      <div className={s.goals}>
+      <div className={s.goalsPage}>
         <Header title="Goals page" />
         <div className={s.content}>
           <SkeletonGoals />

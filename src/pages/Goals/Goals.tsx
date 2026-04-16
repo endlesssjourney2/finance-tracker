@@ -8,6 +8,7 @@ import Confetti from "react-confetti";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
 import AddGoalForm from "../../components/Form/AddGoalForm/AddGoalForm";
 import GoalsList from "../../components/GoalsList/GoalsList";
+import GoalsInfo from "./GoalsInfo/GoalsInfo";
 
 const Goals = () => {
   const { authLoading, spentByCategory } = useExpensesWithGoals();
@@ -49,14 +50,7 @@ const Goals = () => {
       <div className={s.content}>
         <AddGoalForm onAddGoal={addGoal} />
         {goals.length > 0 && (
-          <div className={s.goalsInfo}>
-            <h2 className={`${s.infoTitle} ${s.totalTitle}`}>
-              Your goals: {totalGoals}
-            </h2>
-            <span className={`${s.infoTitle} ${s.completedGoals}`}>
-              Completed: {completedGoals}
-            </span>
-          </div>
+          <GoalsInfo totalGoals={totalGoals} completedGoals={completedGoals} />
         )}
         <GoalsList
           goals={goals}

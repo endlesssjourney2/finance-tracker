@@ -1,12 +1,10 @@
-import { Alert, Divider, Snackbar } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { useExpenses } from "../../hooks/useExpenses";
 import s from "./Import.module.css";
-import { useState } from "react";
+import Guide from "./components/Guide";
 
 const Import = () => {
   const { importExpensesCsv, importExpensesJSON } = useExpenses();
-  const [message, setMessage] = useState("");
 
   return (
     <div className={s.importPage}>
@@ -23,7 +21,6 @@ const Import = () => {
               if (!file) return;
               try {
                 await importExpensesCsv(file);
-                setMessage("Import complete!");
               } catch (e) {
                 console.error(e);
               } finally {
@@ -42,7 +39,6 @@ const Import = () => {
               if (!file) return;
               try {
                 await importExpensesJSON(file);
-                setMessage("Import complete!");
               } catch (e) {
                 console.error(e);
               } finally {
@@ -60,82 +56,13 @@ const Import = () => {
         </div>
         <div className={s.description}>
           <h3 className={s.descHeading}>
-            Please note that you can only import files in the same format in
-            which you exported them.
+            Please note that you can only import files in the same format as in
+            guides below. If your file structure is different, the import will
+            fail.
           </h3>
         </div>
-        <div className={s.guide}>
-          <div className={s.titleCont}>
-            <h2 className={s.guideTitle}>How does it work?</h2>
-          </div>
-          <div className={s.guideCont}>
-            <div className={s.card}>
-              <h2 className={s.cardTitle}>JSON</h2>
-              <Divider sx={{ background: "#000000", width: "100%" }} />
-              <p className={s.text}>
-                To import expenses using JSON, your file must include all
-                database fields except <b>id</b> and <b>user_id</b>. These
-                fields are generated automatically.
-              </p>
-              <p className={s.text}>Example of a valid JSON structure:</p>
-
-              <pre className={s.code}>
-                {`{
-  "expenses": [
-    {
-      "amount": 100,
-      "category": "Food(category)",
-      "description": "lunch(description)",
-      "date": "2026-03-01T12:00:00+00:00"
-    }
-  ]
-}`}
-              </pre>
-              <p className={s.warning}>
-                Do not include <b>id</b> or <b>user_id</b> fields. They will be
-                added automatically.
-              </p>
-            </div>
-            <div className={s.card}>
-              <h2 className={s.cardTitle}>CSV</h2>
-              <Divider sx={{ background: "#000000", width: "100%" }} />
-              <p className={s.text}>
-                The CSV file must contain the same fields as the database except
-                <b> id</b> and <b>user_id</b>. These fields are generated
-                automatically.
-              </p>
-              <p className={s.text}>Example of a valid CSV structure:</p>
-
-              <pre className={s.code}>
-                {`amount,category,description,date
-100(amount),Food(category),lunch(description),2026-03-01T12:00:00+00:00`}
-              </pre>
-              <p className={s.warning}>
-                The first row <b>must</b> contain column names. Do not include{" "}
-                <b>id</b> or <b>user_id</b> fields. They will be added
-                automatically.
-              </p>
-            </div>
-          </div>
-        </div>
+        <Guide />
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={message !== ""}
-        autoHideDuration={2500}
-        onClose={(_, reason) => {
-          if (reason === "clickaway") return;
-          setMessage("");
-        }}
-      >
-        <Alert
-          severity="success"
-          variant="filled"
-          onClose={() => setMessage("")}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

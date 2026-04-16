@@ -1,0 +1,73 @@
+.guide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.titleCont {
+  margin: 30px 0 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.guideTitle {
+  color: var(--color-text-primary);
+}
+
+.guideCont {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 12px 14px;
+  border: 1px solid var(--color-card-border);
+  background-color: var(--color-card-bg);
+  border-radius: 12px;
+  color: var(--color-text-primary);
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  min-height: 460px;
+}
+
+.cardTitle {
+  color: var(--color-text-primary);
+  font-size: 28px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.text {
+  text-align: center;
+  line-height: 1.7;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+
+.code {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.warning {
+  text-align: center;
+  color: var(--color-error);
+  line-height: 1.5;
+}

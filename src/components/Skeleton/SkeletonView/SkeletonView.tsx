@@ -6,6 +6,11 @@ const sxColor = { bgColor: "rgba(255, 255,255, 0.1" };
 const SkeletonView = () => {
   return (
     <div className={s.content}>
+      <div className={s.info}>
+        <Skeleton width="30%" height={100} sx={sxColor} />
+        <Skeleton width="30%" height={100} sx={sxColor} />
+      </div>
+
       <ul className={s.expensesList}>
         {Array.from({ length: 8 }).map((_, i) => (
           <li className={s.expenseItem} key={i}>

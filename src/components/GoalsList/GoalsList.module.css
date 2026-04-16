@@ -1,0 +1,169 @@
+.list {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.goalsList {
+  list-style: none;
+  width: 100%;
+  max-width: 600px;
+}
+
+.item {
+  background-color: var(--color-card-bg);
+  color: var(--color-text-primary);
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid var(--color-card-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 10px 24px var(--color-shadow);
+  transition: all 0.2s ease;
+}
+
+.item:hover {
+  background-color: var(--color-card-hover);
+  transform: translateY(-2px);
+}
+
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.goalName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.goalAmount {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+/* Chrome */
+.progress::-webkit-progress-bar {
+  background-color: var(--color-bg-secondary);
+  border-radius: 10px;
+}
+
+.progress::-webkit-progress-value {
+  background: linear-gradient(
+    90deg,
+    var(--color-btn-bg-primary),
+    var(--color-accent-blue)
+  );
+  border-radius: 10px;
+}
+
+/* Firefox */
+.progress::-moz-progress-bar {
+  background: linear-gradient(
+    90deg,
+    var(--color-btn-bg-primary),
+    var(--color-accent-blue)
+  );
+}
+
+.itemBottom {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.goalPercent {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.goalCategory {
+  font-size: 1rem;
+  font-weight: 450;
+  color: var(--color-text-secondary);
+}
+
+.categoryText {
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  font-weight: 450;
+  opacity: 0.9;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.deleteBtn {
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-error);
+  color: var(--color-btn-text-secondary);
+}
+
+.completeBtn {
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.completeBtn:hover {
+  background-color: var(--color-success);
+  color: var(--color-btn-text-secondary);
+}
+
+.completeBtn:disabled {
+  background: transparent;
+  color: var(--color-card-border);
+  border: 1px solid var(--color-card-border);
+  cursor: not-allowed;
+}
+
+.copyButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+@media (max-width: 530px) {
+  .copyButton {
+    position: static;
+    margin-top: 10px;
+  }
+}

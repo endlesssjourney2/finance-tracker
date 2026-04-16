@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
 import type { Expense } from "../types/Expense";
 import { downloadBlob, toCsv } from "../helpers/downloadExpenses";
 import { abbreviatedDate } from "../helpers/abbreviatedDate";
@@ -7,6 +6,14 @@ import Papa from "papaparse";
 import { useAlert } from "../context/AlertContext";
 import { useAuth } from "../pages/Auth/AuthContext";
 import type { Dayjs } from "dayjs";
+import {
+  addExpenseApi,
+  deleteExpenseApi,
+  getExpenses,
+  importExpensesApi,
+  updateExpenseApi,
+} from "../api/expenses";
+import dayjs from "dayjs";
 
 export const useExpenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -19,17 +26,15 @@ export const useExpenses = () => {
 
     const fetchExpenses = async () => {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("expenses")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("date", { ascending: false });
-
+      const [data, error] = await getExpenses(user.id);
       if (error) {
-        console.error("Error during loading:", error.message);
-      } else {
-        setExpenses(data as Expense[]);
+        showAlert("Failed to load expenses. Please try again.", {
+          severity: "error",
+        });
+        setLoading(false);
+        return;
       }
+      setExpenses(data as Expense[]);
       setLoading(false);
     };
     void fetchExpenses();
@@ -59,20 +64,13 @@ export const useExpenses = () => {
       return false;
     }
 
-    const { data, error } = await supabase
-      .from("expenses")
-      .insert([
-        {
-          user_id: user.id,
-          amount: parsedAmount,
-          category: formData.category,
-          description: formData.description || null,
-          date: formData.date.toISOString(),
-        },
-      ])
-      .select()
-      .single();
-
+    const [data, error] = await addExpenseApi(
+      user.id,
+      formData.category,
+      parsedAmount,
+      formData.description,
+      formData.date.toISOString(),
+    );
     if (error) {
       showAlert("Failed to add expense. Please try again.", {
         severity: "error",
@@ -87,7 +85,7 @@ export const useExpenses = () => {
 
   const deleteExpense = async (id: string) => {
     if (!user) return;
-    const { error } = await supabase.from("expenses").delete().eq("id", id);
+    const error = await deleteExpenseApi(id);
 
     if (error) {
       console.error("Error deleting expense:", error.message);
@@ -105,13 +103,7 @@ export const useExpenses = () => {
     updated: Omit<Expense, "id" | "user_id">,
   ) => {
     if (!user) return;
-    const { data, error } = await supabase
-      .from("expenses")
-      .update(updated)
-      .eq("id", id)
-      .select()
-      .single();
-
+    const [data, error] = await updateExpenseApi(id, updated);
     if (error) {
       console.error("Error updating expense", error.message);
       showAlert("Failed to update expense. Please try again.", {
@@ -176,16 +168,12 @@ export const useExpenses = () => {
             amount: Number(row.amount),
             category: row.category,
             description: row.description || "",
-            date: row.date,
+            date: dayjs(row.date).format("YYYY-MM-DD"),
           }),
         );
-        const { data, error } = await supabase
-          .from("expenses")
-          .insert(parsed)
-          .select();
+        const [data, error] = await importExpensesApi(parsed);
 
         if (error) {
-          console.error("Error importing expenses", error.message);
           showAlert("Failed to import expenses. Please try again.", {
             severity: "error",
           });
@@ -209,16 +197,12 @@ export const useExpenses = () => {
         amount: row.amount,
         category: row.category,
         description: row.description,
-        date: row.date,
+        date: dayjs(row.date).format("YYYY-MM-DD"),
       }));
 
-      const { data, error } = await supabase
-        .from("expenses")
-        .insert(parsed)
-        .select();
+      const [data, error] = await importExpensesApi(parsed);
 
       if (error) {
-        console.error("Error importing expenses", error.message);
         showAlert("Failed to import expenses. Please try again.", {
           severity: "error",
         });

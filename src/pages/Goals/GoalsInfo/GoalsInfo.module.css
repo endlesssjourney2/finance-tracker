@@ -1,0 +1,23 @@
+.goalsInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infoTitle {
+  font-family: "Montserrat", sans-serif;
+}
+
+.totalTitle {
+  color: var(--color-text-secondary);
+  font-size: 1.75rem;
+}
+
+.completedGoals {
+  color: var(--color-text-secondary);
+  font-size: 1.25rem;
+  opacity: 0.8;
+}

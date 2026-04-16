@@ -16,13 +16,13 @@ import Header from "../../components/Header/Header";
 import { useAuth } from "../Auth/AuthContext";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { expenses, loading } = useExpenses();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedChart, setSelectedChart] = useState<ChartType>("byCategory");
 
   const menuOpen = Boolean(anchorEl);
-  const isLoading = user === null || loading;
+  const isLoading = loading || authLoading;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -103,7 +103,7 @@ const Dashboard = () => {
           />
         )}
       </div>
-      <LoadingProgress loading={loading} />
+      <LoadingProgress loading={isLoading} />
     </div>
   );
 };

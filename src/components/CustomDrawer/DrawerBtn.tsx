@@ -1,9 +1,7 @@
 import s from "./DrawerBtn.module.css";
-import type { SvgIconTypeMap } from "@mui/material";
-import type { OverridableComponent } from "@mui/material/OverridableComponent";
-import type { FC } from "react";
 
-type MuiIcon = OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+import type { FC } from "react";
+import type { MuiIcon } from "../../types/MuiIcon";
 
 type DrawerBtnProps = {
   text: string;

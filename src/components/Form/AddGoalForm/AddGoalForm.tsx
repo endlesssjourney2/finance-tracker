@@ -27,7 +27,12 @@ const AddGoalForm: FC<AddGoalFormProps> = ({ onAddGoal }) => {
 
   return (
     <div className={s.inputs}>
-      <CustomInput value={amount} onChange={setAmount} label="Goal" required />
+      <CustomInput
+        value={amount}
+        onChange={setAmount}
+        label="Goal Amount"
+        required
+      />
       <CustomInput value={name} onChange={setName} label="Goal Name" required />
       <CustomInput
         value={category}

@@ -8,7 +8,7 @@ import Confetti from "react-confetti";
 import useExpensesWithGoals from "../../hooks/useExpensesWithGoals";
 import AddGoalForm from "../../components/Form/AddGoalForm/AddGoalForm";
 import GoalsList from "../../components/GoalsList/GoalsList";
-import GoalsInfo from "./GoalsInfo/GoalsInfo";
+import GoalsInfo from "./components/GoalsInfo/GoalsInfo";
 
 const Goals = () => {
   const { authLoading, spentByCategory } = useExpensesWithGoals();

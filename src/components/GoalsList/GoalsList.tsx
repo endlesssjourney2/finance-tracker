@@ -33,14 +33,14 @@ const GoalsList: FC<GoalsListProps> = ({
                   {spent} $ / {goal.goal} $
                 </span>
               </div>
-
               <progress className={s.progress} value={progress} max={100} />
+
               <div className={s.itemBottom}>
+                <span className={s.goalPercent}>{Math.round(progress)}%</span>
                 <span className={s.goalCategory}>
                   Category:{" "}
                   <span className={s.categoryText}>{goal.category}</span>
                 </span>
-                <span className={s.goalPercent}>{Math.round(progress)}%</span>
 
                 <div className={s.buttons}>
                   <button
